@@ -1,6 +1,6 @@
-import Foundation
+import FMDB
 
-final class FMDBOwnerStore: FMDBStore {
+final class FMDBOwnerStore: FMDBOwnerStoreType {
 
     let databaseWrapper: FMDBDatabaseWrapeer
 

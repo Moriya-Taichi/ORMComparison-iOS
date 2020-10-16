@@ -1,8 +1,14 @@
 
-import Foundation
+import FMDB
 
-final class FMDBProductStore: FMDBStore {
-    
+final class FMDBProductStore: FMDBProductStoreType {
+
+    let databaseWrapper: FMDBDatabaseWrapeer
+
+    init(databaseWrapper: FMDBDatabaseWrapeer) {
+        self.databaseWrapper = databaseWrapper
+    }
+
     func create(object: Product) {
 
     }
@@ -16,6 +22,6 @@ final class FMDBProductStore: FMDBStore {
     }
 
     func delete(object: Product) {
-        
+
     }
 }
