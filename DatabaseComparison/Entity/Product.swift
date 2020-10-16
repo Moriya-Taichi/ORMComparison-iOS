@@ -1,13 +1,6 @@
-//
-//  Product.swift
-//  DatabaseComparison
-//
-//  Created by Mori on 2020/10/16.
-//
-
-struct Product {
-    let identifier: String
+struct Book {
+    let id: Int
     let name: String
     let price: Int
-    let features: [String]
+    let tag: [String]
 }

@@ -1,13 +1,6 @@
-//
-//  Shop.swift
-//  DatabaseComparison
-//
-//  Created by Mori on 2020/10/16.
-//
-
-struct Shop {
-    let identifier: String
+struct Publisher {
+    let id: Int
     let name: String
-    let products: [Product]
+    let books: [Book]
     let owner: Owner
 }
