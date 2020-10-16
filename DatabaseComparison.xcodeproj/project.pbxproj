@@ -14,7 +14,6 @@
 		8D0EA830252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA82E252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld */; };
 		8D0EA832252BB62B005E51C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D0EA831252BB62B005E51C3 /* Assets.xcassets */; };
 		8D0EA835252BB62B005E51C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D0EA833252BB62B005E51C3 /* LaunchScreen.storyboard */; };
-		8D0EA848252CC4D9005E51C3 /* SQLiteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA847252CC4D9005E51C3 /* SQLiteStore.swift */; };
 		8D0EA84B252CC4E0005E51C3 /* RealmStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA84A252CC4E0005E51C3 /* RealmStore.swift */; };
 		8D0EA84E252CC4E8005E51C3 /* GRDBStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA84D252CC4E8005E51C3 /* GRDBStore.swift */; };
 		8D0EA851252CC4F1005E51C3 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA850252CC4F1005E51C3 /* CoreDataStore.swift */; };
@@ -35,7 +34,6 @@
 		8D0EA831252BB62B005E51C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D0EA834252BB62B005E51C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8D0EA836252BB62B005E51C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8D0EA847252CC4D9005E51C3 /* SQLiteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteStore.swift; sourceTree = "<group>"; };
 		8D0EA84A252CC4E0005E51C3 /* RealmStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStore.swift; sourceTree = "<group>"; };
 		8D0EA84D252CC4E8005E51C3 /* GRDBStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBStore.swift; sourceTree = "<group>"; };
 		8D0EA850252CC4F1005E51C3 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
@@ -97,12 +95,11 @@
 		8D0EA83D252C5DC0005E51C3 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
-				8D0EA847252CC4D9005E51C3 /* SQLiteStore.swift */,
-				8D0EA84A252CC4E0005E51C3 /* RealmStore.swift */,
-				8D0EA84D252CC4E8005E51C3 /* GRDBStore.swift */,
-				8D0EA850252CC4F1005E51C3 /* CoreDataStore.swift */,
-				8D0EA853252CC50E005E51C3 /* UserDefaultsStore.swift */,
-				8D0EA856252CC51E005E51C3 /* FMDBStore.swift */,
+				8D727BBB253956F600F2912D /* UserDefaults */,
+				8D727BBA253956ED00F2912D /* CoreData */,
+				8D727BB9253956E600F2912D /* FMDB */,
+				8D727BB7253956D800F2912D /* GRDB */,
+				8D727BB6253956CF00F2912D /* Realm */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -115,6 +112,46 @@
 				8D727BB1253953F800F2912D /* Product.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		8D727BB6253956CF00F2912D /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				8D0EA84A252CC4E0005E51C3 /* RealmStore.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		8D727BB7253956D800F2912D /* GRDB */ = {
+			isa = PBXGroup;
+			children = (
+				8D0EA84D252CC4E8005E51C3 /* GRDBStore.swift */,
+			);
+			path = GRDB;
+			sourceTree = "<group>";
+		};
+		8D727BB9253956E600F2912D /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				8D0EA856252CC51E005E51C3 /* FMDBStore.swift */,
+			);
+			path = FMDB;
+			sourceTree = "<group>";
+		};
+		8D727BBA253956ED00F2912D /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				8D0EA850252CC4F1005E51C3 /* CoreDataStore.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		8D727BBB253956F600F2912D /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				8D0EA853252CC50E005E51C3 /* UserDefaultsStore.swift */,
+			);
+			path = UserDefaults;
 			sourceTree = "<group>";
 		};
 		E5D9ED313DCEF2B6E4487606 /* Frameworks */ = {
@@ -248,7 +285,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D0EA848252CC4D9005E51C3 /* SQLiteStore.swift in Sources */,
 				8D0EA857252CC51F005E51C3 /* FMDBStore.swift in Sources */,
 				8D0EA826252BB62A005E51C3 /* AppDelegate.swift in Sources */,
 				8D0EA84E252CC4E8005E51C3 /* GRDBStore.swift in Sources */,
