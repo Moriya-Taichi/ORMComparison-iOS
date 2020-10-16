@@ -22,10 +22,11 @@
 		8D727BAA253950D100F2912D /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BA9253950D100F2912D /* Shop.swift */; };
 		8D727BAF253953E200F2912D /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BAE253953E200F2912D /* Owner.swift */; };
 		8D727BB2253953F800F2912D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BB1253953F800F2912D /* Product.swift */; };
-		8D727BBD2539578E00F2912D /* ShopStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BBC2539578E00F2912D /* ShopStore.swift */; };
 		8D727BC225397B4700F2912D /* FMDBOwnerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BC125397B4700F2912D /* FMDBOwnerStore.swift */; };
 		8D727BC525397E0E00F2912D /* FMDBProductStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BC425397E0E00F2912D /* FMDBProductStore.swift */; };
 		8D727BC825397E3200F2912D /* FMDBDatabaseWrapeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BC725397E3200F2912D /* FMDBDatabaseWrapeer.swift */; };
+		8D727BD12539813200F2912D /* StoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BD02539813200F2912D /* StoreType.swift */; };
+		8D727BD4253983A500F2912D /* FMDBStoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BD3253983A500F2912D /* FMDBStoreType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,10 +47,11 @@
 		8D727BA9253950D100F2912D /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
 		8D727BAE253953E200F2912D /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		8D727BB1253953F800F2912D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
-		8D727BBC2539578E00F2912D /* ShopStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopStore.swift; sourceTree = "<group>"; };
 		8D727BC125397B4700F2912D /* FMDBOwnerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBOwnerStore.swift; sourceTree = "<group>"; };
 		8D727BC425397E0E00F2912D /* FMDBProductStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBProductStore.swift; sourceTree = "<group>"; };
 		8D727BC725397E3200F2912D /* FMDBDatabaseWrapeer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDatabaseWrapeer.swift; sourceTree = "<group>"; };
+		8D727BD02539813200F2912D /* StoreType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreType.swift; sourceTree = "<group>"; };
+		8D727BD3253983A500F2912D /* FMDBStoreType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBStoreType.swift; sourceTree = "<group>"; };
 		F4693C13DFC13D22D82B5012 /* Pods_DatabaseComparison.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DatabaseComparison.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB9848FEEB79477F8E0FE867 /* Pods-DatabaseComparison.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatabaseComparison.release.xcconfig"; path = "Target Support Files/Pods-DatabaseComparison/Pods-DatabaseComparison.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,7 +110,7 @@
 				8D727BB9253956E600F2912D /* FMDB */,
 				8D727BB7253956D800F2912D /* GRDB */,
 				8D727BB6253956CF00F2912D /* Realm */,
-				8D727BBC2539578E00F2912D /* ShopStore.swift */,
+				8D727BD02539813200F2912D /* StoreType.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -146,6 +148,7 @@
 				8D727BC125397B4700F2912D /* FMDBOwnerStore.swift */,
 				8D727BC425397E0E00F2912D /* FMDBProductStore.swift */,
 				8D727BC725397E3200F2912D /* FMDBDatabaseWrapeer.swift */,
+				8D727BD3253983A500F2912D /* FMDBStoreType.swift */,
 			);
 			path = FMDB;
 			sourceTree = "<group>";
@@ -299,9 +302,9 @@
 			files = (
 				8D0EA857252CC51F005E51C3 /* FMDBShopStore.swift in Sources */,
 				8D727BC825397E3200F2912D /* FMDBDatabaseWrapeer.swift in Sources */,
-				8D727BBD2539578E00F2912D /* ShopStore.swift in Sources */,
 				8D0EA826252BB62A005E51C3 /* AppDelegate.swift in Sources */,
 				8D0EA84E252CC4E8005E51C3 /* GRDBStore.swift in Sources */,
+				8D727BD4253983A500F2912D /* FMDBStoreType.swift in Sources */,
 				8D0EA828252BB62A005E51C3 /* SceneDelegate.swift in Sources */,
 				8D727BB2253953F800F2912D /* Product.swift in Sources */,
 				8D0EA830252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld in Sources */,
@@ -312,6 +315,7 @@
 				8D727BAF253953E200F2912D /* Owner.swift in Sources */,
 				8D0EA854252CC50E005E51C3 /* UserDefaultsStore.swift in Sources */,
 				8D727BAA253950D100F2912D /* Shop.swift in Sources */,
+				8D727BD12539813200F2912D /* StoreType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
