@@ -1,31 +1,9 @@
 import Foundation
 import FMDB
 
-final class DatabaseWrapper {
+final class FMDBShopStore: FMDBStore {
 
-    let database: FMDatabase
-
-    init () {
-        let databasePath = try! FileManager.default
-                .url(
-                    for: .applicationSupportDirectory,
-                    in: .userDomainMask,
-                    appropriateFor: nil,
-                    create: true
-                )
-                .appendingPathComponent("test.sqlite")
-        database = FMDatabase(url: databasePath)
-        database.open()
-    }
-
-    deinit {
-        database.close()
-    }
-}
-
-final class FMDBShopStore: ShopStore {
-
-    private let wrapper: DatabaseWrapper
+    let databaseWrapper: FMDBDatabaseWrapeer
 
     private let createTableSQL =
         "CREATE TABLE IF NOT EXISTS shop (" +
@@ -61,13 +39,17 @@ final class FMDBShopStore: ShopStore {
         "DELETE FROM test_object WHERE id = ?;"
 
 
-    init (wrapper: DatabaseWrapper) {
-        self.wrapper = wrapper
-        try? wrapper.database.executeUpdate(createTableSQL, values: nil)
+    init (databaseWrapper: FMDBDatabaseWrapeer) {
+        self.databaseWrapper = databaseWrapper
+        try? databaseWrapper
+            .database
+            .executeUpdate(createTableSQL, values: nil)
     }
 
     func create(object: Shop) {
-        try? wrapper.database.executeUpdate(
+        try? databaseWrapper
+            .database
+            .executeUpdate(
             insertSQL,
             values: [
                 object.identifier
@@ -78,7 +60,9 @@ final class FMDBShopStore: ShopStore {
     func read () -> [Shop]? {
         var objects: [Shop] = []
         if
-            let result = try? wrapper.database.executeQuery(
+            let result = try? databaseWrapper
+                .database
+                .executeQuery(
                 selectSQL,
                 values: nil
         ) {
@@ -90,7 +74,9 @@ final class FMDBShopStore: ShopStore {
     }
 
     func update (object: Shop) {
-        try? wrapper.database.executeUpdate(
+        try? databaseWrapper
+            .database
+            .executeUpdate(
             updateSQL,
             values: [
             ]
