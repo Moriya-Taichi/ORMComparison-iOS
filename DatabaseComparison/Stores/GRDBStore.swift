@@ -1,4 +1,6 @@
 import Foundation
 import GRDB
 
-final class 
+final class GRDBShopStore {
+    
+}
