@@ -1,14 +1,6 @@
 import Foundation
 import FMDB
 
-struct FMDBTestObject {
-    let id: Int
-    let name: String
-    let age: Int
-    let profile: String
-    let position: String
-}
-
 final class DatabaseWrapper {
 
     let database: FMDatabase
@@ -31,12 +23,12 @@ final class DatabaseWrapper {
     }
 }
 
-final class FmdbStore {
+final class FMDBShopStore: ShopStore {
 
     private let wrapper: DatabaseWrapper
 
     private let createTableSQL =
-        "CREATE TABLE IF NOT EXISTS test_object (" +
+        "CREATE TABLE IF NOT EXISTS shop (" +
         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
         "name TEXT, " +
         "age INTEGER, " +
@@ -74,55 +66,38 @@ final class FmdbStore {
         try? wrapper.database.executeUpdate(createTableSQL, values: nil)
     }
 
-    func create(object: FMDBTestObject) {
+    func create(object: Shop) {
         try? wrapper.database.executeUpdate(
             insertSQL,
             values: [
-                object.name,
-                object.age,
-                object.profile,
-                object.position
+                object.identifier
             ]
         )
     }
 
-    func read () -> [FMDBTestObject] {
-        var objects: [FMDBTestObject] = []
+    func read () -> [Shop]? {
+        var objects: [Shop] = []
         if
             let result = try? wrapper.database.executeQuery(
                 selectSQL,
                 values: nil
         ) {
             while result.next() {
-                let object = FMDBTestObject(
-                    id: result.long(forColumnIndex: 0),
-                    name: result.string(forColumnIndex: 1) ?? "",
-                    age: result.long(forColumnIndex: 2),
-                    profile: result.string(forColumnIndex: 3) ?? "",
-                    position: result.string(forColumnIndex: 4) ?? ""
-                )
-                objects.append(object)
+
             }
         }
         return objects
     }
 
-    func update (object: FMDBTestObject) {
+    func update (object: Shop) {
         try? wrapper.database.executeUpdate(
             updateSQL,
             values: [
-                object.name,
-                object.age,
-                object.profile,
-                object.position,
-                object.id
             ]
         )
     }
 
-    func delete (id: Int) {
-        try? wrapper.database.executeUpdate(deleteSQL, values: [id])
+    func delete(object: Shop) {
+        try? wrapper.database.executeUpdate(deleteSQL, values: [])
     }
-
-
 }
