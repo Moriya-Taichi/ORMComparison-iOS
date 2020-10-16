@@ -1,8 +1,23 @@
-//
-//  UserDefaultsStore.swift
-//  DatabaseComparison
-//
-//  Created by Mori on 2020/10/07.
-//
-
 import Foundation
+
+final class UserDefaultsStore {
+
+    let defaults = UserDefaults.standard
+
+
+    func create() {
+
+    }
+
+    func read () {
+
+    }
+
+    func update () {
+
+    }
+
+    func delete () {
+
+    }
+}
