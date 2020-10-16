@@ -5,7 +5,7 @@ final class FMDBPublisherStore: FMDBPublisherStoreType {
     let databaseWrapper: FMDBDatabaseWrapeer
 
     private let createTableSQL =
-        "CREATE TABLE IF NOT EXISTS shop (" +
+        "CREATE TABLE IF NOT EXISTS publishers (" +
         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
         "name TEXT, " +
         "owner_id INTEGER" +
@@ -13,27 +13,27 @@ final class FMDBPublisherStore: FMDBPublisherStoreType {
 
     private let insertSQL =
         "INSERT INTO " +
-        "shop (name, age, profile, position) " +
+        "publishers (name, owner_id) " +
         "VALUES " +
-        "(?, ?, ?, ?);"
+        "(?, ?);"
 
     private let selectSQL =
         "SELECT " +
-        "id, name, age, profile, position " +
+        "id, name, owner_id " +
         "FROM " +
-        "shop;" +
+        "publishers;" +
         "ORDER BY name;"
 
     private let updateSQL =
         "UPDATE " +
-        "shop " +
+        "publishers " +
         "SET " +
-        "name = ?, age = ?, profile = ?, position = ? " +
+        "name = ?, owner_id = ? " +
         "WHERE " +
         "id = ?;"
 
     private let deleteSQL =
-        "DELETE FROM shop WHERE id = ?;"
+        "DELETE FROM publishers WHERE id = ?;"
 
 
     init (databaseWrapper: FMDBDatabaseWrapeer) {
@@ -79,7 +79,7 @@ final class FMDBPublisherStore: FMDBPublisherStoreType {
         )
     }
 
-    func delete(object: Shop) {
+    func delete(object: Publisher) {
         try? databaseWrapper.database.executeUpdate(deleteSQL, values: [])
     }
 }
