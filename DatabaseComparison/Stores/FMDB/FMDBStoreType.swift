@@ -5,8 +5,8 @@ protocol FMDBStoreType: StoreType {
     init (databaseWrapper: FMDBDatabaseWrapeer)
 }
 
-protocol FMDBShopStoreType: FMDBStoreType where StoredObjectType == Shop {}
+protocol FMDBPublisherStoreType: FMDBStoreType where StoredObjectType == Publisher {}
 
 protocol FMDBOwnerStoreType: FMDBStoreType where StoredObjectType == Owner {}
 
-protocol FMDBProductStoreType: FMDBStoreType where StoredObjectType == Product {}
+protocol FMDBBookStoreType: FMDBStoreType where StoredObjectType == Book {}
