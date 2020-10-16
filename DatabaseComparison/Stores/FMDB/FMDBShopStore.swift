@@ -1,7 +1,6 @@
-import Foundation
 import FMDB
 
-final class FMDBShopStore: FMDBStore {
+final class FMDBShopStore: FMDBShopStoreType {
 
     let databaseWrapper: FMDBDatabaseWrapeer
 
@@ -84,6 +83,6 @@ final class FMDBShopStore: FMDBStore {
     }
 
     func delete(object: Shop) {
-        try? wrapper.database.executeUpdate(deleteSQL, values: [])
+        try? databaseWrapper.database.executeUpdate(deleteSQL, values: [])
     }
 }
