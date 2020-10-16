@@ -1,8 +1,21 @@
-//
-//  FMDBProductStore.swift
-//  DatabaseComparison
-//
-//  Created by Mori on 2020/10/16.
-//
 
 import Foundation
+
+final class FMDBProductStore: FMDBStore {
+    
+    func create(object: Product) {
+
+    }
+
+    func read() -> [Product]? {
+
+    }
+
+    func update(object: Product) {
+
+    }
+
+    func delete(object: Product) {
+        
+    }
+}
