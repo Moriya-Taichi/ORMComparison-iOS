@@ -1,5 +1,5 @@
 
-protocol Store {
+protocol StoreType {
     associatedtype StoredObjectType
 
     func create(object: StoredObjectType)
