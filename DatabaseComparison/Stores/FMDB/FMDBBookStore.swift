@@ -1,7 +1,7 @@
 
 import FMDB
 
-final class FMDBProductStore: FMDBProductStoreType {
+final class FMDBBookStore: FMDBBookStoreType {
 
     let databaseWrapper: FMDBDatabaseWrapeer
 
@@ -9,19 +9,19 @@ final class FMDBProductStore: FMDBProductStoreType {
         self.databaseWrapper = databaseWrapper
     }
 
-    func create(object: Product) {
+    func create(object: Book) {
 
     }
 
-    func read() -> [Product]? {
+    func read() -> [Book]? {
 
     }
 
-    func update(object: Product) {
+    func update(object: Book) {
 
     }
 
-    func delete(object: Product) {
+    func delete(object: Book) {
 
     }
 }

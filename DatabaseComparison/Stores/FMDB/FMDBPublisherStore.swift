@@ -1,6 +1,6 @@
 import FMDB
 
-final class FMDBShopStore: FMDBShopStoreType {
+final class FMDBPublisherStore: FMDBPublisherStoreType {
 
     let databaseWrapper: FMDBDatabaseWrapeer
 
@@ -8,14 +8,12 @@ final class FMDBShopStore: FMDBShopStoreType {
         "CREATE TABLE IF NOT EXISTS shop (" +
         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
         "name TEXT, " +
-        "age INTEGER, " +
-        "profile TEXT," +
-        "position TEXT" +
+        "owner_id INTEGER" +
       ");"
 
     private let insertSQL =
         "INSERT INTO " +
-        "test_object (name, age, profile, position) " +
+        "shop (name, age, profile, position) " +
         "VALUES " +
         "(?, ?, ?, ?);"
 
@@ -23,19 +21,19 @@ final class FMDBShopStore: FMDBShopStoreType {
         "SELECT " +
         "id, name, age, profile, position " +
         "FROM " +
-        "test_object;" +
+        "shop;" +
         "ORDER BY name;"
 
     private let updateSQL =
         "UPDATE " +
-        "test_object " +
+        "shop " +
         "SET " +
         "name = ?, age = ?, profile = ?, position = ? " +
         "WHERE " +
         "id = ?;"
 
     private let deleteSQL =
-        "DELETE FROM test_object WHERE id = ?;"
+        "DELETE FROM shop WHERE id = ?;"
 
 
     init (databaseWrapper: FMDBDatabaseWrapeer) {
@@ -45,19 +43,18 @@ final class FMDBShopStore: FMDBShopStoreType {
             .executeUpdate(createTableSQL, values: nil)
     }
 
-    func create(object: Shop) {
+    func create(object: Publisher) {
         try? databaseWrapper
             .database
             .executeUpdate(
             insertSQL,
             values: [
-                object.identifier
             ]
         )
     }
 
-    func read () -> [Shop]? {
-        var objects: [Shop] = []
+    func read () -> [Publisher]? {
+        var objects: [Publisher] = []
         if
             let result = try? databaseWrapper
                 .database
@@ -72,7 +69,7 @@ final class FMDBShopStore: FMDBShopStoreType {
         return objects
     }
 
-    func update (object: Shop) {
+    func update (object: Publisher) {
         try? databaseWrapper
             .database
             .executeUpdate(
