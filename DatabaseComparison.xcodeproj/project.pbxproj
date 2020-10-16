@@ -22,6 +22,7 @@
 		8D727BAA253950D100F2912D /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BA9253950D100F2912D /* Shop.swift */; };
 		8D727BAF253953E200F2912D /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BAE253953E200F2912D /* Owner.swift */; };
 		8D727BB2253953F800F2912D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BB1253953F800F2912D /* Product.swift */; };
+		8D727BBD2539578E00F2912D /* ShopStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BBC2539578E00F2912D /* ShopStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		8D727BA9253950D100F2912D /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
 		8D727BAE253953E200F2912D /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		8D727BB1253953F800F2912D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		8D727BBC2539578E00F2912D /* ShopStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopStore.swift; sourceTree = "<group>"; };
 		F4693C13DFC13D22D82B5012 /* Pods_DatabaseComparison.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DatabaseComparison.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB9848FEEB79477F8E0FE867 /* Pods-DatabaseComparison.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatabaseComparison.release.xcconfig"; path = "Target Support Files/Pods-DatabaseComparison/Pods-DatabaseComparison.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 				8D727BB9253956E600F2912D /* FMDB */,
 				8D727BB7253956D800F2912D /* GRDB */,
 				8D727BB6253956CF00F2912D /* Realm */,
+				8D727BBC2539578E00F2912D /* ShopStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D0EA857252CC51F005E51C3 /* FMDBStore.swift in Sources */,
+				8D727BBD2539578E00F2912D /* ShopStore.swift in Sources */,
 				8D0EA826252BB62A005E51C3 /* AppDelegate.swift in Sources */,
 				8D0EA84E252CC4E8005E51C3 /* GRDBStore.swift in Sources */,
 				8D0EA828252BB62A005E51C3 /* SceneDelegate.swift in Sources */,
