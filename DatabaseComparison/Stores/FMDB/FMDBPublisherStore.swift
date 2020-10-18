@@ -8,7 +8,7 @@ final class FMDBPublisherStore {
 
     private let createTableSQL =
         "CREATE TABLE IF NOT EXISTS publishers (" +
-        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        "id INTEGER PRIMARY KEY, " +
         "name TEXT, " +
         "owner_id INTEGER" +
       ");"
@@ -24,7 +24,7 @@ final class FMDBPublisherStore {
         "id, name, owner_id " +
         "FROM " +
         "publishers;" +
-        "ORDER BY name;"
+        "ORDER BY id;"
 
     private let updateSQL =
         "UPDATE " +
@@ -59,8 +59,12 @@ final class FMDBPublisherStore {
         )
     }
 
-    func read () -> [Publisher]? {
-        var objects: [Publisher] = []
+    func readByEagerLoading () -> [Publisher] {
+        var temporaryPublishers: [(
+            id: Int,
+            name: String,
+            ownerId: Int
+        )] = []
         if
             let result = try? databaseWrapper
                 .executeQuery(
@@ -68,10 +72,40 @@ final class FMDBPublisherStore {
                 values: nil
         ) {
             while result.next() {
-
+                temporaryPublishers.append(
+                    (
+                        id: result.long(forColumnIndex: 0),
+                        name: result.string(forColumnIndex: 0) ?? "",
+                        ownerId: result.long(forColumnIndex: 0)
+                    )
+                )
             }
         }
-        return objects
+
+        let publisherIDs = temporaryPublishers.map { $0.id }
+        let books = bookStore.readBooksWithIDByPublisherIDs(publisherIDs)
+        let ownerIDs = temporaryPublishers.map { $0.ownerId }
+        let owners = ownerStore.readByIDs(Array(Set(ownerIDs)))
+        
+        return temporaryPublishers.compactMap { publisher -> Publisher? in
+            guard
+                let owner = owners.filter({ $0.id == publisher.ownerId }).first
+            else {
+                return nil
+            }
+            let book = books.filter { $0.id == publisher.id }.map { $0.book }
+            return Publisher(
+                id: publisher.id,
+                name: publisher.name,
+                books: book,
+                owner: owner
+            )
+        }
+    }
+
+    func readByJoin() -> [Publisher] {
+        let query = ""
+        return []
     }
 
     func update (object: Publisher) {
