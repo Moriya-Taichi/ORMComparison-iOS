@@ -1,8 +1,10 @@
 import FMDB
 
-final class FMDBPublisherStore: FMDBPublisherStoreType {
+final class FMDBPublisherStore {
 
-    let databaseWrapper: FMDBDatabaseWrapeer
+    private let databaseWrapper: FMDBDatabaseWrapeer
+    private let bookStore: FMDBBookStore
+    private let ownerStore: FMDBOwnerStore
 
     private let createTableSQL =
         "CREATE TABLE IF NOT EXISTS publishers (" +
@@ -36,16 +38,20 @@ final class FMDBPublisherStore: FMDBPublisherStoreType {
         "DELETE FROM publishers WHERE id = ?;"
 
 
-    init (databaseWrapper: FMDBDatabaseWrapeer) {
+    init (
+        databaseWrapper: FMDBDatabaseWrapeer,
+        bookStore: FMDBBookStore,
+        ownerStore: FMDBOwnerStore
+    ) {
         self.databaseWrapper = databaseWrapper
+        self.bookStore = bookStore
+        self.ownerStore = ownerStore
         try? databaseWrapper
-            .database
             .executeUpdate(createTableSQL, values: nil)
     }
 
     func create(object: Publisher) {
         try? databaseWrapper
-            .database
             .executeUpdate(
             insertSQL,
             values: [
@@ -57,7 +63,6 @@ final class FMDBPublisherStore: FMDBPublisherStoreType {
         var objects: [Publisher] = []
         if
             let result = try? databaseWrapper
-                .database
                 .executeQuery(
                 selectSQL,
                 values: nil
@@ -71,7 +76,6 @@ final class FMDBPublisherStore: FMDBPublisherStoreType {
 
     func update (object: Publisher) {
         try? databaseWrapper
-            .database
             .executeUpdate(
             updateSQL,
             values: [
@@ -80,6 +84,6 @@ final class FMDBPublisherStore: FMDBPublisherStoreType {
     }
 
     func delete(object: Publisher) {
-        try? databaseWrapper.database.executeUpdate(deleteSQL, values: [])
+        try? databaseWrapper.executeUpdate(deleteSQL, values: [])
     }
 }
