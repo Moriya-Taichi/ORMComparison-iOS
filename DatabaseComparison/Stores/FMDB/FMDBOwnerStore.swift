@@ -1,11 +1,11 @@
 import FMDB
 
-final class FMDBOwnerStore: FMDBOwnerStoreType {
+final class FMDBOwnerStore {
 
     let databaseWrapper: FMDBDatabaseWrapeer
 
     private let createTableSQL =
-        "CREATE TABLE IF NOT EXISTS owner (" +
+        "CREATE TABLE IF NOT EXISTS owners (" +
         "id INTEGER PRIMARY KEY, " +
         "name TEXT, " +
         "age INTEGER, " +
@@ -14,7 +14,7 @@ final class FMDBOwnerStore: FMDBOwnerStoreType {
 
     private let insertSQL =
         "INSERT INTO " +
-        "owner (name, age, profile) " +
+        "owners (name, age, profile) " +
         "VALUES " +
         "(?, ?, ?);"
 
@@ -22,19 +22,19 @@ final class FMDBOwnerStore: FMDBOwnerStoreType {
         "SELECT " +
         "id, name, age, profile " +
         "FROM " +
-        "owner;" +
+        "owners;" +
         "ORDER BY name;"
 
     private let updateSQL =
         "UPDATE " +
-        "owner " +
+        "owners " +
         "SET " +
         "name = ?, age = ?, profile = ? " +
         "WHERE " +
         "id = ?;"
 
     private let deleteSQL =
-        "DELETE FROM owner WHERE id = ?;"
+        "DELETE FROM owners WHERE id = ?;"
 
     init(databaseWrapper: FMDBDatabaseWrapeer) {
         self.databaseWrapper = databaseWrapper
@@ -44,8 +44,9 @@ final class FMDBOwnerStore: FMDBOwnerStoreType {
 
     }
 
-    func read() -> [Owner]? {
-
+    func read() -> [Owner] {
+        var result: [Owner] = []
+        return result
     }
 
     func update(object: Owner) {
