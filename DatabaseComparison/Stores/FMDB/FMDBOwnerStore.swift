@@ -49,6 +49,28 @@ final class FMDBOwnerStore {
         return result
     }
 
+    func readByIDs(_ ids: [Int]) -> [Owner]{
+        var results: [Owner] = []
+        let params = Array(repeating: "?", count: ids.count).joined(separator: ",")
+        let query = "SELECT * FROM owners WHERE id IN (" + params + ");"
+        if
+            let result = try? databaseWrapper.executeQuery(
+                query,
+                values: ids
+            ) {
+            while result.next() {
+                let owner = Owner(
+                    id: result.long(forColumnIndex: 0),
+                    name: result.string(forColumnIndex: 1) ?? "",
+                    age: result.long(forColumnIndex: 2),
+                    profile: result.string(forColumnIndex: 3) ?? ""
+                )
+                results.append(owner)
+            }
+        }
+        return results
+    }
+
     func update(object: Owner) {
 
     }
