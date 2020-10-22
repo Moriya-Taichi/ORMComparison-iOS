@@ -20,6 +20,7 @@
 		8D0EA854252CC50E005E51C3 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA853252CC50E005E51C3 /* UserDefaultsStore.swift */; };
 		8D0EA857252CC51F005E51C3 /* FMDBPublisherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA856252CC51E005E51C3 /* FMDBPublisherStore.swift */; };
 		8D5B5FBB254177F500B22207 /* GRDBModelExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBA254177F500B22207 /* GRDBModelExtention.swift */; };
+		8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */; };
 		8D727BAA253950D100F2912D /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BA9253950D100F2912D /* Publisher.swift */; };
 		8D727BAF253953E200F2912D /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BAE253953E200F2912D /* Owner.swift */; };
 		8D727BB2253953F800F2912D /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BB1253953F800F2912D /* Book.swift */; };
@@ -44,6 +45,7 @@
 		8D0EA853252CC50E005E51C3 /* UserDefaultsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStore.swift; sourceTree = "<group>"; };
 		8D0EA856252CC51E005E51C3 /* FMDBPublisherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBPublisherStore.swift; sourceTree = "<group>"; };
 		8D5B5FBA254177F500B22207 /* GRDBModelExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBModelExtention.swift; sourceTree = "<group>"; };
+		8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBMigrator.swift; sourceTree = "<group>"; };
 		8D727BA9253950D100F2912D /* Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		8D727BAE253953E200F2912D /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		8D727BB1253953F800F2912D /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			children = (
 				8D0EA84D252CC4E8005E51C3 /* GRDBStore.swift */,
 				8D5B5FBA254177F500B22207 /* GRDBModelExtention.swift */,
+				8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */,
 			);
 			path = GRDB;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D0EA857252CC51F005E51C3 /* FMDBPublisherStore.swift in Sources */,
+				8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */,
 				8D727BC825397E3200F2912D /* FMDBDatabaseWrapeer.swift in Sources */,
 				8D0EA826252BB62A005E51C3 /* AppDelegate.swift in Sources */,
 				8D0EA84E252CC4E8005E51C3 /* GRDBStore.swift in Sources */,
