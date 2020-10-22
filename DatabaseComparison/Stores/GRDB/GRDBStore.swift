@@ -31,10 +31,21 @@ final class GRDBPublisherStore {
     }
 
     func update(publisher: Publisher) {
-
+        try? databaseQueue.write { database in
+            try? publisher.owner.update(database)
+            publisher.books.forEach { book in
+                try? book.update(database)
+            }
+            let publisherInfo = GRDBStoredPublisher(
+                id: publisher.id,
+                name: publisher.name,
+                ownerId: publisher.owner.id
+            )
+            try? publisherInfo.update(database)
+        }
     }
 
     func delete(publisher: Publisher) {
-        
+
     }
 }
