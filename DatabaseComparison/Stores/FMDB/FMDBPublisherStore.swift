@@ -59,7 +59,7 @@ final class FMDBPublisherStore {
         )
     }
 
-    func readByEagerLoading () -> [Publisher] {
+    func readByLazyLoading () -> [Publisher] {
         var temporaryPublishers: [(
             id: Int,
             name: String,
@@ -89,11 +89,15 @@ final class FMDBPublisherStore {
         
         return temporaryPublishers.compactMap { publisher -> Publisher? in
             guard
-                let owner = owners.filter({ $0.id == publisher.ownerId }).first
+                let owner = owners
+                    .filter({ $0.id == publisher.ownerId })
+                    .first
             else {
                 return nil
             }
-            let book = books.filter { $0.id == publisher.id }.map { $0.book }
+            let book = books
+                .filter { $0.id == publisher.id }
+                .map { $0.book }
             return Publisher(
                 id: publisher.id,
                 name: publisher.name,
@@ -103,9 +107,18 @@ final class FMDBPublisherStore {
         }
     }
 
-    func readByJoin() -> [Publisher] {
-        let query = ""
-        return []
+    func readByEagerLoading() -> [Publisher] {
+        var publishers: [Publisher] = []
+        let query = "SELECT * FROM publishers JOIN books ON publsihers.id == books.id"
+        if
+            let result = try? databaseWrapper.executeQuery(
+                query,
+                values: nil
+            ) {
+            while result.next() {
+            }
+        }
+        return publishers
     }
 
     func update (object: Publisher) {
