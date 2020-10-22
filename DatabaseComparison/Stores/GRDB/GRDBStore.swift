@@ -46,6 +46,17 @@ final class GRDBPublisherStore {
     }
 
     func delete(publisher: Publisher) {
-
+        try? databaseQueue.write { database in
+            try? publisher.owner.delete(database)
+            publisher.books.forEach { book in
+                try? book.delete(database)
+            }
+            let publisherInfo = GRDBStoredPublisher(
+                id: publisher.id,
+                name: publisher.name,
+                ownerId: publisher.owner.id
+            )
+            try? publisherInfo.delete(database)
+        }
     }
 }
