@@ -76,8 +76,35 @@ final class RealmPublisherStore {
         try? realm.add(newPublisher)
     }
 
-    func read() {
+    func read() -> [Publisher] {
+        let publishers = realm.objects(PublisherObject.self)
+        return publishers.compactMap { object -> Publisher? in
+            guard let ownerObject = object.owner else {
+                return nil
+            }
 
+            let owner = Owner(
+                id: ownerObject.id,
+                name: ownerObject.name,
+                age: ownerObject.age,
+                profile: ownerObject.profile
+            )
+
+            let books: [Book] = object.books.map { bookObeject -> Book in
+                .init(
+                    id: bookObeject.id,
+                    name: bookObeject.name,
+                    price: bookObeject.price
+                )
+            }
+
+            return .init(
+                id: object.id,
+                name: object.name,
+                books: books,
+                owner: owner
+            )
+        }
     }
 
     func update(publisher: Publisher) {
