@@ -2,24 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:DatabaseComparison/Stores/CoreData/PublisherEntity+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:DatabaseComparison/Stores/CoreData/PublisherEntity+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
-      location = "group:DatabaseComparison/Stores/CoreData/OwnerEntiry+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:DatabaseComparison/Stores/CoreData/OwnerEntiry+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
-      location = "group:DatabaseComparison/Stores/CoreData/BookEntity+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:DatabaseComparison/Stores/CoreData/BookEntity+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
       location = "group:DatabaseComparison.xcodeproj">
    </FileRef>
    <FileRef
