@@ -42,7 +42,38 @@ final class RealmPublisherStore {
     }
 
     func create (publisher: Publisher) {
+        if realm.isInWriteTransaction {
+            createProcess(publisher: publisher)
+        } else {
+            try? realm.write {
+                createProcess(publisher: publisher)
+            }
+        }
+    }
 
+    private func createProcess(publisher: Publisher) {
+        let newPublisher = PublisherObject()
+        newPublisher.id = publisher.id
+        newPublisher.name = publisher.name
+
+        let owner = OwnerObject()
+        owner.age = publisher.owner.age
+        owner.name = publisher.owner.name
+        owner.profile = publisher.owner.profile
+
+        publisher.books.map { book -> BookObject in
+            let object = BookObject()
+            object.id = book.id
+            object.name = book.name
+            object.price = book.price
+            return object
+        }.forEach {
+            newPublisher.books.append($0)
+        }
+
+        newPublisher.owner = owner
+
+        try? realm.add(newPublisher)
     }
 
     func read() {
