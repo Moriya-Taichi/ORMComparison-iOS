@@ -42,7 +42,7 @@ final class RealmPublisherStore {
     }
 
     func create (publisher: Publisher) {
-        
+
     }
 
     func read() {
@@ -50,7 +50,35 @@ final class RealmPublisherStore {
     }
 
     func update(publisher: Publisher) {
+        guard let storedPublisher = realm.objects(PublisherObject.self).filter("", publisher.id).first else {
+            return
+        }
+        if realm.isInWriteTransaction {
+            updateProcess(publisher: publisher, storedPublisher: storedPublisher)
+        } else {
+            try? realm.write {
+                updateProcess(publisher: publisher, storedPublisher: storedPublisher)
+            }
+        }
+    }
 
+    private func updateProcess(publisher: Publisher, storedPublisher: PublisherObject) {
+        let owner = OwnerObject()
+        owner.age = publisher.owner.age
+        owner.name = publisher.owner.name
+        owner.profile = publisher.owner.profile
+        storedPublisher.name = publisher.name
+        storedPublisher.owner = owner
+        storedPublisher.books.removeAll()
+        publisher.books.map { book -> BookObject in
+            let object = BookObject()
+            object.id = book.id
+            object.name = book.name
+            object.price = book.price
+            return object
+        }.forEach {
+            storedPublisher.books.append($0)
+        }
     }
 
     func delete(publisher: Publisher) {
