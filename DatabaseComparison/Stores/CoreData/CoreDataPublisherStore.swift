@@ -73,7 +73,31 @@ final class CorePublisherDataStore {
     }
 
     func update(publisher: Publisher) {
-
+        let context = container.viewContext
+        let request: NSFetchRequest<PublisherEntity> = PublisherEntity.fetchRequest()
+        request.fetchLimit = 1
+        request.predicate = .init(format: "id = %@", publisher.id)
+        guard
+            let objcet = try? context.fetch(request).first
+        else {
+            return
+        }
+        objcet.id = Int64(publisher.owner.id)
+        objcet.name = publisher.name
+        objcet.owner?.id = Int64(publisher.owner.id)
+        objcet.owner?.age = Int32(publisher.owner.age)
+        objcet.owner?.name = publisher.owner.name
+        objcet.owner?.profile = publisher.owner.profile
+        let bookEntities = publisher.books.map { book -> BookEntity in
+            let bookEntity = BookEntity()
+            bookEntity.id = Int64(book.id)
+            bookEntity.name = book.name
+            bookEntity.price = Int64(book.price)
+            return bookEntity
+        }
+        let newBooks: NSSet = .init(array: bookEntities)
+        objcet.books = newBooks
+        saveContext()
     }
 
     func delete(publisher: Publisher) {
@@ -87,6 +111,7 @@ final class CorePublisherDataStore {
             return
         }
         context.delete(objcet)
+        saveContext()
     }
 
     func saveContext() {
