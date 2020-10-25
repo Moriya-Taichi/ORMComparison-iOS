@@ -35,19 +35,12 @@ final class CorePublisherDataStore {
     func read() -> [Publisher] {
         let context = container.viewContext
         let request: NSFetchRequest<PublisherEntity> = PublisherEntity.fetchRequest()
-        let controller = NSFetchedResultsController(
-            fetchRequest: request,
-            managedObjectContext: context,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-        do {
-            try controller.performFetch()
+        guard
+            let publisherEntities = try? context.fetch(request)
+        else {
+            return []
         }
-        catch {
-            print(error)
-        }
-        let publishers: [Publisher]? = controller.fetchedObjects?.compactMap { publisherEntity in
+        let publishers: [Publisher] = publisherEntities.compactMap { publisherEntity in
             guard let ownerEntity = publisherEntity.owner else {
                 return nil
             }
@@ -76,7 +69,7 @@ final class CorePublisherDataStore {
                 owner: owner
             )
         }
-        return publishers ?? []
+        return publishers
     }
 
     func update(publisher: Publisher) {
