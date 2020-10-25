@@ -47,7 +47,40 @@ final class CorePublisherDataStore {
         catch {
             print(error)
         }
-        return controller
+        let publishers: [Publisher]? = controller.fetchedObjects?.compactMap { publisherEntity in
+            guard let ownerEntity = publisherEntity.owner else {
+                return nil
+            }
+            let bookEntities = publisherEntity.books == nil ? [] : publisherEntity.books!
+            let books: [Book] = bookEntities.compactMap { entity in
+                guard let bookEntity = entity as? BookEntity else {
+                    return nil
+                }
+                let book = Book(
+                    id: Int(bookEntity.id),
+                    name: bookEntity.name ?? "",
+                    price: Int(bookEntity.price)
+                )
+                return book
+            }
+            let owner: Owner = Owner(
+                id: Int(ownerEntity.id),
+                name: ownerEntity.name ?? "",
+                age: Int(ownerEntity.age),
+                profile: ownerEntity.profile ?? ""
+            )
+            return Publisher(
+                id: Int(publisherEntity.id),
+                name: publisherEntity.name ?? "",
+                books: books,
+                owner: owner
+            )
+        }
+        return publishers ?? []
+    }
+
+    func update(publisher: Publisher) {
+
     }
 
     func saveContext() {
