@@ -89,7 +89,7 @@ final class CorePublisherDataStore {
         objcet.owner?.name = publisher.owner.name
         objcet.owner?.profile = publisher.owner.profile
         let bookEntities = publisher.books.map { book -> BookEntity in
-            let bookEntity = BookEntity()
+            let bookEntity = BookEntity(context: context)
             bookEntity.id = Int64(book.id)
             bookEntity.name = book.name
             bookEntity.price = Int64(book.price)
