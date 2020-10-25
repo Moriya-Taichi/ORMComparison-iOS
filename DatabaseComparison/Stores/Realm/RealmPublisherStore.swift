@@ -60,6 +60,7 @@ final class RealmPublisherStore {
         owner.age = publisher.owner.age
         owner.name = publisher.owner.name
         owner.profile = publisher.owner.profile
+        newPublisher.owner = owner
 
         publisher.books.map { book -> BookObject in
             let object = BookObject()
@@ -70,8 +71,6 @@ final class RealmPublisherStore {
         }.forEach {
             newPublisher.books.append($0)
         }
-
-        newPublisher.owner = owner
 
         try? realm.add(newPublisher)
     }
@@ -108,7 +107,7 @@ final class RealmPublisherStore {
     }
 
     func update(publisher: Publisher) {
-        guard let storedPublisher = realm.objects(PublisherObject.self).filter("", publisher.id).first else {
+        guard let storedPublisher = realm.object(ofType: PublisherObject.self, forPrimaryKey: publisher.id) else {
             return
         }
         if realm.isInWriteTransaction {
@@ -127,20 +126,20 @@ final class RealmPublisherStore {
         owner.profile = publisher.owner.profile
         storedPublisher.name = publisher.name
         storedPublisher.owner = owner
-        storedPublisher.books.removeAll()
-        publisher.books.map { book -> BookObject in
+        publisher.books.forEach { book in
             let object = BookObject()
             object.id = book.id
             object.name = book.name
             object.price = book.price
-            return object
-        }.forEach {
-            storedPublisher.books.append($0)
+            try? realm.add(object, update: .modified)
         }
     }
 
     func delete(publisher: Publisher) {
-        guard let storedPublisher = realm.objects(PublisherObject.self).filter("", publisher.id).first else {
+        guard let storedPublisher = realm.object(
+                ofType: PublisherObject.self,
+                forPrimaryKey: publisher.id)
+        else {
             return
         }
         if realm.isInWriteTransaction {
