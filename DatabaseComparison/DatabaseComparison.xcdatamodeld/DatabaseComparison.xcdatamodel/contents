@@ -7,7 +7,7 @@
         <attribute name="publisherId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="publisher" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PublisherEntity" inverseName="books" inverseEntity="PublisherEntity"/>
     </entity>
-    <entity name="OwnerEntiry" representedClassName="OwnerEntiry" syncable="YES" codeGenerationType="class">
+    <entity name="OwnerEntity" representedClassName="OwnerEntity" syncable="YES" codeGenerationType="class">
         <attribute name="age" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -18,11 +18,11 @@
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BookEntity" inverseName="publisher" inverseEntity="BookEntity"/>
-        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="OwnerEntiry" inverseName="publishers" inverseEntity="OwnerEntiry"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="OwnerEntity" inverseName="publishers" inverseEntity="OwnerEntity"/>
     </entity>
     <elements>
         <element name="PublisherEntity" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="BookEntity" positionX="381.6953125" positionY="24.4375" width="128" height="118"/>
-        <element name="OwnerEntiry" positionX="422.45703125" positionY="-113.203125" width="128" height="118"/>
+        <element name="BookEntity" positionX="527.55859375" positionY="27.18359375" width="128" height="118"/>
+        <element name="OwnerEntity" positionX="519.87890625" positionY="-194.30859375" width="128" height="118"/>
     </elements>
 </model>
