@@ -21,12 +21,6 @@
 		8D0EA857252CC51F005E51C3 /* FMDBPublisherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA856252CC51E005E51C3 /* FMDBPublisherStore.swift */; };
 		8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */; };
 		8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */; };
-		8D5B5FCC2543297400B22207 /* OwnerEntiry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FC72543297300B22207 /* OwnerEntiry+CoreDataProperties.swift */; };
-		8D5B5FCD2543297400B22207 /* OwnerEntiry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FCB2543297400B22207 /* OwnerEntiry+CoreDataClass.swift */; };
-		8D5B5FCE2543297400B22207 /* BookEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FC92543297300B22207 /* BookEntity+CoreDataClass.swift */; };
-		8D5B5FCF2543297400B22207 /* PublisherEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FC82543297300B22207 /* PublisherEntity+CoreDataClass.swift */; };
-		8D5B5FD02543297400B22207 /* BookEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FCA2543297300B22207 /* BookEntity+CoreDataProperties.swift */; };
-		8D5B5FD12543297400B22207 /* PublisherEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FC62543297300B22207 /* PublisherEntity+CoreDataProperties.swift */; };
 		8D727BAA253950D100F2912D /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BA9253950D100F2912D /* Publisher.swift */; };
 		8D727BAF253953E200F2912D /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BAE253953E200F2912D /* Owner.swift */; };
 		8D727BB2253953F800F2912D /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BB1253953F800F2912D /* Book.swift */; };
@@ -52,12 +46,6 @@
 		8D0EA856252CC51E005E51C3 /* FMDBPublisherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBPublisherStore.swift; sourceTree = "<group>"; };
 		8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBModelExtension.swift; sourceTree = "<group>"; };
 		8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBMigrator.swift; sourceTree = "<group>"; };
-		8D5B5FC62543297300B22207 /* PublisherEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PublisherEntity+CoreDataProperties.swift"; path = "/Users/mori/projects/Practice_Swift/DatabaseComparison/DatabaseComparison/Stores/CoreData/PublisherEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		8D5B5FC72543297300B22207 /* OwnerEntiry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "OwnerEntiry+CoreDataProperties.swift"; path = "/Users/mori/projects/Practice_Swift/DatabaseComparison/DatabaseComparison/Stores/CoreData/OwnerEntiry+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		8D5B5FC82543297300B22207 /* PublisherEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PublisherEntity+CoreDataClass.swift"; path = "/Users/mori/projects/Practice_Swift/DatabaseComparison/DatabaseComparison/Stores/CoreData/PublisherEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		8D5B5FC92543297300B22207 /* BookEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BookEntity+CoreDataClass.swift"; path = "/Users/mori/projects/Practice_Swift/DatabaseComparison/DatabaseComparison/Stores/CoreData/BookEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		8D5B5FCA2543297300B22207 /* BookEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BookEntity+CoreDataProperties.swift"; path = "/Users/mori/projects/Practice_Swift/DatabaseComparison/DatabaseComparison/Stores/CoreData/BookEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		8D5B5FCB2543297400B22207 /* OwnerEntiry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "OwnerEntiry+CoreDataClass.swift"; path = "/Users/mori/projects/Practice_Swift/DatabaseComparison/DatabaseComparison/Stores/CoreData/OwnerEntiry+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		8D727BA9253950D100F2912D /* Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		8D727BAE253953E200F2912D /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		8D727BB1253953F800F2912D /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
@@ -168,12 +156,6 @@
 		8D727BBA253956ED00F2912D /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B5FC82543297300B22207 /* PublisherEntity+CoreDataClass.swift */,
-				8D5B5FC62543297300B22207 /* PublisherEntity+CoreDataProperties.swift */,
-				8D5B5FCB2543297400B22207 /* OwnerEntiry+CoreDataClass.swift */,
-				8D5B5FC72543297300B22207 /* OwnerEntiry+CoreDataProperties.swift */,
-				8D5B5FC92543297300B22207 /* BookEntity+CoreDataClass.swift */,
-				8D5B5FCA2543297300B22207 /* BookEntity+CoreDataProperties.swift */,
 				8D0EA850252CC4F1005E51C3 /* CoreDataStore.swift */,
 			);
 			path = CoreData;
@@ -321,19 +303,13 @@
 				8D0EA857252CC51F005E51C3 /* FMDBPublisherStore.swift in Sources */,
 				8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */,
 				8D727BC825397E3200F2912D /* FMDBDatabaseWrapeer.swift in Sources */,
-				8D5B5FCC2543297400B22207 /* OwnerEntiry+CoreDataProperties.swift in Sources */,
-				8D5B5FCD2543297400B22207 /* OwnerEntiry+CoreDataClass.swift in Sources */,
 				8D0EA826252BB62A005E51C3 /* AppDelegate.swift in Sources */,
 				8D0EA84E252CC4E8005E51C3 /* GRDBStore.swift in Sources */,
-				8D5B5FCE2543297400B22207 /* BookEntity+CoreDataClass.swift in Sources */,
-				8D5B5FD02543297400B22207 /* BookEntity+CoreDataProperties.swift in Sources */,
 				8D0EA828252BB62A005E51C3 /* SceneDelegate.swift in Sources */,
 				8D727BB2253953F800F2912D /* Book.swift in Sources */,
 				8D0EA830252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld in Sources */,
 				8D0EA851252CC4F1005E51C3 /* CoreDataStore.swift in Sources */,
-				8D5B5FD12543297400B22207 /* PublisherEntity+CoreDataProperties.swift in Sources */,
 				8D727BC525397E0E00F2912D /* FMDBBookStore.swift in Sources */,
-				8D5B5FCF2543297400B22207 /* PublisherEntity+CoreDataClass.swift in Sources */,
 				8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */,
 				8D727BC225397B4700F2912D /* FMDBOwnerStore.swift in Sources */,
 				8D0EA84B252CC4E0005E51C3 /* RealmPublisherStore.swift in Sources */,
