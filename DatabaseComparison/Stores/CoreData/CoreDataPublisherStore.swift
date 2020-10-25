@@ -83,6 +83,19 @@ final class CorePublisherDataStore {
 
     }
 
+    func delete(publisher: Publisher) {
+        let context = container.viewContext
+        let request: NSFetchRequest<PublisherEntity> = PublisherEntity.fetchRequest()
+        request.fetchLimit = 1
+        request.predicate = .init(format: "id = %@", publisher.id)
+        guard
+            let objcet = try? context.fetch(request).first
+        else {
+            return
+        }
+        context.delete(objcet)
+    }
+
     func saveContext() {
         let context = container.viewContext
         if context.hasChanges {
