@@ -9,39 +9,32 @@ final class CorePublisherDataStore {
         self.container = container
     }
 
-    func create<T: NSManagedObject>() -> T {
+    func create(publisher: Publisher) {
         let context = container.viewContext
-        return T(context: context)
-    }
+        let publisherEntity = PublisherEntity(context: context)
+        publisherEntity.id = Int64(publisher.owner.id)
+        publisherEntity.name = publisher.name
 
-    func insert<T: NSManagedObject>(object: T) {
-        let context = container.viewContext
-        context.insert(object)
+        let ownerEntity = OwnerEntity(context: context)
+        ownerEntity.id = Int64(publisher.owner.id)
+        ownerEntity.name = publisher.owner.name
+        ownerEntity.profile = publisher.owner.profile
+        ownerEntity.age = Int32(publisher.owner.age)
+
+        publisher.books.forEach { book in
+            let bookEntity = BookEntity(context: context)
+            bookEntity.id = Int64(book.id)
+            bookEntity.name = book.name
+            bookEntity.price = Int64(book.price)
+            publisherEntity.addToBooks(bookEntity)
+        }
+        context.insert(publisherEntity)
         saveContext()
     }
 
-    func delete<T: NSManagedObject>(object: T) {
+    func read() -> [Publisher] {
         let context = container.viewContext
-        context.delete(object)
-        saveContext()
-    }
-
-    func deleteAll<T: NSManagedObject>(objectType: T.Type) {
-        let context = container.viewContext
-        let fetchRequest = objectType.fetchRequest()
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        do {
-            try context.execute(deleteRequest)
-            try context.save()
-        }
-        catch {
-            print(error)
-        }
-    }
-
-    func read<T: NSManagedObject>() -> NSFetchedResultsController<T> {
-        let context = container.viewContext
-        let request: NSFetchRequest<T> = .init(entityName: String(describing: T.self))
+        let request: NSFetchRequest<PublisherEntity> = PublisherEntity.fetchRequest()
         let controller = NSFetchedResultsController(
             fetchRequest: request,
             managedObjectContext: context,
