@@ -74,29 +74,39 @@ final class CorePublisherDataStore {
 
     func update(publisher: Publisher) {
         let context = container.viewContext
-        let request: NSFetchRequest<PublisherEntity> = PublisherEntity.fetchRequest()
-        request.fetchLimit = 1
-        request.predicate = .init(format: "id = %@", publisher.id)
+        let publisherRequest: NSFetchRequest<PublisherEntity> = PublisherEntity.fetchRequest()
+        publisherRequest.fetchLimit = 1
+        publisherRequest.predicate = .init(format: "id = %@", publisher.id)
+
+        let booksRequest: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
+        booksRequest.predicate = .init(format: "id IN %@", argumentArray: publisher.books.map { $0.id })
+
         guard
-            let objcet = try? context.fetch(request).first
+            let publisherEntity = try? context.fetch(publisherRequest).first,
+            let bookEntities = try? context.fetch(booksRequest)
         else {
             return
         }
-        objcet.id = Int64(publisher.owner.id)
-        objcet.name = publisher.name
-        objcet.owner?.id = Int64(publisher.owner.id)
-        objcet.owner?.age = Int32(publisher.owner.age)
-        objcet.owner?.name = publisher.owner.name
-        objcet.owner?.profile = publisher.owner.profile
-        let bookEntities = publisher.books.map { book -> BookEntity in
-            let bookEntity = BookEntity(context: context)
-            bookEntity.id = Int64(book.id)
-            bookEntity.name = book.name
-            bookEntity.price = Int64(book.price)
-            return bookEntity
+        publisherEntity.id = Int64(publisher.owner.id)
+        publisherEntity.name = publisher.name
+        publisherEntity.owner?.id = Int64(publisher.owner.id)
+        publisherEntity.owner?.age = Int32(publisher.owner.age)
+        publisherEntity.owner?.name = publisher.owner.name
+        publisherEntity.owner?.profile = publisher.owner.profile
+
+        if bookEntities.count == publisher.books.count {
+            zip(bookEntities.sorted(by: { lhs, rhs -> Bool in
+                return lhs.id > rhs.id
+            }), publisher.books.sorted(by: { lhs, rhs -> Bool in
+                return lhs.id > rhs.id
+            })).forEach { bookEntity, book in
+                bookEntity.name = book.name
+                bookEntity.price = Int64(book.price)
+            }
+        } else {
+            
         }
-        let newBooks: NSSet = .init(array: bookEntities)
-        objcet.books = newBooks
+
         saveContext()
     }
 
