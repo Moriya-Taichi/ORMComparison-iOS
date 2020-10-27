@@ -19,14 +19,14 @@ iOSの様々なORMをCRUD操作, マイグレーションを実装して比較
 ### Core Data
 Apple公式が提供するSQLiteのORM  
 Editor上でモデルを作成し、Containerのcontextを使用してCRUD操作を行う  
-日本語の情報においては`insertedObeject`で保存するオブジェクトの生成と挿入を同時に行なっているのが多いが、  
-2020現在では下記のように`Object.init(context:)`で生成し、`context.insert(object:)`で挿入するのがAppleのSwiftUIの作例で示されている  
-またRead以外の各種操作の後には`context.save()`を呼ぶ必要がある  
+Read以外の各種操作の後には`context.save()`を呼ぶ必要がある  
 マイグレーションにはLightとHeavyの２種類があり、前者は自動的にマイグレーションが行われる。  
 それに対して後者は他のORMフレームワークと同じでどのプロパティがどれに対応するかなどをコードで示す必要がある。
 
 ---
 #### Create
+作成はオブジェクトを`init(context:)`で作成し、各プロパティに値をセット
+その後`context.insert`を使うことで
 
 ```
 //オブジェクトの生成
@@ -38,14 +38,18 @@ newObject.hoge = "HogeHoge"
 newObject.id = Int64(12)
 
 //挿入
-context.insert(newObject)
+try? context.insert(newObject)
 
 //保存
-context.save()
+try? context.save()
 ```
 
 #### Read
-単純にオブジェクトをfetchするのとNSFetchedResultsControllerを返すのの２種類がある
+単純にオブジェクトをfetchするのとNSFetchedResultsControllerを返すのの２種類がある。NSFetchedResultsControllerはfetchされたオブジェクトに対してIndexPathでアクセスできることやdelegateで変更通知などを行える。  
+またNSFetchedResultsControllerはinit時にキャッシュ名を設定するとキャッシュを作ってくれる。  
+これはキャッシュの更新日時とCoreDataのファイルの更新日時を監視しており、変更がない場合はキャッシュを使い変更がある場合は再fetchという挙動になっている。
+どちらにしてもまずは読み込みたい型のリクエストを`HogeType.fetchRequest()`で作成する。  
+その後、`request.predicate`に対して検索条件を設定しfetchを実行する。
 - 単純にfetchするパターン
 ```
 let id = 12
