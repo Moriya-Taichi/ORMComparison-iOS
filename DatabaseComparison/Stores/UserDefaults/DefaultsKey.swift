@@ -5,4 +5,6 @@
 //  Created by Mori on 2020/10/26.
 //
 
-import Foundation
+enum DefaultsKey: String {
+    case publisher = "publisher"
+}
