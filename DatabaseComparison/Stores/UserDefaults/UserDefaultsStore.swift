@@ -2,22 +2,21 @@ import Foundation
 
 final class UserDefaultsStore {
 
-    let defaults = UserDefaults.standard
+    private let defaults = UserDefaults.standard
 
-
-    func create() {
-
-    }
-
-    func read () {
+    func create(publisher: Publisher) {
 
     }
 
-    func update () {
+    func read () -> [Publisher] {
+        return []
+    }
+
+    func update (publisher: Publisher) {
 
     }
 
-    func delete () {
+    func delete (publisher: Publisher) {
 
     }
 }
