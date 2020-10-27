@@ -19,14 +19,17 @@ iOSの様々なORMをCRUD操作, マイグレーションを実装して比較
 ### Core Data
 Apple公式が提供するSQLiteのORM  
 Editor上でモデルを作成し、Containerのcontextを使用してCRUD操作を行う  
-Read以外の各種操作の後には`context.save()`を呼ぶ必要がある  
+Read以外の各種操作の後には`context.save()`を呼ぶ必要があり、これによってCoreDataのファイルが更新される。 
 マイグレーションにはLightとHeavyの２種類があり、前者は自動的にマイグレーションが行われる。  
 それに対して後者は他のORMフレームワークと同じでどのプロパティがどれに対応するかなどをコードで示す必要がある。
 
 ---
 #### Create
 作成はオブジェクトを`init(context:)`で作成し、各プロパティに値をセット
-その後`context.insert`を使うことで
+その後`context.insert`を使うことでオブジェクトを挿入できる。  
+1 対 多の場合は`addToHoge(object)`にオブジェクトを入れていくことで保存ができる。  
+日本語の情報においては`insertedObeject`で保存するオブジェクトの生成と挿入を同時に行なっているのが多いが、  
+2020年現在では下記のように`Object.init(context:)`で生成し、`context.insert(object:)`で挿入するのがAppleのSwiftUIの作例で示されている  
 
 ```
 //オブジェクトの生成
