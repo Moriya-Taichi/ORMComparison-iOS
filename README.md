@@ -11,3 +11,52 @@ iOSの様々なORMをCRUD操作, マイグレーションを実装して比較
 - FMDB
 - Realm
 
+---
+### installed 
+`pod install` and open workspace
+
+---
+### Core Data
+Apple公式が提供するSQLiteのORM  
+Editor上でモデルを作成し、Containerのcontextを使用してCRUD操作を行う  
+日本語の情報においては`insertedObeject`で保存するオブジェクトの生成と挿入を同時に行なっているのが多いが、  
+2020現在では下記のように`Object.init(context:)`で生成し、`context.insert(object:)`で挿入するのがAppleのSwiftUIの作例で示されている  
+またRead以外の各種操作の後には`context.save()`を呼ぶ必要がある  
+マイグレーションにはLightとHeavyの２種類があり、前者は自動的にマイグレーションが行われる。  
+それに対して後者は他のORMフレームワークと同じでどのプロパティがどれに対応するかなどをコードで示す必要がある。
+
+---
+#### Create
+
+```
+//オブジェクトの生成
+let context = container.viewContext
+let newObject = Object(contex)
+
+//オブジェクトのプロパティにセット
+newObject.hoge = "HogeHoge"
+newObject.id = Int64(12)
+
+//挿入
+context.insert(newObject)
+//保存
+context.save()
+```
+
+#### Read
+
+```
+
+```
+
+#### Update
+
+```
+
+```
+
+#### Delete
+
+```
+
+```
