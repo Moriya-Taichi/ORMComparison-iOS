@@ -28,6 +28,7 @@
 		8D727BC225397B4700F2912D /* FMDBOwnerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BC125397B4700F2912D /* FMDBOwnerStore.swift */; };
 		8D727BC525397E0E00F2912D /* FMDBBookStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BC425397E0E00F2912D /* FMDBBookStore.swift */; };
 		8D727BC825397E3200F2912D /* FMDBDatabaseWrapeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BC725397E3200F2912D /* FMDBDatabaseWrapeer.swift */; };
+		8DE32AE325470E74007A3ADB /* DefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE32AE225470E74007A3ADB /* DefaultsKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		8D727BC125397B4700F2912D /* FMDBOwnerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBOwnerStore.swift; sourceTree = "<group>"; };
 		8D727BC425397E0E00F2912D /* FMDBBookStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBBookStore.swift; sourceTree = "<group>"; };
 		8D727BC725397E3200F2912D /* FMDBDatabaseWrapeer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDatabaseWrapeer.swift; sourceTree = "<group>"; };
+		8DE32AE225470E74007A3ADB /* DefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKey.swift; sourceTree = "<group>"; };
 		F4693C13DFC13D22D82B5012 /* Pods_DatabaseComparison.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DatabaseComparison.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB9848FEEB79477F8E0FE867 /* Pods-DatabaseComparison.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatabaseComparison.release.xcconfig"; path = "Target Support Files/Pods-DatabaseComparison/Pods-DatabaseComparison.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				8D0EA853252CC50E005E51C3 /* UserDefaultsStore.swift */,
+				8DE32AE225470E74007A3ADB /* DefaultsKey.swift */,
 			);
 			path = UserDefaults;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				8D727BB2253953F800F2912D /* Book.swift in Sources */,
 				8D0EA830252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld in Sources */,
 				8D0EA851252CC4F1005E51C3 /* CoreDataPublisherStore.swift in Sources */,
+				8DE32AE325470E74007A3ADB /* DefaultsKey.swift in Sources */,
 				8D727BC525397E0E00F2912D /* FMDBBookStore.swift in Sources */,
 				8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */,
 				8D727BC225397B4700F2912D /* FMDBOwnerStore.swift in Sources */,
