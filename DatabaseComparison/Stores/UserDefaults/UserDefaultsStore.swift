@@ -25,7 +25,20 @@ final class UserDefaultsStore {
     }
 
     func update (publisher: Publisher) {
-
+        guard
+            let data = defaults.data(.publisher),
+            var publishers = try? JSONDecoder().decode(
+                [Publisher].self,
+                from: data
+            ),
+            let index = publishers.firstIndex(where: { $0.id == publisher.id })
+        else {
+            return
+        }
+        publishers.remove(at: index)
+        publishers.append(publisher)
+        let publishersData = try? JSONEncoder().encode(publishers)
+        defaults.setValue(publishersData, key: .publisher)
     }
 
     func delete (publisher: Publisher) {
