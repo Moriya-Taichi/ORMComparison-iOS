@@ -64,6 +64,8 @@ func create(id: Int, name: String) {
 またNSFetchedResultsControllerはinit時にキャッシュ名を設定するとキャッシュを作ってくれる。  
 これはキャッシュの更新日時とCoreDataのファイルの更新日時を監視しており、変更がない場合はキャッシュを使い変更がある場合は再fetchという挙動になっている。
 どちらにしてもまずは読み込みたい型のリクエストを`HogeType.fetchRequest()`で作成する。  
+`NSFetchRequest(entityName: String)`と`NSFetchRequest<HogeType>(entityName: String)`もあるが、どちらもTypoの可能性があるのと、前者はダウンキャストする手間があるのでおすすめしない。 
+また`@FetchRequest`を`FetchResult<Entity>`につけることで簡単にfetchしたオブジェクトを使用できる。AppleのSwiftUI + CoreDataのサンプルでも使われている。   
 その後、`request.predicate`に対して検索条件を設定しfetchを実行する。
 - 単純にfetchするパターン
 ```
