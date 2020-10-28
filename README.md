@@ -22,6 +22,14 @@ Editor上でモデルを作成し、Containerのcontextを使用してCRUD操作
 Read以外の各種操作の後には`context.save()`を呼ぶ必要があり、これによってCoreDataのファイルが更新される。 
 マイグレーションにはLightとHeavyの２種類があり、前者は自動的にマイグレーションが行われる。  
 それに対して後者は他のORMフレームワークと同じでどのプロパティがどれに対応するかなどをコードで示す必要がある。
+簡単な例として、以下のような一意なidを持つ`Object`を用いて説明する
+
+```
+class Object: NSManagedObject {
+    @NSManaged public var id: Int64
+    @NSManaged public var name: String?
+} 
+```
 
 ---
 #### Create
