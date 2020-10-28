@@ -171,6 +171,92 @@ CoreDataと同じで元がObj-cなのでSwift的にモデルをStructで定義�
 簡単な例として、以下のような一意なidを持つ`Entity`を用いて説明する
 ```
 class Entity: Object {
+    @objc dynamic var id: Int = -1
+    @objc dynamic var name: String = ""
 
+    static override func primaryKey() -> String? {
+        return "id"
+    }
 }
 ```
+---
+### Create
+```
+func create(id: Int, name: String) {
+    //トランザクション
+    try? realm.write {
+        //オブジェクトの作成
+        let newEntity = Entity()
+        newEntity.id = id
+        newEntity.name = name
+        
+        //追加
+        try? realm.add(newEntity)
+    }
+} 
+```
+---
+### Read
+```
+func read() -> [Entity] {
+    return realm.objects(Entity.self)
+}
+```
+---
+### Update
+- CoreDataと同じやり方
+```
+func update(id: Int, name: String) {
+    //PrimaryKeyを使ってオブジェクトを取得
+    guard let entity = realm.object(
+        ofType: Entity.self, 
+        forPrimaryKey: id
+    ) 
+    else {
+        return
+    }
+
+    //トランザクション
+    try? realm.write {
+        //更新
+        entity.name = name
+    }
+}
+```
+- Createとほぼ同じやり方
+```
+func update(id: Int, name: String) {
+    //トランザクション
+    try? realm.write {
+        //オブジェクトの作成
+        let newEntity = Entity()
+        newEntity.id = id
+        newEntity.name = name
+
+        //updateにmodifiedを設定すると、
+        //同じkeyのオブジェクトがあったらupdateしてくれる
+        try? realm.add(newEntity, update: .modified)
+    }
+}
+```
+---
+### Delete
+```
+func delete(id: Int) {
+    //PrimaryKeyを使ってオブジェクトを取得
+    guard let entity = realm.object(
+        ofType: Entity.self, 
+        forPrimaryKey: id
+    ) 
+    else {
+        return
+    }
+
+    //トランザクション
+    try? realm.write {
+        //削除
+        try? realm.delete(entity)
+    }
+}
+```
+---
