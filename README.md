@@ -37,22 +37,26 @@ class Object: NSManagedObject {
 その後`context.insert`を使うことでオブジェクトを挿入できる。  
 1 対 多の場合は`addToHoge(object)`にオブジェクトを入れていくことで保存ができる。  
 日本語の情報においては`insertedObeject`で保存するオブジェクトの生成と挿入を同時に行なっているのが多いが、  
-2020年現在では下記のように`Object.init(context:)`で生成し、`context.insert(object:)`で挿入するのがAppleのSwiftUIの作例で示されている  
+2020年現在では下記のように`Object.init(context:)`で生成し、`context.insert(object:)`で挿入するのがAppleのSwiftUIの作例で示されている    
+作成したオブジェクトには一意なObjectIDが付与されており、これPrimaryKeyとしてオブジェクトを管理している。このIDの役割を任意のプロパティに変更することはできないので、作成前には同じオブジェクトがあるかどうかを調べる必要がある。
 
 ```
-//オブジェクトの生成
-let context = container.viewContext
-let newObject = Object(contex)
+func create(id: Int, name: String) {
+    //オブジェクトの生成
+    let context = container.viewContext
+    let newObject = Object(contex)
 
-//オブジェクトのプロパティにセット
-newObject.hoge = "HogeHoge"
-newObject.id = Int64(12)
+    //オブジェクトのプロパティにセット
+    newObject.name = name
+    newObject.id = Int64(id)
 
-//挿入
-try? context.insert(newObject)
+    //挿入
+    try? context.insert(newObject)
 
-//保存
-try? context.save()
+    //保存
+    try? context.save()
+}
+
 ```
 
 #### Read
