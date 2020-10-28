@@ -11,6 +11,8 @@ iOSの様々なORMをCRUD操作, マイグレーションを実装して比較
 - FMDB
 - Realm
 
+Qiitaの解説とコードでは実際に高度に使われるのを考えて1 対 1, 1 対 多, Migrationの説明を重点的におこなっているので、このREADMEにおいてはシンプルなオブジェクトを用いた簡単なCRUDの説明を行う。
+
 ---
 ### installed 
 `pod install` and open workspace
@@ -155,6 +157,20 @@ func delete(id: Int) {
     //削除したのを保存
     try? context.save()
 }
+```
 
+### Realm
+CoreDataなどのSQLite系のORMとは違い  
+独自のDBとORMを提供しているOSS  
+CoreDataと同じで元がObj-cなのでSwift的にモデルをStructで定義して使うことができない  
+使い方としては保存したいオブジェクトをclassで宣言し`Object`を継承
+`Realm`のインスタンスを通して各操作を行う  
+1 対 多の関係ではプロパティに`List<HogeObject>`を使い  
+1 対 1の場合はプロパティにそのまま`HogeObject`を使う  
+どちらの場合でも参照しているだけなので更新や削除の際に親のオブジェクトからやる必要はない。  
+簡単な例として、以下のような一意なidを持つ`Entity`を用いて説明する
+```
+class Entity: Object {
 
+}
 ```
