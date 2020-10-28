@@ -58,7 +58,7 @@ func create(id: Int, name: String) {
 }
 
 ```
-
+---
 #### Read
 単純にオブジェクトをfetchするのとNSFetchedResultsControllerを返すのの２種類がある。NSFetchedResultsControllerはfetchされたオブジェクトに対してIndexPathでアクセスできることやdelegateで変更通知などを行える。  
 またNSFetchedResultsControllerはinit時にキャッシュ名を設定するとキャッシュを作ってくれる。  
@@ -102,9 +102,11 @@ controller.fetchedObjects
 //またIndexPathでもアクセスできる
 controller.object(at: IndexPath(row: 0, section: 0))
 ```
-
+---
 #### Update  
-更新はオブジェクトのプロパティを変更で行う
+更新はオブジェクトのプロパティを変更で行う。
+なので一旦、更新対象のオブジェクトをfetchする必要がある。
+
 ```
 func update(id: Int, name: String) {
 
@@ -126,11 +128,33 @@ func update(id: Int, name: String) {
     //更新を保存
     try? context.save()
 }
-
 ```
-
+---
 #### Delete
+`context.delete(object)`で消去できる。  
+updateと同じで削除対象のオブジェクトを一旦fetchする必要がある
 
 ```
+func delete(id: Int) {
+    
+    let context = container.viewContext()
+
+    //idが同じobjectを1個fetchするようにrequestを作成
+    let request: NSFetchRequest<Object> = Object.fetchRequest()
+    request.predicate = .init("id = @%", id)
+    request.fetchLimit = 1
+
+    //fetchする、objectがなければ何もせずにreturn
+    guard let result = try? context.fetch(request).first else {
+        return
+    }
+
+    //オブジェクトの削除
+    context.delete(result)
+
+    //削除したのを保存
+    try? context.save()
+}
+
 
 ```
