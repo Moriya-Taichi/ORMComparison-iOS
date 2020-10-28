@@ -103,9 +103,29 @@ controller.fetchedObjects
 controller.object(at: IndexPath(row: 0, section: 0))
 ```
 
-#### Update
-
+#### Update  
+更新はオブジェクトのプロパティを変更で行う
 ```
+func update(id: Int, name: String) {
+
+    let context = container.viewContext()
+
+    //idが同じobjectを1個fetchするようにrequestを作成
+    let request: NSFetchRequest<Object> = Object.fetchRequest()
+    request.predicate = .init("id = @%", id)
+    request.fetchLimit = 1
+
+    //fetchする、objectがなければ何もせずにreturn
+    guard let result = try? context.fetch(request).first else {
+        return
+    }
+
+    //nameを更新
+    result.name = name
+
+    //更新を保存
+    try? context.save()
+}
 
 ```
 
