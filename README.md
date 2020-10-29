@@ -263,6 +263,51 @@ func delete(id: Int) {
 ---
 
 ## GRDB
+2015年にリリースされたSQLiteのORM  
+モデルに各種protocolやclassを継承させていくことでDBで扱えるようになる。  
+素のSQLもサポートされており、更新頻度高い(2020/10において) 
+のでSQLを書きたい場合でもFMDBよりこちらの方がおすすめできる。   
+保存する対象は`Record`のサブクラスにするか  
+Structで定義し各種protocolに準拠させる。  
+公式としては`Record`でサブクラスを作るのはoldで、  
+structを`FetchableRecord`や`PersistableRecord`に準拠させるのがSwifty  
+と述べている。今回はSwiftyな方を解説する。  
+まず各種Protocolについて解説する。  
+- `Read`できるようにする系
+   - `FetchableRecord`  
+これに準拠するとDBからfetchするメソッドが付与される。  
+またプロパティ名を元にDBのカラムからinitするのが付与される。  
+initではこの先紹介するモデルのように`row["hoge"]`といった風に  
+カラム名を指定して初期化する。  
+`String, ColumnExpression`に準拠したenumも使用可能で  
+`row[Enum.hoge]`といった記述もできる。  
+`Decodable`に準拠している場合はinitを書く必要はない  
+
+  - `TableRecord`   
+これに準拠すると、SQLを生成してくれるようになる  
+また`PrimaryKey`での検索が可能になる
+<br>
+<br>
+
+
+- `Update`などの操作を可能にする系
+  - `MutablePersistableRecord(TableRecord, EncodableRecord)`
+  - `PersistableRecord(MutablePersistableRecord)`  
+<br>
+`EncodableRecord`というのも存在するが直接使うことはない。   
+どちらも準拠すると`Update`,`Create`,`Delete`が可能になる。  
+使い毛については  
+`struct`で`Auto Increment主キーがある`場合は`MutablePersistableRecord`に準拠し`didInsert()`の中でrowIDをモデルのidにセットする実装をする。   
+`モデルがclass` or `structでAuto Incrementな主キーがない`場合は`PersistableRecord`に準拠、`didInsert()`は実装しない。  
+どちらも`TableRecord`を含んでいるのでデータベースに保存するモデルは  
+上二つのどちらか + `FetchableRecord`に準拠すれば全てに操作ができる。
+
+Databaseへのアクセスは`Queue`と`Pool`があるが、  
+訳のわからない場合は`Queue`を公式はおすすめしている。  
+叩くメソッドは同じなのでデータベースに対してマルチスレッドで  
+大量にアクセスしない限りは`Queue`で十分である。
+
+
 - モデルの定義
 ```
 struct Object: FetchableRecord, Decodable, PersistableRecord {
