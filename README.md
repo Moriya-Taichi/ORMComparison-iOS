@@ -11,14 +11,15 @@ iOSの様々なORMをCRUD操作, マイグレーションを実装して比較
 - FMDB
 - Realm
 
-Qiitaの解説とコードでは実際に高度に使われるのを考えて1 対 1, 1 対 多, Migrationの説明を重点的におこなっているので、このREADMEにおいてはシンプルなオブジェクトを用いた簡単なCRUDの説明を行う。
+Qiitaの解説とコードでは実際に高度に使われるのを考えて1 対 1, 1 対 多, Migrationの説明を重点的におこなっているので、このREADMEにおいてはシンプルなオブジェクトを用いた簡単なCRUDの説明を行う。  
+## 今回は例なのでREADMEにおいても、コードにおいても`try?`でエラーを潰していますがプロダクトにおいてはアプリの性質を考えて適切に処理しましょう！
 
 ---
 ### installed 
 `pod install` and open workspace
 
 ---
-### Core Data
+## Core Data
 Apple公式が提供するSQLiteのORM  
 Editor上でモデルを作成し、Containerのcontextを使用してCRUD操作を行う  
 Read以外の各種操作の後には`context.save()`を呼ぶ必要があり、これによってCoreDataのファイルが更新される。 
@@ -34,7 +35,7 @@ class Object: NSManagedObject {
 ```
 
 ---
-#### Create
+### Create
 作成はオブジェクトを`init(context:)`で作成し、各プロパティに値をセット
 その後`context.insert`を使うことでオブジェクトを挿入できる。  
 1 対 多の場合は`addToHoge(object)`にオブジェクトを入れていくことで保存ができる。  
@@ -61,7 +62,7 @@ func create(id: Int, name: String) {
 
 ```
 ---
-#### Read
+### Read
 単純にオブジェクトをfetchするのとNSFetchedResultsControllerを返すのの２種類がある。NSFetchedResultsControllerはfetchされたオブジェクトに対してIndexPathでアクセスできることやdelegateで変更通知などを行える。  
 またNSFetchedResultsControllerはinit時にキャッシュ名を設定するとキャッシュを作ってくれる。  
 これはキャッシュの更新日時とCoreDataのファイルの更新日時を監視しており、変更がない場合はキャッシュを使い変更がある場合は再fetchという挙動になっている。
@@ -105,7 +106,7 @@ controller.fetchedObjects
 controller.object(at: IndexPath(row: 0, section: 0))
 ```
 ---
-#### Update  
+### Update  
 更新はオブジェクトのプロパティを変更で行う。
 なので一旦、更新対象のオブジェクトをfetchする必要がある。
 
@@ -132,7 +133,7 @@ func update(id: Int, name: String) {
 }
 ```
 ---
-#### Delete
+### Delete
 `context.delete(object)`で消去できる。  
 updateと同じで削除対象のオブジェクトを一旦fetchする必要がある
 
@@ -159,7 +160,7 @@ func delete(id: Int) {
 }
 ```
 
-### Realm
+## Realm
 CoreDataなどのSQLite系のORMとは違い  
 独自のDBとORMを提供しているOSS  
 CoreDataと同じで元がObj-cなのでSwift的にモデルをStructで定義して使うことができない  
@@ -256,6 +257,85 @@ func delete(id: Int) {
     try? realm.write {
         //削除
         try? realm.delete(entity)
+    }
+}
+```
+---
+
+## GRDB
+- モデルの定義
+```
+struct Object: FetchableRecord, Decodable, PersistableRecord {
+    let id: Int
+    let name: String
+
+    //Decodableが無い場合
+    // init(row: Row) {
+    //  id = row["id"]
+    //  name = row["name"]
+    //}
+}
+```
+- テーブルの作成
+```
+func createTable() {
+    //書き込み
+    try? dbQueue.write { db in
+        //テーブルの作成、同名が無い場合のみ実行される
+        try? db.create(
+            table: String(describing:
+                type(of: Object.self)
+            ),
+            temporary: false,
+            ifNotExists: true
+        ) { table in
+            //各カラムの設定
+            table.primaryKey(["id"])
+            table.column("name", .text).notNull()
+            table.column("id", .integer).notNull()
+        }
+    }
+}
+```
+
+---
+### Create
+```
+func create(object: Object) {
+    //書き込み
+    try? databaseQueue.write { database in 
+        //挿入
+        try? object.insert(database)
+    }
+}
+```
+---
+### Read
+```
+func read() -> [Object]? {
+    //読み込み
+    return databaseQueue.read { database in 
+        //fetch
+        return try? Object.fetchAll(database)
+    }
+}
+```
+---
+### Update
+```
+func update(object: Object) {
+    //書き込み
+    try? databaseQueue.write { database in 
+        try? object.update(database)
+    }
+}
+```
+---
+### Delete
+```
+func delete(object: Object) {
+    try? databaseQueue.write { database in
+        try? obect.dalete(database)
     }
 }
 ```
