@@ -72,32 +72,35 @@ func create(id: Int, name: String) {
 その後、`request.predicate`に対して検索条件を設定しfetchを実行する。
 - 単純にfetchするパターン
 ```
-let id = 12
-let context = container.viewContext
+func read() -> [Object]? {
+    let context = container.viewContext
 
-//requestを作成、型推論が弱いので書かないといけない
-let request: NSFetchRequest<Object>  = Object.fetchReqest()
+    //requestを作成、型推論が弱いので書かないといけない
+    let request: NSFetchRequest<Object>  = Object.fetchReqest()
 
-//検索条件を設定
-//IN のような場合は.init("id IN @%", Array)のような感じで単純に配列を渡す
-request.predicate = .init("id = @%", id)
+    //検索条件の例
+    //IN のような場合は.init("id IN @%", Array)のような感じで単純に配列を渡す
+    // request.predicate = .init("id = @%", id)
 
-//fetchする
-let objects = try? context.fetch(request)
+    //fetchする
+    return try? context.fetch(request)   
+}
 ```
 - NSFetchedResultsControllerのパターン
 ```
-let id = 12
-let context = container.viewContext
-let request: NSFetchRequest<Object>  = Object.fetchReqest()
-let controller = NSFetchedResultsController(
+func readWithController() -> NSFetchedResultsController<Object> {
+    let context = container.viewContext
+    let request: NSFetchRequest<Object>  = Object.fetchReqest()
+    let controller = NSFetchedResultsController(
             fetchRequest: request,
             managedObjectContext: context,
             sectionNameKeyPath: nil,
             cacheName: nil
-)
-//fetch
-try? controller.performFetch()
+    )
+    //fetch
+    try? controller.performFetch()
+    return controller
+}
 
 //fetchした結果にアクセスするには下記でできる
 controller.fetchedObjects
