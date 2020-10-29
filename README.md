@@ -340,3 +340,145 @@ func delete(object: Object) {
 }
 ```
 ---
+## FMDB
+```
+struct Object {
+    let id: Int
+    let name: String
+}
+```
+- テーブルの作成
+```
+func createTable() {
+    
+    //テーブルを作成するSQL
+    let createTableSQL = "CREATE TABLE IF NOT EXISTS " +
+    "objects (" +
+    "id INTEGER PRIMARY KEY, " +
+    "name TEXT" +
+    ");"
+
+    //データベースをオープン
+    database.open()
+
+    //SQLの実行
+    try? database.executeUpdate(
+        createTableSQL, 
+        values: nil
+    )
+    
+    //変更を保存 
+    database.close()
+}
+```
+
+### Create 
+```
+func create(object: Object) {
+    //INSERTするSQL
+    let insertSQL = "INSERT INTO " +
+    "objects (id, name)" +
+    "VALUES " +
+    "(?, ?);"
+    
+    //データベースをオープン
+    database.open()
+
+    //SQLを実行
+    try? database.execureUpdate(
+        insertSQL, 
+        values: [object.id, object.name]
+    )
+
+    //変更を保存 
+    database.close()
+}
+```
+---
+### Read 
+```
+func read() -> [Object] {
+    
+    //SELECTするSQL
+    let selectSQL = "SELECT " +
+    "id, name " + 
+    "FROM " +
+    "objects;" + 
+    "ORDER BY id;"
+    var objects: [Object] = []
+    
+    //データベースをオープン
+    database.open()
+
+    //SQLの実行
+    if let result = try? database.executeQuery(
+        selectSQL,
+        values: nil
+    ) {
+        //
+        while result.next() {
+            let object = Object(
+                id: Int(result.int(forColumnIndex: 0)),
+                name: result.string(forColumnIndex: 1) ?? ""
+            )
+            objects.append(object)
+        }
+    }
+
+    //データベースを閉じる 
+    database.close()
+
+    return objects
+}
+```
+---
+### Update 
+```
+func update(object: Object) {
+    
+    //UPDATEするSQL
+    ler updateSQL = "UPDATE " + 
+    "objects " + 
+    "SET" +
+    "name = ?" +
+    "WHERE " +
+    "id = ?;"
+    
+    //データベースをオープン
+    database.open()
+
+    //SQLの実行
+    try? database.executeUpdata(
+        updateSQL,
+        values: [
+            object.name,
+            object.id
+        ]
+    )
+
+    //変更を保存 
+    database.close()
+}
+```
+---
+### Delete 
+```
+func delete(object: Object) {
+    
+    //DELETEするSQL
+    let deleteSQL = "DELETE FROM objects WHERE id = ?;"
+    
+    //データベースをオープン
+    datebase.open()
+
+    //SQLの実行
+    try? database.executeUpdate(
+        deleteSQL, 
+        values: [object.id]
+    )
+
+    //変更を保存 
+    database.close()
+}
+```
+---
