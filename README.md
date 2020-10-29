@@ -341,6 +341,18 @@ func delete(object: Object) {
 ```
 ---
 ## FMDB
+古くからあるSQLiteのWrapper  
+基本的にはSQLを書いて実行していく、  
+そのためN+1をはじめとしたパフォーマンス面での調整はエンジニアに委ねられる。
+かつマルチスレッドでの動作もエンジニアに委ねられる。  
+他のORMと同じで初めにpathを指定して`FMDatabase`を初期化し各種操作を行う。
+pathを指定しない場合はinMemoryで動作する。    
+公式としてはFMDatabaseのインスタンスを共有するのが推奨していなく、  
+様々なスレッドで共有される場合は`FMDatabaseQueue`か`FMDatabasePool`を  
+使用するように推奨されている。  
+紹介してきたORMの中では一番更新頻度が少なく、かつSQLの実行はGRDBでサポートされているので積極的にこれを選択する理由はない。
+
+
 ```
 struct Object {
     let id: Int
