@@ -15,9 +15,9 @@ final class FMDBPublisherStore {
 
     private let insertSQL =
         "INSERT INTO " +
-        "publishers (name, owner_id) " +
+        "publishers (id, name, owner_id) " +
         "VALUES " +
-        "(?, ?);"
+        "(?, ?, ?);"
 
     private let selectSQL =
         "SELECT " +
@@ -50,11 +50,14 @@ final class FMDBPublisherStore {
             .executeUpdate(createTableSQL, values: nil)
     }
 
-    func create(object: Publisher) {
+    func create(publisher: Publisher) {
         try? databaseWrapper
             .executeUpdate(
             insertSQL,
             values: [
+                publisher.id,
+                publisher.name,
+                publisher.owner.id
             ]
         )
     }
@@ -135,7 +138,7 @@ final class FMDBPublisherStore {
         ownerStore.update(owner: publisher.owner)
     }
 
-    func delete(object: Publisher) {
-        try? databaseWrapper.executeUpdate(deleteSQL, values: [])
+    func delete(publisher: Publisher) {
+        try? databaseWrapper.executeUpdate(deleteSQL, values: [publisher.id])
     }
 }
