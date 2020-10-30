@@ -121,13 +121,18 @@ final class FMDBPublisherStore {
         return publishers
     }
 
-    func update (object: Publisher) {
+    func update (publisher: Publisher) {
         try? databaseWrapper
             .executeUpdate(
             updateSQL,
             values: [
+                publisher.name,
+                publisher.id
             ]
         )
+
+        bookStore.updateByBooks(books: publisher.books)
+        ownerStore.update(owner: publisher.owner)
     }
 
     func delete(object: Publisher) {
