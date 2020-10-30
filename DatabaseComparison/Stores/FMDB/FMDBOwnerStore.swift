@@ -14,9 +14,9 @@ final class FMDBOwnerStore {
 
     private let insertSQL =
         "INSERT INTO " +
-        "owners (name, age, profile) " +
+        "owners (id, name, age, profile) " +
         "VALUES " +
-        "(?, ?, ?);"
+        "(?, ?, ?, ?);"
 
     private let selectSQL =
         "SELECT " +
@@ -40,13 +40,36 @@ final class FMDBOwnerStore {
         self.databaseWrapper = databaseWrapper
     }
 
-    func create(object: Owner) {
-
+    func create(owner: Owner) {
+        try? databaseWrapper.executeUpdate(
+            insertSQL,
+            values: [
+                owner.id,
+                owner.name,
+                owner.age,
+                owner.profile
+            ]
+        )
     }
 
     func read() -> [Owner] {
-        var result: [Owner] = []
-        return result
+        var owners: [Owner] = []
+        if
+            let result = try? databaseWrapper.executeQuery(
+                selectSQL,
+                values: nil
+            ) {
+            while result.next() {
+                let owner = Owner(
+                    id: result.long(forColumnIndex: 0),
+                    name: result.string(forColumnIndex: 1) ?? "",
+                    age: result.long(forColumnIndex: 2),
+                    profile: result.string(forColumnIndex: 3) ?? ""
+                )
+                owners.append(owner)
+            }
+        }
+        return owners
     }
 
     func readByIDs(_ ids: [Int]) -> [Owner]{
@@ -83,7 +106,12 @@ final class FMDBOwnerStore {
         )
     }
 
-    func delete(object: Owner) {
-        
+    func delete(owner: Owner) {
+        try? databaseWrapper.executeUpdate(
+            deleteSQL,
+            values: [
+                owner.id
+            ]
+        )
     }
 }
