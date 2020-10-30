@@ -43,8 +43,16 @@ final class FMDBBookStore {
         self.databaseWrapper = databaseWrapper
     }
 
-    func create(object: Book) {
-
+    func create(book: Book, publisherID: Int) {
+        try? databaseWrapper.executeUpdate(
+            insertSQL,
+            values: [
+                book.id,
+                book.name,
+                book.price,
+                publisherID
+            ]
+        )
     }
 
     func read() -> [Book] {
@@ -73,8 +81,16 @@ final class FMDBBookStore {
         return books
     }
 
-    func update(object: Book) {
-
+    func update(book: Book, publisherID: Int) {
+        try? databaseWrapper.executeUpdate(
+            updateSQL,
+            values: [
+                book.name,
+                book.price,
+                publisherID,
+                book.id
+            ]
+        )
     }
 
     func updateByBooks(books: [Book], publisherID: Int) {
@@ -94,7 +110,12 @@ final class FMDBBookStore {
         }
     }
 
-    func delete(object: Book) {
-
+    func delete(book: Book) {
+        try? databaseWrapper.executeUpdate(
+            deleteSQL,
+            values: [
+                book.id
+            ]
+        )
     }
 }
