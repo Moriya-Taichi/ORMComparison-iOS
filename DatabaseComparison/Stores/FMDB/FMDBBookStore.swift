@@ -56,8 +56,20 @@ final class FMDBBookStore {
     }
 
     func read() -> [Book] {
-        var result: [Book] = []
-        return result
+        var books: [Book] = []
+        if
+            let result = try? databaseWrapper.executeQuery(
+                selectSQL,
+                values: nil
+            ) {
+            let book = Book(
+                id: result.long(forColumnIndex: 0),
+                name: result.string(forColumnIndex: 1) ?? "",
+                price: result.long(forColumnIndex: 2)
+            )
+            books.append(book)
+        }
+        return books
     }
 
     func readBooksWithIDByPublisherIDs(_ ids:[Int]) -> [(book: Book, id: Int)] {
