@@ -39,4 +39,13 @@ final class FMDBDatabaseWrapeer {
             try database.executeUpdate(sql, values: values)
         }
     }
+
+    func executeBlockWithTransaction( _ block: @escaping () -> Void) {
+        database.open()
+        if database.beginTransaction() {
+            block()
+            database.commit()
+        }
+        database.close()
+    }
 }
