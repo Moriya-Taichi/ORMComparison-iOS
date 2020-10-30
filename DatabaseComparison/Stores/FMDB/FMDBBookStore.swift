@@ -77,6 +77,23 @@ final class FMDBBookStore {
 
     }
 
+    func updateByBooks(books: [Book], publisherID: Int) {
+        try? databaseWrapper.executeBlockWithTransaction { [weak self] in
+            guard let self = self else { return }
+            books.forEach { book in
+                try? self.databaseWrapper.executeUpdateWithoutOpen(
+                    self.updateSQL,
+                    values: [
+                        book.name,
+                        book.price,
+                        publisherID,
+                        book.id
+                    ]
+                )
+            }
+        }
+    }
+
     func delete(object: Book) {
 
     }

@@ -130,11 +130,12 @@ final class FMDBPublisherStore {
             updateSQL,
             values: [
                 publisher.name,
+                publisher.owner.id,
                 publisher.id
             ]
         )
 
-        bookStore.updateByBooks(books: publisher.books)
+        bookStore.updateByBooks(books: publisher.books, publisherID: publisher.id)
         ownerStore.update(owner: publisher.owner)
     }
 
