@@ -71,8 +71,16 @@ final class FMDBOwnerStore {
         return results
     }
 
-    func update(object: Owner) {
-
+    func update(owner: Owner) {
+        try? databaseWrapper.executeUpdate(
+            updateSQL,
+            values: [
+                owner.name,
+                owner.age,
+                owner.profile,
+                owner.id
+            ]
+        )
     }
 
     func delete(object: Owner) {
