@@ -210,4 +210,24 @@ final class CorePublisherDataStore {
             }
         }
     }
+
+    private func createOwner(_ owner: Owner) -> OwnerEntity {
+        let context = container.viewContext
+        let request: NSFetchRequest<OwnerEntity> = OwnerEntity.fetchRequest()
+        request.predicate = .init(format: "", owner.id)
+        request.fetchLimit = 1
+        if let ownerEntity = try? context.fetch(request).first {
+            ownerEntity.name = owner.name
+            ownerEntity.age = Int32(owner.age)
+            ownerEntity.profile = owner.profile
+            return ownerEntity
+        } else {
+            let newOwnerEntity = OwnerEntity(context: context)
+            newOwnerEntity.id = Int64(owner.id)
+            newOwnerEntity.age = Int32(owner.age)
+            newOwnerEntity.name = owner.name
+            newOwnerEntity.profile = owner.profile
+            return newOwnerEntity
+        }
+    }
 }
