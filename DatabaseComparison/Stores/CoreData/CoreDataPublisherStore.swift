@@ -214,7 +214,7 @@ final class CorePublisherDataStore {
     private func createOwner(_ owner: Owner) -> OwnerEntity {
         let context = container.viewContext
         let request: NSFetchRequest<OwnerEntity> = OwnerEntity.fetchRequest()
-        request.predicate = .init(format: "", owner.id)
+        request.predicate = .init(format: "id = %@", owner.id)
         request.fetchLimit = 1
         if let ownerEntity = try? context.fetch(request).first {
             ownerEntity.name = owner.name
@@ -227,7 +227,49 @@ final class CorePublisherDataStore {
             newOwnerEntity.age = Int32(owner.age)
             newOwnerEntity.name = owner.name
             newOwnerEntity.profile = owner.profile
+            context.insert(newOwnerEntity)
             return newOwnerEntity
+        }
+    }
+
+    private func createBooks(_ books: [Book], _ publisherID: Int) -> [BookEntity] {
+        let context = container.viewContext
+        let request: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
+        request.predicate = .init(format: "id IN %@", argumentArray: books.map { $0.id })
+        guard let bookEntities = try? context.fetch(request) else {
+            return books.map { book -> BookEntity in
+                let newBookEntity = BookEntity(context: context)
+                newBookEntity.id = Int64(book.id)
+                newBookEntity.name = book.name
+                newBookEntity.price = Int64(book.price)
+                newBookEntity.publisherId = Int64(publisherID)
+                context.insert(newBookEntity)
+                return newBookEntity
+            }
+        }
+
+        if bookEntities.count == books.count {
+            return bookEntities.enumerated().map { index, bookEntity -> BookEntity in
+                return bookEntity
+            }
+        } else {
+            return books.map { book -> BookEntity in
+                if let bookEntity = bookEntities.first(where: { entity -> Bool in
+                    return entity.id == book.id
+                }) {
+                    bookEntity.name = book.name
+                    bookEntity.price = Int64(book.price)
+                    return bookEntity
+                } else {
+                    let newBookEntity = BookEntity(context: context)
+                    newBookEntity.id = Int64(book.id)
+                    newBookEntity.name = book.name
+                    newBookEntity.price = Int64(book.price)
+                    newBookEntity.publisherId = Int64(publisherID)
+                    context.insert(newBookEntity)
+                    return newBookEntity
+                }
+            }
         }
     }
 }
