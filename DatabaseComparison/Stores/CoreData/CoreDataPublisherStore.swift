@@ -11,6 +11,15 @@ final class CorePublisherDataStore {
 
     func create(publisher: Publisher) {
         let context = container.viewContext
+        let request: NSFetchRequest<PublisherEntity> = PublisherEntity.fetchRequest()
+        request.fetchLimit = 1
+        request.predicate = .init(format: "id = %@", publisher.id)
+        let storedPublisher = try? context.fetch(request)
+        guard storedPublisher == nil else {
+            update(publisher: publisher)
+            return
+        }
+
         let publisherEntity = PublisherEntity(context: context)
         publisherEntity.id = Int64(publisher.owner.id)
         publisherEntity.name = publisher.name
@@ -127,8 +136,8 @@ final class CorePublisherDataStore {
                     newBookEntity.name = book.name
                     newBookEntity.price = Int64(book.price)
                     publisherEntity.addToBooks(newBookEntity)
-                    
-                    try? context.insert(newBookEntity)
+
+                    context.insert(newBookEntity)
                 }
             }
         }
