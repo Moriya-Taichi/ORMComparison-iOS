@@ -112,13 +112,63 @@ final class FMDBPublisherStore {
 
     func readByEagerLoading() -> [Publisher] {
         var publishers: [Publisher] = []
-        let query = "SELECT * FROM publishers JOIN books ON publsihers.id == books.id"
+        let query = "SELECT * FROM publishers " +
+            "LEFT JOIN books ON publishers.id == books.id " +
+            "LEFT JOIN owners ON publishers.owner_id == owners.id;"
         if
             let result = try? databaseWrapper.executeQuery(
                 query,
                 values: nil
             ) {
+            var publisher: Publisher? = nil
             while result.next() {
+                if publisher == nil {
+                    let owner = Owner(
+                        id: Int(result.int(forColumn: "owners.id")),
+                        name: result.string(forColumn: "owners.name") ?? "",
+                        age: Int(result.int(forColumn: "owners.age")),
+                        profile: result.string(forColumn: "owners.profile") ?? ""
+                    )
+                    publisher = .init(
+                        id: Int(result.int(forColumn: "publishers.id")),
+                        name: result.string(forColumn: "publishers.name") ?? "",
+                        books: [],
+                        owner: owner
+                    )
+                }
+
+                guard var publisher = publisher else {
+                    continue
+                }
+
+                if publisher.id == Int(result.int(forColumn: "publishers.id")) {
+                    let book = Book(
+                        id: Int(result.int(forColumn: "books.id")),
+                        name: result.string(forColumn: "books.name") ?? "",
+                        price: Int(result.int(forColumn: "books.price"))
+                    )
+                    publisher = .init(
+                        id: publisher.id,
+                        name: publisher.name,
+                        books: publisher.books + [book],
+                        owner: publisher.owner
+                    )
+                }
+                else {
+                    publishers.append(publisher)
+                    let owner = Owner(
+                        id: Int(result.int(forColumn: "owners.id")),
+                        name: result.string(forColumn: "owners.name") ?? "",
+                        age: Int(result.int(forColumn: "owners.age")),
+                        profile: result.string(forColumn: "owners.profile") ?? ""
+                    )
+                    publisher = .init(
+                        id: Int(result.int(forColumn: "publishers.id")),
+                        name: result.string(forColumn: "publishers.name") ?? "",
+                        books: [],
+                        owner: owner
+                    )
+                }
             }
         }
         return publishers
