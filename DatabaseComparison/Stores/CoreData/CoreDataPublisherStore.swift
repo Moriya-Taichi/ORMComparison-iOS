@@ -93,6 +93,12 @@ final class CorePublisherDataStore {
         publisherEntity.owner?.age = Int32(publisher.owner.age)
         publisherEntity.owner?.name = publisher.owner.name
         publisherEntity.owner?.profile = publisher.owner.profile
+        publisherEntity.books?.forEach { entity in
+            guard let bookEntity = entity as? BookEntity else {
+                return
+            }
+            publisherEntity.removeFromBooks(bookEntity)
+        }
 
         if bookEntities.count == publisher.books.count {
             zip(bookEntities.sorted(by: { lhs, rhs -> Bool in
@@ -102,9 +108,29 @@ final class CorePublisherDataStore {
             })).forEach { bookEntity, book in
                 bookEntity.name = book.name
                 bookEntity.price = Int64(book.price)
+                publisherEntity.addToBooks(bookEntity)
             }
         } else {
-            
+            publisher.books.sorted(by: { lhs, rhs -> Bool in
+                return lhs.id > rhs.id
+            })
+            .forEach { book in
+                if let index = bookEntities.firstIndex(where: { bookEntity -> Bool in
+                    return book.id == bookEntity.id
+                }) {
+                    bookEntities[index].name = book.name
+                    bookEntities[index].price = Int64(book.price)
+                    publisherEntity.addToBooks(bookEntities[index])
+                } else {
+                    let newBookEntity = BookEntity(context: context)
+                    newBookEntity.id = Int64(book.id)
+                    newBookEntity.name = book.name
+                    newBookEntity.price = Int64(book.price)
+                    publisherEntity.addToBooks(newBookEntity)
+                    
+                    try? context.insert(newBookEntity)
+                }
+            }
         }
 
         saveContext()
