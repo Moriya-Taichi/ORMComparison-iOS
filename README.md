@@ -15,8 +15,8 @@ Qiitaの解説とコードでは実際に高度に使われるのを考えて1 �
 ## 今回は例なのでコードにおいて`try?`でエラーを潰していますが実際に使う場合はアプリの性質を考えて適切に処理しましょう！
 
 ---
-### installed 
-`pod install` and open workspace
+### installation
+`pod install` and open generated workspace
 
 ---
 ## Core Data
@@ -25,15 +25,20 @@ Editor上でモデルを作成し、Containerのcontextを使用してCRUD操作
 Read以外の各種操作の後には`context.save()`を呼ぶ必要があり、これによってCoreDataのファイルが更新される。 
 マイグレーションにはLightとHeavyの２種類があり、前者は自動的にマイグレーションが行われる。  
 それに対して後者は他のORMフレームワークと同じでどのプロパティがどれに対応するかなどをコードで示す必要がある。
-簡単な例として、以下のような一意なidを持つ`Object`を用いて説明する
+簡単な例として、以下のような一意なidを持つ`Object`を用いて説明する  
 
+<br>
+
+- 説明に用いるモデル
 ```
 class Object: NSManagedObject {
     @NSManaged public var id: Int64
     @NSManaged public var name: String?
 } 
 ```
-Containerのinit方法
+<br>  
+
+- DBの接続
 ```
 //DB名を選んで初期化、ファイルがあればロードしなければ作成する
 let container = NSPersistentContainer(name: "hogehoge")
@@ -45,6 +50,8 @@ let description = NSPersistentStoreDescription()
 description.type = NSInMemoryStoreType
 container.persistentStoreDescriptions = [desription]
 ```
+<br>
+
 ---
 ### Create
 作成はオブジェクトを`init(context:)`で作成し、各プロパティに値をセット
@@ -72,6 +79,8 @@ func create(id: Int, name: String) {
 }
 
 ```
+<br>
+
 ---
 ### Read
 単純にオブジェクトをfetchするのとNSFetchedResultsControllerを返すのの２種類がある。NSFetchedResultsControllerはfetchされたオブジェクトに対してIndexPathでアクセスできることやdelegateで変更通知などを行える。  
@@ -80,7 +89,9 @@ func create(id: Int, name: String) {
 どちらにしてもまずは読み込みたい型のリクエストを`HogeType.fetchRequest()`で作成する。  
 `NSFetchRequest(entityName: String)`と`NSFetchRequest<HogeType>(entityName: String)`もあるが、どちらもTypoの可能性があるのと、前者はダウンキャストする手間があるのでおすすめしない。 
 また`@FetchRequest`を`FetchResult<Entity>`につけることで簡単にfetchしたオブジェクトを使用できる。AppleのSwiftUI + CoreDataのサンプルでも使われている。   
-その後、`request.predicate`に対して検索条件を設定しfetchを実行する。
+その後、`request.predicate`に対して検索条件を設定しfetchを実行する。  
+<br>
+
 - 単純にfetchするパターン
 ```
 func read() -> [Object]? {
@@ -97,6 +108,8 @@ func read() -> [Object]? {
     return try? context.fetch(request)   
 }
 ```
+<br>
+
 - NSFetchedResultsControllerのパターン
 ```
 func readWithController() -> NSFetchedResultsController<Object> {
@@ -119,6 +132,8 @@ controller.fetchedObjects
 //またIndexPathでもアクセスできる
 controller.object(at: IndexPath(row: 0, section: 0))
 ```
+<br>
+
 ---
 ### Update  
 更新はオブジェクトのプロパティを変更で行う。
@@ -173,7 +188,9 @@ func delete(id: Int) {
     try? context.save()
 }
 ```
+<br>
 
+---
 ## Realm
 CoreDataなどのSQLite系のORMとは違い  
 独自のDBとORMを提供しているOSS  
@@ -183,7 +200,10 @@ CoreDataと同じで元がObj-cなのでSwift的にモデルをStructで定義�
 1 対 多の関係ではプロパティに`List<HogeObject>`を使い  
 1 対 1の場合はプロパティにそのまま`HogeObject`を使う  
 どちらの場合でも参照しているだけなので更新や削除の際に親のオブジェクトからやる必要はない。  
-簡単な例として、以下のような一意なidを持つ`Entity`を用いて説明する
+簡単な例として、以下のような一意なidを持つ`Entity`を用いて説明する。  
+<br>
+
+- 説明に用いるモデル 
 ```
 class Entity: Object {
     @objc dynamic var id: Int = -1
@@ -194,7 +214,9 @@ class Entity: Object {
     }
 }
 ```
-Realmのinit
+<br>
+
+- DBの接続
 ```
 let configuration: Realm.Configuration = .init(
             //RealmのファイルのURL
@@ -236,6 +258,8 @@ let configuration: Realm.Configuration = .init(
         )
 let realm = .init(configuration: configuration)
 ```
+<br>
+
 ---
 ### Create
 ```
@@ -280,6 +304,8 @@ func update(id: Int, name: String) {
     }
 }
 ```
+<br>
+
 - Createとほぼ同じやり方
 ```
 func update(id: Int, name: String) {
@@ -316,6 +342,8 @@ func delete(id: Int) {
     }
 }
 ```
+<br>
+
 ---
 
 ## GRDB
@@ -360,10 +388,10 @@ initではこの先紹介するモデルのように`row["hoge"]`といった風
 Databaseへのアクセスは`Queue`と`Pool`があるが、  
 訳のわからない場合は`Queue`を公式はおすすめしている。  
 叩くメソッドは同じなのでデータベースに対してマルチスレッドで  
-大量にアクセスしない限りは`Queue`で十分である。
+大量にアクセスしない限りは`Queue`で十分である。  
+<br>
 
-
-- モデルの定義
+- 説明に用いるモデル
 ```
 struct Object: FetchableRecord, Decodable, PersistableRecord {
     let id: Int
@@ -376,6 +404,21 @@ struct Object: FetchableRecord, Decodable, PersistableRecord {
     //}
 }
 ```
+<br>
+
+- DBの接続
+```
+//Queue
+let dbQueue = try DatabaseQueue(path: "/path/to/database.sqlite")
+
+//Pool(SQLiteをWALモードで開く)
+let dbPool = try DatabasePool(path: "/path/to/database.sqlite")
+
+//InMemory(Queueのみ)
+let dbQueue = try DatabaseQueue()
+```
+<br>
+
 - テーブルの作成
 ```
 func createTable() {
@@ -397,17 +440,8 @@ func createTable() {
     }
 }
 ```
-- DBの接続
-```
-//Queue
-let dbQueue = try DatabaseQueue(path: "/path/to/database.sqlite")
+<br>
 
-//Pool(SQLiteをWALモードで開く)
-let dbPool = try DatabasePool(path: "/path/to/database.sqlite")
-
-//InMemory(Queueのみ)
-let dbQueue = try DatabaseQueue()
-```
 ---
 ### Create
 ```
@@ -449,6 +483,8 @@ func delete(object: Object) {
     }
 }
 ```
+<br>
+
 ---
 ## FMDB
 古くからあるSQLiteのWrapper  
@@ -460,16 +496,19 @@ pathを指定しない場合はinMemoryで動作する。
 公式としてはFMDatabaseのインスタンスを共有するのが推奨していなく、  
 様々なスレッドで共有される場合は`FMDatabaseQueue`か`FMDatabasePool`を  
 使用するように推奨されている。  
-紹介してきたORMの中では一番更新頻度が少なく、かつSQLの実行はGRDBでサポートされているので積極的にこれを選択する理由はない。
+紹介してきたORMの中では一番更新頻度が少なく、かつSQLの実行はGRDBでサポートされているので積極的にこれを選択する理由はない。  
+<br>
 
-- 説明に使うモデル
+- 説明に用いるモデル
 ```
 struct Object {
     let id: Int
     let name: String
 }
 ```
-- DBへの接続
+<br>
+
+- DBの接続
 ```
 //DBのpath
 let databasePath = try! FileManager.default
@@ -491,6 +530,8 @@ let pool = FMDatabasePool(url: databasePath)
 //InMemory
 let database = FMDatabase()
 ```
+<br>
+
 - テーブルの作成
 ```
 func createTable() {
@@ -515,7 +556,9 @@ func createTable() {
     database.close()
 }
 ```
+<br>
 
+---
 ### Create 
 ```
 func create(object: Object) {
