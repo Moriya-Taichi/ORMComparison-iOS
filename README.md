@@ -194,6 +194,48 @@ class Entity: Object {
     }
 }
 ```
+Realmのinit
+```
+let configuration: Realm.Configuration = .init(
+            //RealmのファイルのURL
+            fileURL: URL?,
+            
+            //InMemoryにしたい場合は設定する
+            //設定するとfileURLがnilに設定される
+            inMemoryIdentifier: String?,
+            
+            //mongoDB realm(下)と同期する際の設定
+            //https://www.mongodb.com/realm/mobile/sync
+            syncConfiguration: SyncConfiguration?,
+            
+            //データの暗号化に利用する64Bのキー
+            encryptionKey: Data?,
+            
+            //read onlyにするかどうか
+            readOnly: Bool,
+            
+            //スキーマのバージョン
+            //migrationの時に上げる
+            schemaVersion: UInt64,
+            
+            //migrationで実行するブロック
+            //migrationの処理はここに書く
+            migrationBlock: MigrationBlock?,
+            
+            //migrationが必要な時に既存のデータを消すかどうか
+            //テーブルは更新したいけどデータの移行はしない場合はtrue
+            deleteRealmIfMigrationNeeded: Bool?,
+
+            //realm起動時に呼び出されるブロック
+            //データの使用量と空き容量が渡されるので
+            //圧縮するかどうかを判断してBoolで返す
+            shouldCompactOnLaunch: ((Int, Int) -> Bool)?,
+            
+            //格納するObjectのタイプを明示的に指定したい場合は設定する
+            objectTypes: [Object.Type]?
+        )
+let realm = .init(configuration: configuration)
+```
 ---
 ### Create
 ```
