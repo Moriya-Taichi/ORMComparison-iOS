@@ -397,7 +397,17 @@ func createTable() {
     }
 }
 ```
+- DBの接続
+```
+//Queue
+let dbQueue = try DatabaseQueue(path: "/path/to/database.sqlite")
 
+//Pool(SQLiteをWALモードで開く)
+let dbPool = try DatabasePool(path: "/path/to/database.sqlite")
+
+//InMemory(Queueのみ)
+let dbQueue = try DatabaseQueue()
+```
 ---
 ### Create
 ```
