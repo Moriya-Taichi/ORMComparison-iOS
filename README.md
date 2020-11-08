@@ -33,7 +33,18 @@ class Object: NSManagedObject {
     @NSManaged public var name: String?
 } 
 ```
+Containerのinit方法
+```
+//DB名を選んで初期化、ファイルがあればロードしなければ作成する
+let container = NSPersistentContainer(name: "hogehoge")
 
+//テストなどでInMemoryで動かしたい場合は
+container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+//これでもInMemoryにできる
+let description = NSPersistentStoreDescription()
+description.type = NSInMemoryStoreType
+container.persistentStoreDescriptions = [desription]
+```
 ---
 ### Create
 作成はオブジェクトを`init(context:)`で作成し、各プロパティに値をセット
