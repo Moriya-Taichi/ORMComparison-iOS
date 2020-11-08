@@ -350,12 +350,12 @@ initではこの先紹介するモデルのように`row["hoge"]`といった風
   - `MutablePersistableRecord(TableRecord, EncodableRecord)`
   - `PersistableRecord(MutablePersistableRecord)`  
 `EncodableRecord`というのも存在するが直接使うことはない。   
-どちらも準拠すると`Update`,`Create`,`Delete`が可能になる。  
-使い毛については  
+どちらのProtocolも準拠すると`Update`,`Create`,`Delete`が可能になる。  
+使い方については  
 `struct`で`Auto Increment主キーがある`場合は`MutablePersistableRecord`に準拠し`didInsert()`の中でrowIDをモデルのidにセットする実装をする。   
 `モデルがclass` or `structでAuto Incrementな主キーがない`場合は`PersistableRecord`に準拠、`didInsert()`は実装しない。  
 どちらも`TableRecord`を含んでいるのでデータベースに保存するモデルは  
-上二つのどちらか + `FetchableRecord`に準拠すれば全てに操作ができる。  
+上二つのどちらか + `FetchableRecord`に準拠すれば全ての操作ができる。  
 
 Databaseへのアクセスは`Queue`と`Pool`があるが、  
 訳のわからない場合は`Queue`を公式はおすすめしている。  
