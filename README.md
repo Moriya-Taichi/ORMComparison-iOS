@@ -462,12 +462,34 @@ pathを指定しない場合はinMemoryで動作する。
 使用するように推奨されている。  
 紹介してきたORMの中では一番更新頻度が少なく、かつSQLの実行はGRDBでサポートされているので積極的にこれを選択する理由はない。
 
-
+- 説明に使うモデル
 ```
 struct Object {
     let id: Int
     let name: String
 }
+```
+- DBへの接続
+```
+//DBのpath
+let databasePath = try! FileManager.default
+                .url(
+                    for: .applicationSupportDirectory,
+                    in: .userDomainMask,
+                    appropriateFor: nil,
+                    create: true
+                )
+                .appendingPathComponent("hoge.sqlite")
+//init
+let database = FMDatabase(url: databasePath)
+
+//Queue
+let queue = FMDatabaseQueue(url: databasePath)
+//Pool
+let pool = FMDatabasePool(url: databasePath)
+
+//InMemory
+let database = FMDatabase()
 ```
 - テーブルの作成
 ```
