@@ -17,7 +17,7 @@ extension Array where Self.Element: Equatable {
         var deletedElements: [Element] = []
         var noChangedElements: [Element] = []
 
-        let (insertedIndex, deletedIndex, noChangedIndex) = self.differenceIndex(from: elements)
+        let (insertedIndex, deletedIndex, noChangedIndex, _) = self.differenceIndex(from: elements)
 
         insertedElements = insertedIndex.map { self[$0] }
         deletedElements = deletedIndex.map { elements[$0] }
