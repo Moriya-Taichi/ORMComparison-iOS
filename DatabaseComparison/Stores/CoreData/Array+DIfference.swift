@@ -62,6 +62,8 @@ extension Array where Self.Element: Equatable {
                 noChangedIndex.insert(index)
             } else if isPreviousInsertedAndDeletePosition || isNextInsertedAndDeletePrevious {
                 noChangedIndex.insert(index)
+            } else if index < elements.count, self[index] != elements[index] {
+                noChangedIndex.insert(index)
             }
         }
 
