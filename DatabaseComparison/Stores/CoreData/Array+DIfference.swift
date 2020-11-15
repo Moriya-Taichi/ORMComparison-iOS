@@ -62,15 +62,17 @@ extension Array where Self.Element: Equatable {
                 noChangedIndex.insert(index)
             } else if isPreviousInsertedAndDeletePosition || isNextInsertedAndDeletePrevious {
                 noChangedIndex.insert(index)
-            } else if index < elements.count, self[index] != elements[index] {
+            } else if index < elements.count,
+                      self[index] != elements[index] && !insertedIndex.contains(index)
+            {
                 noChangedIndex.insert(index)
             }
         }
 
         return (
-            insertedIndex: Array<Int>(insertedIndex),
-            deletedIndex: Array<Int>(deletedIndex),
-            noChangedIndex: Array<Int>(noChangedIndex)
+            insertedIndex: Array<Int>(insertedIndex).sorted(),
+            deletedIndex: Array<Int>(deletedIndex).sorted(),
+            noChangedIndex: Array<Int>(noChangedIndex).sorted()
         )
     }
 }
