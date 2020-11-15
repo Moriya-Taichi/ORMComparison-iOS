@@ -49,7 +49,18 @@ extension Array where Self.Element: Equatable {
         }
 
         for index in 0..<self.count {
-            if !insertedIndex.contains(index) && !deletedIndex.contains(index) {
+            let nextIndex = index + 1
+            let previousIndex = index - 1
+
+            let isNotRepalaced = !insertedIndex.contains(index) && !deletedIndex.contains(index)
+            let isPreviousInsertedAndDeletePosition = insertedIndex.contains(previousIndex) &&
+                deletedIndex.contains(index)
+            let isNextInsertedAndDeletePrevious = insertedIndex.contains(nextIndex) &&
+                deletedIndex.contains(index)
+
+            if isNotRepalaced {
+                noChangedIndex.insert(index)
+            } else if isPreviousInsertedAndDeletePosition || isNextInsertedAndDeletePrevious {
                 noChangedIndex.insert(index)
             }
         }
