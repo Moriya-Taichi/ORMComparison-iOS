@@ -33,7 +33,8 @@ extension Array where Self.Element: Equatable {
     func differenceIndex(from elements: [Element]) -> (
         insertedIndex: [Int],
         deletedIndex: [Int],
-        noChangedIndex: [Int]
+        noChangedIndex: [Int],
+        noChangedOldIndex: [Int]
     ) {
         var insertedIndex = Set<Int>()
         var deletedIndex = Set<Int>()
@@ -69,10 +70,15 @@ extension Array where Self.Element: Equatable {
             }
         }
 
+        let oldArrayNoChangedPosition = elements.enumerated().map { $0.offset }.filter { index in
+            return !deletedIndex.contains(index)
+        }
+
         return (
             insertedIndex: Array<Int>(insertedIndex).sorted(),
             deletedIndex: Array<Int>(deletedIndex).sorted(),
-            noChangedIndex: Array<Int>(noChangedIndex).sorted()
+            noChangedIndex: Array<Int>(noChangedIndex).sorted(),
+            noChangedOldIndex: oldArrayNoChangedPosition
         )
     }
 }
