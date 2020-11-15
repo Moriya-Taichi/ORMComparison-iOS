@@ -112,30 +112,58 @@ final class CorePublisherDataStore {
             publisherEntity.owner = newOwnerEntity
         }
 
-        if bookEntities?.count == publisher.books.count {
-            zip(bookEntities!, publisher.books).forEach { bookEntity, book in
+        if let bookEntities = bookEntities, let relataionBooks = publisherEntity.books {
+            let differenceFromStored = publisher.books
+                .map { $0.id }
+                .differenceIndex(
+                    from: bookEntities.map { Int($0.id) }
+                )
+
+            zip(
+                differenceFromStored.noChangedIndex,
+                differenceFromStored.noChangedOldIndex
+            ).forEach { bookIndex, storedIndex in
+                let bookEntity = bookEntities[storedIndex]
+                let book = publisher.books[bookIndex]
                 bookEntity.name = book.name
                 bookEntity.price = Int64(book.price)
             }
 
-            guard let publisherBooks = publisherEntity.books else {
-                bookEntities?.forEach { publisherEntity.addToBooks($0) }
-                saveContext()
-                return
-            }
-
-            let differences = bookEntities!
-                .map { $0.id }
-                .difference(
-                    from: publisherBooks
-                        .compactMap { ($0 as? BookEntity)?.id }
+            let differenceFromRelation = bookEntities
+                .differenceElements(
+                    from: relataionBooks.compactMap { $0 as? BookEntity }
                 )
-            differences.forEach { difference in
 
+            differenceFromRelation.insertedElements.forEach { element in
+                publisherEntity.addToBooks(element)
             }
-        } else {
 
+            differenceFromRelation.deletedElements.forEach { element in
+                publisherEntity.removeFromBooks(element)
+            }
+
+            differenceFromStored.insertedIndex.forEach { index in
+                let newBookEntity = BookEntity(context: context)
+                let book = publisher.books[index]
+                newBookEntity.id = Int64(book.id)
+                newBookEntity.name = book.name
+                newBookEntity.price = Int64(book.price)
+                newBookEntity.publisherId = Int64(publisher.id)
+                context.insert(newBookEntity)
+                publisherEntity.addToBooks(newBookEntity)
+            }
+
+        } else {
+            publisher.books.forEach { book in
+                let newBookEntity = BookEntity(context: context)
+                newBookEntity.id = Int64(book.id)
+                newBookEntity.name = book.name
+                newBookEntity.price = Int64(book.price)
+                newBookEntity.publisherId = Int64(publisher.id)
+                context.insert(newBookEntity)
+            }
         }
+
 
         saveContext()
     }
