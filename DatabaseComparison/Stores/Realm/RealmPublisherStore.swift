@@ -133,6 +133,7 @@ final class RealmPublisherStore {
             object.price = book.price
             try? realm.add(object, update: .modified)
         }
+        let list = List<BookObject>()
     }
 
     func delete(publisher: Publisher) {
@@ -149,5 +150,30 @@ final class RealmPublisherStore {
                 try? realm.delete(storedPublisher)
             }
         }
+    }
+
+    private func getOrCreateOwner(owner: Owner) -> OwnerObject {
+        if let ownerObject = realm.object(
+            ofType: OwnerObject.self,
+            forPrimaryKey: owner.id
+        ) {
+            return ownerObject
+        }
+
+        let newOwnerObject = OwnerObject()
+        newOwnerObject.id = owner.id
+        newOwnerObject.name = owner.name
+        newOwnerObject.profile = owner.profile
+        newOwnerObject.age = owner.age
+
+        if realm.isInWriteTransaction {
+            realm.add(newOwnerObject)
+        } else {
+            try? realm.write {
+                realm.add(newOwnerObject)
+            }
+        }
+
+        return newOwnerObject
     }
 }
