@@ -110,24 +110,20 @@ final class CorePublisherDataStore {
         ownerEntity.profile = publisher.owner.profile
 
         let bookEntities = getOrCreateBooks(publisher.books, publisher.id)
+            .sorted { lhs, rhs -> Bool in
+                return lhs.id < rhs.id
+            }
+        zip(
+            bookEntities,
+            publisher.books
+        )
+        .forEach { bookEntity, book in
+            bookEntity.name = book.name
+            bookEntity.price = Int64(book.price)
+            publisherEntity.addToBooks(bookEntity)
+        }
 
         if let relataionBooks = publisherEntity.books {
-            let differenceFromStored = publisher.books
-                .map { $0.id }
-                .differenceIndex(
-                    from: bookEntities.map { Int($0.id) }
-                )
-
-            zip(
-                differenceFromStored.noChangedIndex,
-                differenceFromStored.noChangedOldIndex
-            ).forEach { bookIndex, storedIndex in
-                let bookEntity = bookEntities[storedIndex]
-                let book = publisher.books[bookIndex]
-                bookEntity.name = book.name
-                bookEntity.price = Int64(book.price)
-            }
-
             let differenceFromRelation = bookEntities
                 .differenceElements(
                     from: relataionBooks.compactMap { $0 as? BookEntity }
@@ -140,18 +136,6 @@ final class CorePublisherDataStore {
             differenceFromRelation.deletedElements.forEach { element in
                 publisherEntity.removeFromBooks(element)
             }
-
-            differenceFromStored.insertedIndex.forEach { index in
-                let newBookEntity = BookEntity(context: context)
-                let book = publisher.books[index]
-                newBookEntity.id = Int64(book.id)
-                newBookEntity.name = book.name
-                newBookEntity.price = Int64(book.price)
-                newBookEntity.publisherId = Int64(publisher.id)
-                context.insert(newBookEntity)
-                publisherEntity.addToBooks(newBookEntity)
-            }
-
         }
 
 
