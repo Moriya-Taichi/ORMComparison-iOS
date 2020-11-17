@@ -198,6 +198,18 @@ final class RealmPublisherStore {
                 return newBookObject
             }
 
+            if realm.isInWriteTransaction {
+                newBookObjects.forEach { newBookObject in
+                    realm.add(newBookObject)
+                }
+            } else {
+                try? realm.write {
+                    newBookObjects.forEach { newBookObject in
+                        realm.add(newBookObject)
+                    }
+                }
+            }
+
             return bookObjects + newBookObjects
 
         }
