@@ -107,7 +107,10 @@ final class RealmPublisherStore {
     }
 
     func update(publisher: Publisher) {
-        guard let storedPublisher = realm.object(ofType: PublisherObject.self, forPrimaryKey: publisher.id) else {
+        guard let storedPublisher = realm.object(
+                ofType: PublisherObject.self,
+                forPrimaryKey: publisher.id
+        ) else {
             return
         }
         if realm.isInWriteTransaction {
@@ -120,20 +123,24 @@ final class RealmPublisherStore {
     }
 
     private func updateProcess(publisher: Publisher, storedPublisher: PublisherObject) {
-        let owner = OwnerObject()
+        let owner = getOrCreateOwner(owner: publisher.owner)
         owner.age = publisher.owner.age
         owner.name = publisher.owner.name
         owner.profile = publisher.owner.profile
+
         storedPublisher.name = publisher.name
         storedPublisher.owner = owner
-        publisher.books.forEach { book in
-            let object = BookObject()
-            object.id = book.id
-            object.name = book.name
-            object.price = book.price
-            try? realm.add(object, update: .modified)
+
+        let bookObjects = getOrCreateBooks(books: publisher.books)
+
+        zip(
+            bookObjects.sorted { $0.id < $1.id },
+            publisher.books
+        )
+        .forEach { bookObject, book in
+            bookObject.name = book.name
+            bookObject.price = book.price
         }
-        let list = List<BookObject>()
     }
 
     func delete(publisher: Publisher) {
