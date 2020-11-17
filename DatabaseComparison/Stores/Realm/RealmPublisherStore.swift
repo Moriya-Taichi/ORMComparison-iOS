@@ -176,4 +176,30 @@ final class RealmPublisherStore {
 
         return newOwnerObject
     }
+
+    private func getOrCreateBooks(books: [Book]) -> [BookObject] {
+        let predicate = NSPredicate(format: "id IN @%", books.map { $0.id })
+        let bookObjects: [BookObject] = realm.objects(BookObject.self).filter(predicate).map { $0 }
+        if books.count == bookObjects.count {
+            return bookObjects
+        } else {
+            let difference = books
+                .map { $0.id }
+                .differenceIndex(
+                    from: bookObjects.map { $0.id }
+                )
+
+            let newBookObjects = difference.insertedIndex.map { index -> BookObject in
+                let newBookObject = BookObject()
+                let book = books[index]
+                newBookObject.id = book.id
+                newBookObject.name = book.name
+                newBookObject.price = book.price
+                return newBookObject
+            }
+
+            return bookObjects + newBookObjects
+
+        }
+    }
 }
