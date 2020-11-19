@@ -55,6 +55,10 @@ final class FMDBBookStore {
         )
     }
 
+    func createBooks(books: [Book], publisherID: Int) {
+        
+    }
+
     func read() -> [Book] {
         var books: [Book] = []
         if
@@ -68,6 +72,26 @@ final class FMDBBookStore {
                 price: result.long(forColumnIndex: 2)
             )
             books.append(book)
+        }
+        return books
+    }
+
+    func readBooksByID(publisherID: Int) -> [Book] {
+        var books: [Book] = []
+        let query = "SELECT * FROM books WHERE publisher_id = ?;"
+        if
+            let result = try? databaseWrapper.executeQuery(
+                query,
+                values: [publisherID]
+            ) {
+            while result.next() {
+                let book = Book(
+                    id: result.long(forColumnIndex: 0),
+                    name: result.string(forColumnIndex: 1) ?? "",
+                    price: result.long(forColumnIndex: 2)
+                )
+                books.append(book)
+            }
         }
         return books
     }
