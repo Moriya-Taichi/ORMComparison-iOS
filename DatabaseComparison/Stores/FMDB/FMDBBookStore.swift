@@ -167,4 +167,14 @@ final class FMDBBookStore {
             ]
         )
     }
+
+    func deleteByPublisherID(publisherID: Int) {
+        let query = "DELETE FROM books WHERE publisher_id = ?"
+        try? databaseWrapper.executeUpdate(
+            query,
+            values: [
+                publisherID
+            ]
+        )
+    }
 }
