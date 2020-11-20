@@ -60,6 +60,8 @@ final class FMDBPublisherStore {
                 publisher.owner.id
             ]
         )
+        ownerStore.create(owner: publisher.owner)
+        bookStore.createBooks(books: publisher.books, publisherID: publisher.id)
     }
 
     func readByLazyLoading () -> [Publisher] {
