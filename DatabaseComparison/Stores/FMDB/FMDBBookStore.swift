@@ -56,7 +56,20 @@ final class FMDBBookStore {
     }
 
     func createBooks(books: [Book], publisherID: Int) {
-        
+        let sql = "INSERT INTO books (id, name, price, publisher_id) VALUES "
+        let queryValue = Array(repeating: "(?,?,?,?)", count: books.count).joined(separator: ",")
+        let query = sql + queryValue + ";"
+        try? databaseWrapper.executeUpdate(
+            query,
+            values: books.map { book -> [Any] in
+                [
+                    book.id,
+                    book.name,
+                    book.price,
+                    publisherID
+                ]
+            }.flatMap { $0 }
+        )
     }
 
     func read() -> [Book] {
