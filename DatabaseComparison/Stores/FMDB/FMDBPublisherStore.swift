@@ -193,5 +193,6 @@ final class FMDBPublisherStore {
 
     func delete(publisher: Publisher) {
         try? databaseWrapper.executeUpdate(deleteSQL, values: [publisher.id])
+        bookStore.deleteByPublisherID(publisherID: publisher.id)
     }
 }
