@@ -34,6 +34,13 @@ final class FMDBDatabaseWrapeer {
         database.close()
     }
 
+    func executeUpdate(_ sql: String, withArgumentsIn: [Any]) -> Bool {
+        database.open()
+        let isSucceed = database.executeUpdate(sql, withArgumentsIn: withArgumentsIn)
+        database.close()
+        return isSucceed
+    }
+
     func executeUpdateWithoutOpen(_ sql: String, values: [Any]?) throws {
         if database.isOpen {
             try database.executeUpdate(sql, values: values)
