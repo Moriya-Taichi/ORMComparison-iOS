@@ -7,6 +7,43 @@ final class GRDBPublisherStore {
 
     init (databaseQueue: DatabaseQueue) {
         self.databaseQueue = databaseQueue
+        try? databaseQueue.write { database in
+            try? database.create(
+                table: GRDBStoredPublisher.databaseTableName,
+                temporary: false,
+                ifNotExists: true
+            ) { table in
+                table.column("id", .integer).notNull()
+                table.primaryKey(["id"])
+                table.column("name", .text).notNull()
+                table.column("ownerId", .integer).notNull()
+            }
+
+            try? database.create(
+                table: GRDBStoredBook.databaseTableName,
+                temporary: false,
+                ifNotExists: true
+            ){ table in
+                table.column("id", .integer).notNull()
+                table.primaryKey(["id"])
+                table.column("name", .text).notNull()
+                table.column("price", .integer).notNull()
+                table.column("publisherId", .integer).notNull()
+            }
+
+            try? database.create(
+                table: Owner.databaseTableName,
+                temporary: false,
+                ifNotExists: true
+            ) { table in
+                table.column("id", .integer).notNull()
+                table.primaryKey(["id"])
+                table.column("name", .text).notNull()
+                table.column("age", .integer).notNull()
+                table.column("profile", .text).notNull()
+            }
+
+        }
     }
 
     func create(publisher: Publisher) {
@@ -42,15 +79,34 @@ final class GRDBPublisherStore {
 
     func update(publisher: Publisher) {
         try? databaseQueue.write { database in
+            let storedBooks: [GRDBStoredBook]? = try? GRDBStoredBook
+                .filter(
+                    GRDBStoredBook.Columns.publisherId == publisher.id
+                )
+                .fetchAll(database)
             try? publisher.owner.update(database)
+
+            if let storedBooks = storedBooks {
+                let difference = publisher.books.map { $0.id }
+                    .differenceIndex(from: storedBooks.map { $0.id })
+                difference.deletedIndex.forEach { index in
+                    let book = GRDBStoredBook(
+                        id: publisher.books[index].id,
+                        name: publisher.books[index].name,
+                        price: publisher.books[index].price,
+                        publisherId: publisher.id
+                    )
+                    try? book.delete(database)
+                }
+            }
             publisher.books.forEach { book in
-                let book = GRDBStoredBook(
+                var book = GRDBStoredBook(
                     id: book.id,
                     name: book.name,
                     price: book.price,
                     publisherId: publisher.id
                 )
-                try? book.update(database)
+                try? book.save(database)
             }
             let publisherInfo = GRDBStoredPublisher(
                 id: publisher.id,
@@ -63,7 +119,6 @@ final class GRDBPublisherStore {
 
     func delete(publisher: Publisher) {
         try? databaseQueue.write { database in
-            try? publisher.owner.delete(database)
             publisher.books.forEach { book in
                 let book = GRDBStoredBook(
                     id: book.id,
