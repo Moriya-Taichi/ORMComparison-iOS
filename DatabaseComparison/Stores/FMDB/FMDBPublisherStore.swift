@@ -1,6 +1,6 @@
 import FMDB
 
-final class FMDBPublisherStore {
+final class FMDBPublisherStore: PublisherStore {
 
     private let databaseWrapper: FMDBDatabaseWrapeer
     private let bookStore: FMDBBookStore
@@ -112,7 +112,7 @@ final class FMDBPublisherStore {
         }
     }
 
-    func readByEagerLoading() -> [Publisher] {
+    func read() -> [Publisher] {
         var publishers: [Publisher] = []
         let query = "SELECT * FROM publishers " +
             "LEFT JOIN books ON publishers.id == books.id " +

@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-final class CorePublisherDataStore {
+final class CorePublisherDataStore: PublisherStore {
 
     private let container: NSPersistentContainer
 

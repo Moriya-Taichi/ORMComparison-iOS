@@ -1,7 +1,7 @@
 import Foundation
 import GRDB
 
-final class GRDBPublisherStore {
+final class GRDBPublisherStore: PublisherStore {
 
     private let databaseQueue: DatabaseQueue
 
@@ -68,12 +68,12 @@ final class GRDBPublisherStore {
         }
     }
 
-    func read() -> [Publisher]? {
+    func read() -> [Publisher] {
         return databaseQueue.read { database in
             let request = GRDBStoredPublisher
                 .including(all: GRDBStoredPublisher.books)
                 .including(required: GRDBStoredPublisher.owner)
-            return try? Publisher.fetchAll(database, request)
+            return (try? Publisher.fetchAll(database, request)) ?? []
         }
     }
 

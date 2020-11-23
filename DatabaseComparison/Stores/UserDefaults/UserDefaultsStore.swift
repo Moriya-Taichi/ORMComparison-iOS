@@ -1,17 +1,17 @@
 import Foundation
 
-final class UserDefaultsStore {
+final class UserDefaultsStore: PublisherStore {
 
     private let defaults = UserDefaults.standard
 
     func create(publisher: Publisher) {
         var storedPublishers = read()
-        storedPublishers?.append(publisher)
+        storedPublishers.append(publisher)
         let publishersData = try? JSONEncoder().encode(storedPublishers)
         defaults.setValue(publishersData, key: .publisher)
     }
 
-    func read () -> [Publisher]? {
+    func read () -> [Publisher] {
         guard
             let data = defaults.data(.publisher),
             let publishers = try? JSONDecoder().decode(
@@ -19,7 +19,7 @@ final class UserDefaultsStore {
                 from: data
             )
         else {
-            return nil
+            return []
         }
         return publishers
     }

@@ -33,7 +33,7 @@ class OwnerObject: Object {
     }
 }
 
-final class RealmPublisherStore {
+final class RealmPublisherStore: PublisherStore {
 
     let realm: Realm
 
