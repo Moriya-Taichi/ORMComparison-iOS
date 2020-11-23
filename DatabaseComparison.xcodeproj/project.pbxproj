@@ -20,6 +20,7 @@
 		8D0EA854252CC50E005E51C3 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA853252CC50E005E51C3 /* UserDefaultsStore.swift */; };
 		8D0EA857252CC51F005E51C3 /* FMDBPublisherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA856252CC51E005E51C3 /* FMDBPublisherStore.swift */; };
 		8D2FD7E0255EB0E60042828A /* Array+DIfference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7DF255EB0E60042828A /* Array+DIfference.swift */; };
+		8D2FD7E4256B8CD80042828A /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7E3256B8CD80042828A /* Container.swift */; };
 		8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */; };
 		8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */; };
 		8D5B5FEB25455A1300B22207 /* CoreDataAbstractObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */; };
@@ -49,6 +50,7 @@
 		8D0EA853252CC50E005E51C3 /* UserDefaultsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStore.swift; sourceTree = "<group>"; };
 		8D0EA856252CC51E005E51C3 /* FMDBPublisherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBPublisherStore.swift; sourceTree = "<group>"; };
 		8D2FD7DF255EB0E60042828A /* Array+DIfference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+DIfference.swift"; sourceTree = "<group>"; };
+		8D2FD7E3256B8CD80042828A /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBModelExtension.swift; sourceTree = "<group>"; };
 		8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBMigrator.swift; sourceTree = "<group>"; };
 		8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAbstractObjectStore.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				8D0EA833252BB62B005E51C3 /* LaunchScreen.storyboard */,
 				8D0EA836252BB62B005E51C3 /* Info.plist */,
 				8D0EA82E252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld */,
+				8D2FD7E3256B8CD80042828A /* Container.swift */,
 			);
 			path = DatabaseComparison;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */,
 				8D727BC825397E3200F2912D /* FMDBDatabaseWrapeer.swift in Sources */,
 				8D0EA826252BB62A005E51C3 /* AppDelegate.swift in Sources */,
+				8D2FD7E4256B8CD80042828A /* Container.swift in Sources */,
 				8D2FD7E0255EB0E60042828A /* Array+DIfference.swift in Sources */,
 				8D0EA84E252CC4E8005E51C3 /* GRDBStore.swift in Sources */,
 				8D0EA828252BB62A005E51C3 /* SceneDelegate.swift in Sources */,
