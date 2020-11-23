@@ -23,6 +23,7 @@
 		8D2FD7E4256B8CD80042828A /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7E3256B8CD80042828A /* Container.swift */; };
 		8D2FD7E7256BB6350042828A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7E6256BB6350042828A /* MockData.swift */; };
 		8D2FD7EA256BBF6D0042828A /* PublisherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7E9256BBF6D0042828A /* PublisherStore.swift */; };
+		8D2FD7EE256BC11F0042828A /* PublisherListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7ED256BC11F0042828A /* PublisherListViewModel.swift */; };
 		8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */; };
 		8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */; };
 		8D5B5FEB25455A1300B22207 /* CoreDataAbstractObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */; };
@@ -55,6 +56,7 @@
 		8D2FD7E3256B8CD80042828A /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		8D2FD7E6256BB6350042828A /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		8D2FD7E9256BBF6D0042828A /* PublisherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherStore.swift; sourceTree = "<group>"; };
+		8D2FD7ED256BC11F0042828A /* PublisherListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherListViewModel.swift; sourceTree = "<group>"; };
 		8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBModelExtension.swift; sourceTree = "<group>"; };
 		8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBMigrator.swift; sourceTree = "<group>"; };
 		8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAbstractObjectStore.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				8D0EA82E252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld */,
 				8D2FD7E3256B8CD80042828A /* Container.swift */,
 				8D2FD7E6256BB6350042828A /* MockData.swift */,
+				8D2FD7ED256BC11F0042828A /* PublisherListViewModel.swift */,
 			);
 			path = DatabaseComparison;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				8D0EA830252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld in Sources */,
 				8D0EA851252CC4F1005E51C3 /* CoreDataPublisherStore.swift in Sources */,
 				8DE32AE325470E74007A3ADB /* DefaultsKey.swift in Sources */,
+				8D2FD7EE256BC11F0042828A /* PublisherListViewModel.swift in Sources */,
 				8DE32B6E255C7686007A3ADB /* PublisherMigration.swift in Sources */,
 				8D727BC525397E0E00F2912D /* FMDBBookStore.swift in Sources */,
 				8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */,
