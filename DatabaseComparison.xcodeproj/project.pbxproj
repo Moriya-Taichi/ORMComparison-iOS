@@ -28,6 +28,16 @@
 		8D2FD7FA256C85BB0042828A /* PublisherCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD7F9256C85BB0042828A /* PublisherCellView.xib */; };
 		8D2FD7FD256C85C60042828A /* PublisherCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7FC256C85C60042828A /* PublisherCellView.swift */; };
 		8D2FD800256C89050042828A /* loadNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7FF256C89050042828A /* loadNib.swift */; };
+		8D2FD807256CC0380042828A /* PublisherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD806256CC0380042828A /* PublisherListViewController.swift */; };
+		8D2FD80B256CC1290042828A /* PublisherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD80A256CC1290042828A /* PublisherViewController.swift */; };
+		8D2FD80E256CC1360042828A /* BookCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD80D256CC1360042828A /* BookCellView.swift */; };
+		8D2FD811256CC13D0042828A /* BookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD810256CC13D0042828A /* BookCell.swift */; };
+		8D2FD814256CC1D90042828A /* BookCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD813256CC1D90042828A /* BookCellView.xib */; };
+		8D2FD817256CC1E10042828A /* BookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD816256CC1E10042828A /* BookCell.xib */; };
+		8D2FD81A256CC34D0042828A /* PublisherListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD819256CC34D0042828A /* PublisherListView.xib */; };
+		8D2FD81D256CC60F0042828A /* PublisherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD81C256CC60F0042828A /* PublisherView.xib */; };
+		8D2FD823256CC9130042828A /* ORMListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD822256CC9130042828A /* ORMListView.xib */; };
+		8D2FD826256CC9290042828A /* ORMListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD825256CC9290042828A /* ORMListViewController.swift */; };
 		8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */; };
 		8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */; };
 		8D5B5FEB25455A1300B22207 /* CoreDataAbstractObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */; };
@@ -65,6 +75,16 @@
 		8D2FD7F9256C85BB0042828A /* PublisherCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PublisherCellView.xib; sourceTree = "<group>"; };
 		8D2FD7FC256C85C60042828A /* PublisherCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherCellView.swift; sourceTree = "<group>"; };
 		8D2FD7FF256C89050042828A /* loadNib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loadNib.swift; sourceTree = "<group>"; };
+		8D2FD806256CC0380042828A /* PublisherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherListViewController.swift; sourceTree = "<group>"; };
+		8D2FD80A256CC1290042828A /* PublisherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherViewController.swift; sourceTree = "<group>"; };
+		8D2FD80D256CC1360042828A /* BookCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCellView.swift; sourceTree = "<group>"; };
+		8D2FD810256CC13D0042828A /* BookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCell.swift; sourceTree = "<group>"; };
+		8D2FD813256CC1D90042828A /* BookCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookCellView.xib; sourceTree = "<group>"; };
+		8D2FD816256CC1E10042828A /* BookCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookCell.xib; sourceTree = "<group>"; };
+		8D2FD819256CC34D0042828A /* PublisherListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PublisherListView.xib; sourceTree = "<group>"; };
+		8D2FD81C256CC60F0042828A /* PublisherView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PublisherView.xib; sourceTree = "<group>"; };
+		8D2FD822256CC9130042828A /* ORMListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ORMListView.xib; sourceTree = "<group>"; };
+		8D2FD825256CC9290042828A /* ORMListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMListViewController.swift; sourceTree = "<group>"; };
 		8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBModelExtension.swift; sourceTree = "<group>"; };
 		8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBMigrator.swift; sourceTree = "<group>"; };
 		8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAbstractObjectStore.swift; sourceTree = "<group>"; };
@@ -145,10 +165,8 @@
 		8D2FD7F0256BC2BF0042828A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				8D2FD7F3256BC3780042828A /* PublisherCell.swift */,
-				8D2FD7F6256BC3840042828A /* PublisherCell.xib */,
-				8D2FD7F9256C85BB0042828A /* PublisherCellView.xib */,
-				8D2FD7FC256C85C60042828A /* PublisherCellView.swift */,
+				8D2FD803256CBFFD0042828A /* ViewController */,
+				8D2FD802256CBFF50042828A /* Cell */,
 				8D2FD7FF256C89050042828A /* loadNib.swift */,
 			);
 			path = View;
@@ -160,6 +178,74 @@
 				8D2FD7ED256BC11F0042828A /* PublisherListViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		8D2FD802256CBFF50042828A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8D2FD805256CC01B0042828A /* Book */,
+				8D2FD804256CC0140042828A /* Publisher */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		8D2FD803256CBFFD0042828A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8D2FD821256CC6B90042828A /* ORMList */,
+				8D2FD820256CC6A80042828A /* Publisher */,
+				8D2FD81F256CC69D0042828A /* PublisherList */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8D2FD804256CC0140042828A /* Publisher */ = {
+			isa = PBXGroup;
+			children = (
+				8D2FD7F3256BC3780042828A /* PublisherCell.swift */,
+				8D2FD7F6256BC3840042828A /* PublisherCell.xib */,
+				8D2FD7F9256C85BB0042828A /* PublisherCellView.xib */,
+				8D2FD7FC256C85C60042828A /* PublisherCellView.swift */,
+			);
+			path = Publisher;
+			sourceTree = "<group>";
+		};
+		8D2FD805256CC01B0042828A /* Book */ = {
+			isa = PBXGroup;
+			children = (
+				8D2FD80D256CC1360042828A /* BookCellView.swift */,
+				8D2FD810256CC13D0042828A /* BookCell.swift */,
+				8D2FD813256CC1D90042828A /* BookCellView.xib */,
+				8D2FD816256CC1E10042828A /* BookCell.xib */,
+			);
+			path = Book;
+			sourceTree = "<group>";
+		};
+		8D2FD81F256CC69D0042828A /* PublisherList */ = {
+			isa = PBXGroup;
+			children = (
+				8D2FD806256CC0380042828A /* PublisherListViewController.swift */,
+				8D2FD819256CC34D0042828A /* PublisherListView.xib */,
+			);
+			path = PublisherList;
+			sourceTree = "<group>";
+		};
+		8D2FD820256CC6A80042828A /* Publisher */ = {
+			isa = PBXGroup;
+			children = (
+				8D2FD80A256CC1290042828A /* PublisherViewController.swift */,
+				8D2FD81C256CC60F0042828A /* PublisherView.xib */,
+			);
+			path = Publisher;
+			sourceTree = "<group>";
+		};
+		8D2FD821256CC6B90042828A /* ORMList */ = {
+			isa = PBXGroup;
+			children = (
+				8D2FD822256CC9130042828A /* ORMListView.xib */,
+				8D2FD825256CC9290042828A /* ORMListViewController.swift */,
+			);
+			path = ORMList;
 			sourceTree = "<group>";
 		};
 		8D727BA8253950BC00F2912D /* Entity */ = {
@@ -299,7 +385,12 @@
 			files = (
 				8D2FD7F7256BC3840042828A /* PublisherCell.xib in Resources */,
 				8D0EA835252BB62B005E51C3 /* LaunchScreen.storyboard in Resources */,
+				8D2FD817256CC1E10042828A /* BookCell.xib in Resources */,
+				8D2FD81D256CC60F0042828A /* PublisherView.xib in Resources */,
+				8D2FD814256CC1D90042828A /* BookCellView.xib in Resources */,
+				8D2FD81A256CC34D0042828A /* PublisherListView.xib in Resources */,
 				8D0EA832252BB62B005E51C3 /* Assets.xcassets in Resources */,
+				8D2FD823256CC9130042828A /* ORMListView.xib in Resources */,
 				8D2FD7FA256C85BB0042828A /* PublisherCellView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,6 +447,7 @@
 				8D0EA857252CC51F005E51C3 /* FMDBPublisherStore.swift in Sources */,
 				8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */,
 				8D727BC825397E3200F2912D /* FMDBDatabaseWrapeer.swift in Sources */,
+				8D2FD807256CC0380042828A /* PublisherListViewController.swift in Sources */,
 				8D0EA826252BB62A005E51C3 /* AppDelegate.swift in Sources */,
 				8D2FD7E4256B8CD80042828A /* Container.swift in Sources */,
 				8D2FD7E0255EB0E60042828A /* Array+DIfference.swift in Sources */,
@@ -367,11 +459,15 @@
 				8D2FD800256C89050042828A /* loadNib.swift in Sources */,
 				8D0EA830252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld in Sources */,
 				8D0EA851252CC4F1005E51C3 /* CoreDataPublisherStore.swift in Sources */,
+				8D2FD811256CC13D0042828A /* BookCell.swift in Sources */,
 				8DE32AE325470E74007A3ADB /* DefaultsKey.swift in Sources */,
+				8D2FD826256CC9290042828A /* ORMListViewController.swift in Sources */,
 				8D2FD7EE256BC11F0042828A /* PublisherListViewModel.swift in Sources */,
 				8D2FD7FD256C85C60042828A /* PublisherCellView.swift in Sources */,
 				8DE32B6E255C7686007A3ADB /* PublisherMigration.swift in Sources */,
+				8D2FD80E256CC1360042828A /* BookCellView.swift in Sources */,
 				8D727BC525397E0E00F2912D /* FMDBBookStore.swift in Sources */,
+				8D2FD80B256CC1290042828A /* PublisherViewController.swift in Sources */,
 				8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */,
 				8D727BC225397B4700F2912D /* FMDBOwnerStore.swift in Sources */,
 				8D0EA84B252CC4E0005E51C3 /* RealmPublisherStore.swift in Sources */,
