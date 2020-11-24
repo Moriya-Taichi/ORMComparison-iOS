@@ -10,7 +10,6 @@
 		8250264E5C2ABAF83CF83404 /* Pods_DatabaseComparison.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4693C13DFC13D22D82B5012 /* Pods_DatabaseComparison.framework */; };
 		8D0EA826252BB62A005E51C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA825252BB62A005E51C3 /* AppDelegate.swift */; };
 		8D0EA828252BB62A005E51C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA827252BB62A005E51C3 /* SceneDelegate.swift */; };
-		8D0EA82D252BB62A005E51C3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D0EA82B252BB62A005E51C3 /* Main.storyboard */; };
 		8D0EA830252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA82E252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld */; };
 		8D0EA832252BB62B005E51C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D0EA831252BB62B005E51C3 /* Assets.xcassets */; };
 		8D0EA835252BB62B005E51C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D0EA833252BB62B005E51C3 /* LaunchScreen.storyboard */; };
@@ -24,6 +23,11 @@
 		8D2FD7E7256BB6350042828A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7E6256BB6350042828A /* MockData.swift */; };
 		8D2FD7EA256BBF6D0042828A /* PublisherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7E9256BBF6D0042828A /* PublisherStore.swift */; };
 		8D2FD7EE256BC11F0042828A /* PublisherListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7ED256BC11F0042828A /* PublisherListViewModel.swift */; };
+		8D2FD7F4256BC3780042828A /* PublisherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7F3256BC3780042828A /* PublisherCell.swift */; };
+		8D2FD7F7256BC3840042828A /* PublisherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD7F6256BC3840042828A /* PublisherCell.xib */; };
+		8D2FD7FA256C85BB0042828A /* PublisherCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD7F9256C85BB0042828A /* PublisherCellView.xib */; };
+		8D2FD7FD256C85C60042828A /* PublisherCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7FC256C85C60042828A /* PublisherCellView.swift */; };
+		8D2FD800256C89050042828A /* loadNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7FF256C89050042828A /* loadNib.swift */; };
 		8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */; };
 		8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */; };
 		8D5B5FEB25455A1300B22207 /* CoreDataAbstractObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */; };
@@ -42,7 +46,6 @@
 		8D0EA822252BB62A005E51C3 /* DatabaseComparison.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DatabaseComparison.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0EA825252BB62A005E51C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D0EA827252BB62A005E51C3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8D0EA82C252BB62A005E51C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8D0EA82F252BB62A005E51C3 /* DatabaseComparison.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DatabaseComparison.xcdatamodel; sourceTree = "<group>"; };
 		8D0EA831252BB62B005E51C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D0EA834252BB62B005E51C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -57,6 +60,11 @@
 		8D2FD7E6256BB6350042828A /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		8D2FD7E9256BBF6D0042828A /* PublisherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherStore.swift; sourceTree = "<group>"; };
 		8D2FD7ED256BC11F0042828A /* PublisherListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherListViewModel.swift; sourceTree = "<group>"; };
+		8D2FD7F3256BC3780042828A /* PublisherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherCell.swift; sourceTree = "<group>"; };
+		8D2FD7F6256BC3840042828A /* PublisherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PublisherCell.xib; sourceTree = "<group>"; };
+		8D2FD7F9256C85BB0042828A /* PublisherCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PublisherCellView.xib; sourceTree = "<group>"; };
+		8D2FD7FC256C85C60042828A /* PublisherCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherCellView.swift; sourceTree = "<group>"; };
+		8D2FD7FF256C89050042828A /* loadNib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loadNib.swift; sourceTree = "<group>"; };
 		8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBModelExtension.swift; sourceTree = "<group>"; };
 		8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBMigrator.swift; sourceTree = "<group>"; };
 		8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAbstractObjectStore.swift; sourceTree = "<group>"; };
@@ -105,18 +113,18 @@
 		8D0EA824252BB62A005E51C3 /* DatabaseComparison */ = {
 			isa = PBXGroup;
 			children = (
+				8D2FD7F1256BC2C80042828A /* ViewModel */,
+				8D2FD7F0256BC2BF0042828A /* View */,
 				8D727BA8253950BC00F2912D /* Entity */,
 				8D0EA83D252C5DC0005E51C3 /* Stores */,
 				8D0EA825252BB62A005E51C3 /* AppDelegate.swift */,
 				8D0EA827252BB62A005E51C3 /* SceneDelegate.swift */,
-				8D0EA82B252BB62A005E51C3 /* Main.storyboard */,
 				8D0EA831252BB62B005E51C3 /* Assets.xcassets */,
 				8D0EA833252BB62B005E51C3 /* LaunchScreen.storyboard */,
 				8D0EA836252BB62B005E51C3 /* Info.plist */,
 				8D0EA82E252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld */,
 				8D2FD7E3256B8CD80042828A /* Container.swift */,
 				8D2FD7E6256BB6350042828A /* MockData.swift */,
-				8D2FD7ED256BC11F0042828A /* PublisherListViewModel.swift */,
 			);
 			path = DatabaseComparison;
 			sourceTree = "<group>";
@@ -132,6 +140,26 @@
 				8D2FD7E9256BBF6D0042828A /* PublisherStore.swift */,
 			);
 			path = Stores;
+			sourceTree = "<group>";
+		};
+		8D2FD7F0256BC2BF0042828A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8D2FD7F3256BC3780042828A /* PublisherCell.swift */,
+				8D2FD7F6256BC3840042828A /* PublisherCell.xib */,
+				8D2FD7F9256C85BB0042828A /* PublisherCellView.xib */,
+				8D2FD7FC256C85C60042828A /* PublisherCellView.swift */,
+				8D2FD7FF256C89050042828A /* loadNib.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8D2FD7F1256BC2C80042828A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8D2FD7ED256BC11F0042828A /* PublisherListViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		8D727BA8253950BC00F2912D /* Entity */ = {
@@ -269,9 +297,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D2FD7F7256BC3840042828A /* PublisherCell.xib in Resources */,
 				8D0EA835252BB62B005E51C3 /* LaunchScreen.storyboard in Resources */,
 				8D0EA832252BB62B005E51C3 /* Assets.xcassets in Resources */,
-				8D0EA82D252BB62A005E51C3 /* Main.storyboard in Resources */,
+				8D2FD7FA256C85BB0042828A /* PublisherCellView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,14 +359,17 @@
 				8D0EA826252BB62A005E51C3 /* AppDelegate.swift in Sources */,
 				8D2FD7E4256B8CD80042828A /* Container.swift in Sources */,
 				8D2FD7E0255EB0E60042828A /* Array+DIfference.swift in Sources */,
+				8D2FD7F4256BC3780042828A /* PublisherCell.swift in Sources */,
 				8D0EA84E252CC4E8005E51C3 /* GRDBPublisherStore.swift in Sources */,
 				8D0EA828252BB62A005E51C3 /* SceneDelegate.swift in Sources */,
 				8D727BB2253953F800F2912D /* Book.swift in Sources */,
 				8D2FD7E7256BB6350042828A /* MockData.swift in Sources */,
+				8D2FD800256C89050042828A /* loadNib.swift in Sources */,
 				8D0EA830252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld in Sources */,
 				8D0EA851252CC4F1005E51C3 /* CoreDataPublisherStore.swift in Sources */,
 				8DE32AE325470E74007A3ADB /* DefaultsKey.swift in Sources */,
 				8D2FD7EE256BC11F0042828A /* PublisherListViewModel.swift in Sources */,
+				8D2FD7FD256C85C60042828A /* PublisherCellView.swift in Sources */,
 				8DE32B6E255C7686007A3ADB /* PublisherMigration.swift in Sources */,
 				8D727BC525397E0E00F2912D /* FMDBBookStore.swift in Sources */,
 				8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */,
@@ -354,14 +386,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		8D0EA82B252BB62A005E51C3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8D0EA82C252BB62A005E51C3 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		8D0EA833252BB62B005E51C3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
