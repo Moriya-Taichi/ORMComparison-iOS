@@ -38,6 +38,10 @@
 		8D2FD81D256CC60F0042828A /* PublisherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD81C256CC60F0042828A /* PublisherView.xib */; };
 		8D2FD823256CC9130042828A /* ORMListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD822256CC9130042828A /* ORMListView.xib */; };
 		8D2FD826256CC9290042828A /* ORMListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD825256CC9290042828A /* ORMListViewController.swift */; };
+		8D2FD82C256CDDFD0042828A /* ORMCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD82B256CDDFD0042828A /* ORMCell.swift */; };
+		8D2FD830256CE0870042828A /* ORMCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD82F256CE0870042828A /* ORMCellView.swift */; };
+		8D2FD833256CE0920042828A /* ORMCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD832256CE0920042828A /* ORMCell.xib */; };
+		8D2FD836256CE09A0042828A /* ORMCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD835256CE09A0042828A /* ORMCellView.xib */; };
 		8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */; };
 		8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */; };
 		8D5B5FEB25455A1300B22207 /* CoreDataAbstractObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */; };
@@ -85,6 +89,10 @@
 		8D2FD81C256CC60F0042828A /* PublisherView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PublisherView.xib; sourceTree = "<group>"; };
 		8D2FD822256CC9130042828A /* ORMListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ORMListView.xib; sourceTree = "<group>"; };
 		8D2FD825256CC9290042828A /* ORMListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMListViewController.swift; sourceTree = "<group>"; };
+		8D2FD82B256CDDFD0042828A /* ORMCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMCell.swift; sourceTree = "<group>"; };
+		8D2FD82F256CE0870042828A /* ORMCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMCellView.swift; sourceTree = "<group>"; };
+		8D2FD832256CE0920042828A /* ORMCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ORMCell.xib; sourceTree = "<group>"; };
+		8D2FD835256CE09A0042828A /* ORMCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ORMCellView.xib; sourceTree = "<group>"; };
 		8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBModelExtension.swift; sourceTree = "<group>"; };
 		8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBMigrator.swift; sourceTree = "<group>"; };
 		8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAbstractObjectStore.swift; sourceTree = "<group>"; };
@@ -183,6 +191,7 @@
 		8D2FD802256CBFF50042828A /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				8D2FD82A256CDBA10042828A /* ORM */,
 				8D2FD805256CC01B0042828A /* Book */,
 				8D2FD804256CC0140042828A /* Publisher */,
 			);
@@ -246,6 +255,17 @@
 				8D2FD825256CC9290042828A /* ORMListViewController.swift */,
 			);
 			path = ORMList;
+			sourceTree = "<group>";
+		};
+		8D2FD82A256CDBA10042828A /* ORM */ = {
+			isa = PBXGroup;
+			children = (
+				8D2FD82B256CDDFD0042828A /* ORMCell.swift */,
+				8D2FD82F256CE0870042828A /* ORMCellView.swift */,
+				8D2FD832256CE0920042828A /* ORMCell.xib */,
+				8D2FD835256CE09A0042828A /* ORMCellView.xib */,
+			);
+			path = ORM;
 			sourceTree = "<group>";
 		};
 		8D727BA8253950BC00F2912D /* Entity */ = {
@@ -389,7 +409,9 @@
 				8D2FD81D256CC60F0042828A /* PublisherView.xib in Resources */,
 				8D2FD814256CC1D90042828A /* BookCellView.xib in Resources */,
 				8D2FD81A256CC34D0042828A /* PublisherListView.xib in Resources */,
+				8D2FD833256CE0920042828A /* ORMCell.xib in Resources */,
 				8D0EA832252BB62B005E51C3 /* Assets.xcassets in Resources */,
+				8D2FD836256CE09A0042828A /* ORMCellView.xib in Resources */,
 				8D2FD823256CC9130042828A /* ORMListView.xib in Resources */,
 				8D2FD7FA256C85BB0042828A /* PublisherCellView.xib in Resources */,
 			);
@@ -445,6 +467,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D0EA857252CC51F005E51C3 /* FMDBPublisherStore.swift in Sources */,
+				8D2FD830256CE0870042828A /* ORMCellView.swift in Sources */,
 				8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */,
 				8D727BC825397E3200F2912D /* FMDBDatabaseWrapeer.swift in Sources */,
 				8D2FD807256CC0380042828A /* PublisherListViewController.swift in Sources */,
@@ -464,6 +487,7 @@
 				8D2FD826256CC9290042828A /* ORMListViewController.swift in Sources */,
 				8D2FD7EE256BC11F0042828A /* PublisherListViewModel.swift in Sources */,
 				8D2FD7FD256C85C60042828A /* PublisherCellView.swift in Sources */,
+				8D2FD82C256CDDFD0042828A /* ORMCell.swift in Sources */,
 				8DE32B6E255C7686007A3ADB /* PublisherMigration.swift in Sources */,
 				8D2FD80E256CC1360042828A /* BookCellView.swift in Sources */,
 				8D727BC525397E0E00F2912D /* FMDBBookStore.swift in Sources */,
