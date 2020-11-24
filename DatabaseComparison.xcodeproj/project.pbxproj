@@ -42,6 +42,7 @@
 		8D2FD830256CE0870042828A /* ORMCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD82F256CE0870042828A /* ORMCellView.swift */; };
 		8D2FD833256CE0920042828A /* ORMCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD832256CE0920042828A /* ORMCell.xib */; };
 		8D2FD836256CE09A0042828A /* ORMCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD835256CE09A0042828A /* ORMCellView.xib */; };
+		8D2FD83B256CFF420042828A /* CellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD83A256CFF420042828A /* CellItem.swift */; };
 		8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */; };
 		8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */; };
 		8D5B5FEB25455A1300B22207 /* CoreDataAbstractObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */; };
@@ -93,6 +94,7 @@
 		8D2FD82F256CE0870042828A /* ORMCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMCellView.swift; sourceTree = "<group>"; };
 		8D2FD832256CE0920042828A /* ORMCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ORMCell.xib; sourceTree = "<group>"; };
 		8D2FD835256CE09A0042828A /* ORMCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ORMCellView.xib; sourceTree = "<group>"; };
+		8D2FD83A256CFF420042828A /* CellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellItem.swift; sourceTree = "<group>"; };
 		8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBModelExtension.swift; sourceTree = "<group>"; };
 		8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBMigrator.swift; sourceTree = "<group>"; };
 		8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAbstractObjectStore.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				8D2FD82A256CDBA10042828A /* ORM */,
 				8D2FD805256CC01B0042828A /* Book */,
 				8D2FD804256CC0140042828A /* Publisher */,
+				8D2FD83A256CFF420042828A /* CellItem.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 				8DE32AE325470E74007A3ADB /* DefaultsKey.swift in Sources */,
 				8D2FD826256CC9290042828A /* ORMListViewController.swift in Sources */,
 				8D2FD7EE256BC11F0042828A /* PublisherListViewModel.swift in Sources */,
+				8D2FD83B256CFF420042828A /* CellItem.swift in Sources */,
 				8D2FD7FD256C85C60042828A /* PublisherCellView.swift in Sources */,
 				8D2FD82C256CDDFD0042828A /* ORMCell.swift in Sources */,
 				8DE32B6E255C7686007A3ADB /* PublisherMigration.swift in Sources */,
