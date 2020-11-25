@@ -11,24 +11,26 @@ import CoreData
 import GRDB
 
 struct Container {
-    static let coredataContainer = NSPersistentContainer(name: "")
+    private static let coredataContainer = NSPersistentContainer(name: "")
     private static let fmdbDatabaseWrapper = FMDBDatabaseWrapeer()
     private static let fmdbBookStore = FMDBBookStore(databaseWrapper: fmdbDatabaseWrapper)
     private static let fmdbOwnerStore = FMDBOwnerStore(databaseWrapper: fmdbDatabaseWrapper)
-    static let fmdbPublisherStore = FMDBPublisherStore(
-        databaseWrapper: fmdbDatabaseWrapper,
-        bookStore: fmdbBookStore,
-        ownerStore: fmdbOwnerStore
-    )
-
-    private static let grdbDatabaseQueue = try! DatabaseQueue(path: "")
-    static let grdbPublisherStore = GRDBPublisherStore(databaseQueue: grdbDatabaseQueue)
-
     private static let realmConfiguration = Realm.Configuration(
         encryptionKey: "hogehoge".data(using: .utf8),
         schemaVersion: 1,
         migrationBlock: nil,
         deleteRealmIfMigrationNeeded: false
     )
-    static let realm = try! Realm(configuration: realmConfiguration)
+    private static let realm = try! Realm(configuration: realmConfiguration)
+    private static let grdbDatabaseQueue = try! DatabaseQueue(path: "")
+    static let grdbPublisherStore = GRDBPublisherStore(databaseQueue: grdbDatabaseQueue)
+    static let fmdbPublisherStore = FMDBPublisherStore(
+        databaseWrapper: fmdbDatabaseWrapper,
+        bookStore: fmdbBookStore,
+        ownerStore: fmdbOwnerStore
+    )
+
+    static let coredataStore = CoreDataPublisherStore(container: coredataContainer)
+    static let realmStore = RealmPublisherStore(realm: realm)
+    static let userDefaultsStore = UserDefaultsStore()
 }
