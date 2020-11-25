@@ -67,7 +67,8 @@ extension ORMListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = Mock.mockORMList[indexPath.row]
         let viewModel = createViewModel(type: item)
-        let viewController = PublisherListViewController(viewModel: viewModel)
+        let viewController = PublisherListViewController()
+        viewController.viewModel = viewModel
         self.navigationController?.pushViewController(viewController, animated: true)
         collectionView.deselectItem(at: indexPath, animated: false)
     }
