@@ -8,7 +8,15 @@
 import Foundation
 
 struct Mock {
-    static let mockdata: [Publisher] = [
+    static let mockORMList: [ORMType] = [
+        .coredata,
+        .userDefaults,
+        .realm,
+        .grdb,
+        .fmdb
+    ]
+    
+    static let mockPublishers: [Publisher] = [
         Publisher(
             id: 1,
             name: "hoge-publisher-1",
