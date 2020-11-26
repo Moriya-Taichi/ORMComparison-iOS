@@ -79,34 +79,49 @@ final class GRDBPublisherStore: PublisherStore {
 
     func update(publisher: Publisher) {
         try? databaseQueue.write { database in
-            let storedBooks: [GRDBStoredBook]? = try? GRDBStoredBook
-                .filter(
-                    GRDBStoredBook.Columns.publisherId == publisher.id
-                )
-                .fetchAll(database)
+            let request = GRDBStoredPublisher
+                .filter(GRDBStoredPublisher.Columns.id == publisher.id)
+                .including(all: GRDBStoredPublisher.books)
+                .including(required: GRDBStoredPublisher.owner)
+            guard let storedPublisher = try? Publisher.fetchOne(database, request) else {
+                return
+            }
             try? publisher.owner.update(database)
 
-            if let storedBooks = storedBooks {
-                let difference = publisher.books.map { $0.id }
-                    .differenceIndex(from: storedBooks.map { $0.id })
-                difference.deletedIndex.forEach { index in
-                    let book = GRDBStoredBook(
-                        id: publisher.books[index].id,
-                        name: publisher.books[index].name,
-                        price: publisher.books[index].price,
-                        publisherId: publisher.id
-                    )
-                    try? book.delete(database)
-                }
-            }
-            publisher.books.forEach { book in
-                var book = GRDBStoredBook(
-                    id: book.id,
-                    name: book.name,
-                    price: book.price,
+            let difference = publisher
+                .books
+                .differenceElements(
+                    from: storedPublisher.books
+                )
+
+            difference.deletedElements.forEach { element in
+                let book = GRDBStoredBook(
+                    id: element.id,
+                    name: element.name,
+                    price: element.price,
                     publisherId: publisher.id
                 )
-                try? book.save(database)
+                try? book.delete(database)
+            }
+
+            difference.insertedElements.forEach { element in
+                var book = GRDBStoredBook(
+                    id: element.id,
+                    name: element.name,
+                    price: element.price,
+                    publisherId: publisher.id
+                )
+                try? book.insert(database)
+            }
+
+            difference.noChangedElements.forEach { element in
+                var book = GRDBStoredBook(
+                    id: element.id,
+                    name: element.name,
+                    price: element.price,
+                    publisherId: publisher.id
+                )
+                try? book.update(database)
             }
             let publisherInfo = GRDBStoredPublisher(
                 id: publisher.id,
