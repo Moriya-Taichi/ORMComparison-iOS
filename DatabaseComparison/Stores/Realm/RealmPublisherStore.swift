@@ -59,11 +59,13 @@ final class RealmPublisherStore: PublisherStore {
         let owner = getOrCreateOwner(owner: publisher.owner)
         newPublisher.owner = owner
 
-        let books = getOrCreateBooks(books: publisher.books)
-        books.forEach { book in
-            newPublisher.books.append(book)
+        publisher.books.forEach { book in
+            let bookObject = BookObject()
+            bookObject.id = book.id
+            bookObject.name = book.name
+            bookObject.price = book.price
+            newPublisher.books.append(bookObject)
         }
-
         try? realm.add(newPublisher)
     }
 
@@ -123,13 +125,32 @@ final class RealmPublisherStore: PublisherStore {
         storedPublisher.name = publisher.name
         storedPublisher.owner = owner
 
-        let bookObjects = getOrCreateBooks(books: publisher.books)
+        let difference = publisher
+            .books
+            .map { $0.id }
+            .differenceIndex(
+                from: storedPublisher.books.map { $0.id }
+            )
+
+        difference.deletedIndex.forEach { index in
+            storedPublisher.books.remove(at: index)
+        }
+
+        difference.insertedIndex.forEach { index in
+            let newBookObject = BookObject()
+            let book = publisher.books[index]
+            newBookObject.id = book.id
+            newBookObject.name = book.name
+            newBookObject.price = book.price
+            storedPublisher.books.append(newBookObject)
+        }
 
         zip(
-            bookObjects.sorted { $0.id < $1.id },
-            publisher.books
+            difference.noChangedIndex.map { publisher.books[$0] },
+            difference.noChangedOldIndex.map { storedPublisher.books[$0] }
         )
-        .forEach { bookObject, book in
+        .forEach { book, bookObject in
+            bookObject.id = book.id
             bookObject.name = book.name
             bookObject.price = book.price
         }
@@ -174,43 +195,5 @@ final class RealmPublisherStore: PublisherStore {
         }
 
         return newOwnerObject
-    }
-
-    private func getOrCreateBooks(books: [Book]) -> [BookObject] {
-        let predicate = NSPredicate(format: "id IN @%", books.map { $0.id })
-        let bookObjects: [BookObject] = realm.objects(BookObject.self).filter(predicate).map { $0 }
-        if books.count == bookObjects.count {
-            return bookObjects
-        } else {
-            let difference = books
-                .map { $0.id }
-                .differenceIndex(
-                    from: bookObjects.map { $0.id }
-                )
-
-            let newBookObjects = difference.insertedIndex.map { index -> BookObject in
-                let newBookObject = BookObject()
-                let book = books[index]
-                newBookObject.id = book.id
-                newBookObject.name = book.name
-                newBookObject.price = book.price
-                return newBookObject
-            }
-
-            if realm.isInWriteTransaction {
-                newBookObjects.forEach { newBookObject in
-                    realm.add(newBookObject)
-                }
-            } else {
-                try? realm.write {
-                    newBookObjects.forEach { newBookObject in
-                        realm.add(newBookObject)
-                    }
-                }
-            }
-
-            return bookObjects + newBookObjects
-
-        }
     }
 }
