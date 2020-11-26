@@ -30,18 +30,13 @@ final class CoreDataPublisherStore: PublisherStore {
         ownerEntity.profile = publisher.owner.profile
         publisherEntity.owner = ownerEntity
 
-        let bookEntities = getOrCreateBooks(publisher.books, publisher.id)
-            .sorted { lhs, rhs -> Bool in
-                return lhs.id < rhs.id
-            }
-        zip(
-            bookEntities,
-            publisher.books
-        )
-        .forEach { bookEntity, book in
+        publisher.books.forEach { book in
+            let bookEntity = BookEntity(context: context)
+            bookEntity.id = Int64(book.id)
             bookEntity.name = book.name
             bookEntity.price = Int64(book.price)
             publisherEntity.addToBooks(bookEntity)
+            context.insert(bookEntity)
         }
 
         context.insert(publisherEntity)
@@ -102,39 +97,43 @@ final class CoreDataPublisherStore: PublisherStore {
         }
 
         publisherEntity.name = publisher.name
-        publisherEntity.owner = getOrCreateOwner(publisher.owner)
-
         let ownerEntity = getOrCreateOwner(publisher.owner)
         ownerEntity.name = publisher.owner.name
         ownerEntity.age = Int32(publisher.owner.age)
         ownerEntity.profile = publisher.owner.profile
+        publisherEntity.owner = ownerEntity
 
-        let bookEntities = getOrCreateBooks(publisher.books, publisher.id)
-            .sorted { lhs, rhs -> Bool in
-                return lhs.id < rhs.id
-            }
-        zip(
-            bookEntities,
-            publisher.books
-        )
-        .forEach { bookEntity, book in
-            bookEntity.name = book.name
-            bookEntity.price = Int64(book.price)
-            publisherEntity.addToBooks(bookEntity)
-        }
-
-        if let relataionBooks = publisherEntity.books {
-            let differenceFromRelation = bookEntities
-                .differenceElements(
-                    from: relataionBooks.compactMap { $0 as? BookEntity }
+        if let relataionBooks = publisherEntity.books?.compactMap({ $0 as? BookEntity }) {
+            let difference = publisher
+                .books
+                .map { $0.id }
+                .differenceIndex(
+                    from: relataionBooks.map { Int($0.id) }
                 )
 
-            differenceFromRelation.insertedElements.forEach { element in
-                publisherEntity.addToBooks(element)
+            difference.insertedIndex.forEach { index in
+                let book = publisher.books[index]
+                let bookEntity = BookEntity(context: context)
+                bookEntity.id = Int64(book.id)
+                bookEntity.name = book.name
+                bookEntity.price = Int64(book.price)
+                publisherEntity.addToBooks(bookEntity)
+                context.insert(bookEntity)
             }
 
-            differenceFromRelation.deletedElements.forEach { element in
-                publisherEntity.removeFromBooks(element)
+            difference.deletedIndex.forEach { index in
+                let bookEntity = relataionBooks[index]
+                publisherEntity.removeFromBooks(bookEntity)
+            }
+
+            zip(
+                difference.noChangedIndex.map { publisher.books[$0] },
+                difference.noChangedOldIndex.map { relataionBooks[$0] }
+            )
+            .forEach { book, bookEntity in
+                bookEntity.id = Int64(book.id)
+                bookEntity.name = book.name
+                bookEntity.price = Int64(book.price)
             }
         }
 
@@ -183,45 +182,6 @@ final class CoreDataPublisherStore: PublisherStore {
             newOwnerEntity.profile = owner.profile
             context.insert(newOwnerEntity)
             return newOwnerEntity
-        }
-    }
-
-    private func getOrCreateBooks(_ books: [Book], _ publisherID: Int) -> [BookEntity] {
-        let context = container.viewContext
-        let request: NSFetchRequest<BookEntity> = BookEntity.fetchRequest()
-        request.predicate = .init(format: "id IN %@", argumentArray: books.map { $0.id })
-        guard let bookEntities = try? context.fetch(request) else {
-            return books.map { book -> BookEntity in
-                let newBookEntity = BookEntity(context: context)
-                newBookEntity.id = Int64(book.id)
-                newBookEntity.name = book.name
-                newBookEntity.price = Int64(book.price)
-                newBookEntity.publisherId = Int64(publisherID)
-                context.insert(newBookEntity)
-                saveContext()
-                return newBookEntity
-            }
-        }
-
-        if bookEntities.count == books.count {
-            return bookEntities
-        } else {
-            let difference = books.map { $0.id }
-                .differenceIndex(
-                    from: bookEntities.map { Int($0.id) }
-                )
-            let insertedElements = difference.insertedIndex.map { index -> BookEntity in
-                let book = books[index]
-                let newBookEntity = BookEntity(context: context)
-                newBookEntity.id = Int64(book.id)
-                newBookEntity.name = book.name
-                newBookEntity.price = Int64(book.price)
-                newBookEntity.publisherId = Int64(publisherID)
-                context.insert(newBookEntity)
-                return newBookEntity
-            }
-            saveContext()
-            return bookEntities + insertedElements
         }
     }
 }
