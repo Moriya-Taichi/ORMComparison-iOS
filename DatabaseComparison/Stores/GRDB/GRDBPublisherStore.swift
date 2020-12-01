@@ -13,10 +13,15 @@ final class GRDBPublisherStore: PublisherStore {
                 temporary: false,
                 ifNotExists: true
             ) { table in
-                table.column("id", .integer).notNull()
+                table.column("id", .integer)
+                    .indexed()
+                    .notNull()
                 table.primaryKey(["id"])
                 table.column("name", .text).notNull()
-                table.column("ownerId", .integer).notNull()
+                table.column("ownerId", .integer)
+                    .notNull()
+                    .indexed()
+                    .references(Owner.databaseTableName)
             }
 
             try? database.create(
@@ -24,11 +29,19 @@ final class GRDBPublisherStore: PublisherStore {
                 temporary: false,
                 ifNotExists: true
             ){ table in
-                table.column("id", .integer).notNull()
+                table.column("id", .integer)
+                    .indexed()
+                    .notNull()
                 table.primaryKey(["id"])
                 table.column("name", .text).notNull()
                 table.column("price", .integer).notNull()
-                table.column("publisherId", .integer).notNull()
+                table.column("publisherId", .integer)
+                    .notNull()
+                    .indexed()
+                    .references(
+                        GRDBStoredPublisher.databaseTableName,
+                        onDelete: .cascade
+                    )
             }
 
             try? database.create(
@@ -36,7 +49,9 @@ final class GRDBPublisherStore: PublisherStore {
                 temporary: false,
                 ifNotExists: true
             ) { table in
-                table.column("id", .integer).notNull()
+                table.column("id", .integer)
+                    .notNull()
+                    .indexed()
                 table.primaryKey(["id"])
                 table.column("name", .text).notNull()
                 table.column("age", .integer).notNull()
@@ -70,8 +85,9 @@ final class GRDBPublisherStore: PublisherStore {
 
     func read() -> [Publisher] {
         return databaseQueue.read { database in
+            let temporalKey = GRDBStoredPublisher.books.forKey("books")
             let request = GRDBStoredPublisher
-                .including(all: GRDBStoredPublisher.books)
+                .including(all: temporalKey)
                 .including(required: GRDBStoredPublisher.owner)
             return (try? Publisher.fetchAll(database, request)) ?? []
         }
@@ -134,15 +150,6 @@ final class GRDBPublisherStore: PublisherStore {
 
     func delete(publisher: Publisher) {
         try? databaseQueue.write { database in
-            publisher.books.forEach { book in
-                let book = GRDBStoredBook(
-                    id: book.id,
-                    name: book.name,
-                    price: book.price,
-                    publisherId: publisher.id
-                )
-                try? book.delete(database)
-            }
             let publisherInfo = GRDBStoredPublisher(
                 id: publisher.id,
                 name: publisher.name,
