@@ -120,5 +120,120 @@ final class Benchmarker {
                 table.primaryKey(["id"])
             }
         }
+
+        fmDatabasePool.inExclusiveTransaction { fmDatabase, _ in
+            let parentTableSQL = "CREATE TABLE IF NOT EXISTS parents (id INTEGER PRIMARY KEY, name TEXT);"
+            let childTableSQL = "CREATE TABLE IF NOT EXISTS children (id INTEGER PRIMARY KEY, name TEXT, parent_id INTEGER, foreign key(parent_id) references parent(id));"
+            fmDatabase.open()
+            try? fmDatabase.executeUpdate(
+                parentTableSQL,
+                values: nil
+            )
+            try? fmDatabase.executeUpdate(
+                childTableSQL,
+                values: nil
+            )
+            fmDatabase.close()
+        }
+    }
+}
+
+extension Benchmarker {
+    func benchmarkInsertSimpleByCoreData() {
+
+    }
+
+    func benchmarkInsertOneToOneByCoreData() {
+
+    }
+
+    func benachmarkInsertOneToManyByCoreData() {
+
+    }
+
+    func benchmarkInsertSimpleByGRDB() {
+
+    }
+
+    func benchmarkInsertOneToOneByGRDB() {
+
+    }
+
+    func benachmarkInsertOneToManyByGRDB() {
+
+    }
+
+    func benchmarkInsertSimpleByRealm() {
+
+    }
+
+    func benchmarkInsertOneToOneByRealm() {
+
+    }
+
+    func benachmarkInsertOneToManyByRealm() {
+
+    }
+
+    func benchmarkInsertSimpleByFMDB() {
+
+    }
+
+    func benchmarkInsertOneToOneByFMDB() {
+
+    }
+
+    func benachmarkInsertOneToManyByFMDB() {
+
+    }
+}
+
+extension Benchmarker {
+    func benchmarkReadSimpleByCoreData() {
+
+    }
+
+    func benchmarkReadOneToOneByCoreData() {
+
+    }
+
+    func benchmarkReadOneToManyByCoreData() {
+
+    }
+
+    func benchmarkReadSimpleByGRDB() {
+
+    }
+
+    func benchmarkReadOneToOneByGRDB() {
+
+    }
+
+    func benchmarkReadOneToManyByGRDB() {
+
+    }
+
+    func benchmarkReadSimpleByRealm() {
+
+    }
+
+    func benchmarkReadOneToOneByRealm() {
+
+    }
+
+    func benchmarkReadOneToManyByRealm() {
+
+    }
+
+    func benchmarkReadSimpleByFMDB() {
+
+    }
+
+    func benchmarkReadOneToOneByFMDB() {
+
+    }
+
+    func benchmarkReadOneToManyByFMDB() {
+
     }
 }
