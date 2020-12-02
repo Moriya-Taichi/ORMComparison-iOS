@@ -43,9 +43,7 @@ final class Benchmarker {
                 table.column("name", .text).notNull()
                 table.primaryKey(["id"])
             }
-        }
 
-        try? databasePool.write { database in
             try? database.create(
                 table: GRDBObject
                     .OneToOneObject
@@ -59,9 +57,7 @@ final class Benchmarker {
                 table.column("name", .text).notNull()
                 table.primaryKey(["id"])
             }
-        }
 
-        try? databasePool.write { database in
             try? database.create(
                 table: GRDBObject
                     .OneToOneChildObject
@@ -81,9 +77,7 @@ final class Benchmarker {
                     )
                 table.primaryKey(["id"])
             }
-        }
 
-        try? databasePool.write { database in
             try? database.create(
                 table: GRDBObject
                     .OneToManyObject
@@ -97,9 +91,7 @@ final class Benchmarker {
                 table.column("name", .text).notNull()
                 table.primaryKey(["id"])
             }
-        }
 
-        try? databasePool.write { database in
             try? database.create(
                 table: GRDBObject
                     .OneToManyChildObject
