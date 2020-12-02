@@ -7,22 +7,24 @@
 
 import GRDB
 
-struct GRDBStoredPublisher: Decodable {
-    let id: Int
-    let name: String
-    let ownerId: Int
-}
+final class GRDBObject {
+    struct Publisher: Decodable {
+        let id: Int
+        let name: String
+        let ownerId: Int
+    }
 
-struct GRDBStoredBook: Decodable {
-    let id: Int
-    let name: String
-    let price: Int
-    let publisherId: Int
+    struct Book: Decodable {
+        let id: Int
+        let name: String
+        let price: Int
+        let publisherId: Int
+    }
 }
 
 extension Publisher: FetchableRecord { }
 
-extension GRDBStoredBook: MutablePersistableRecord, FetchableRecord {
+extension GRDBObject.Book: MutablePersistableRecord, FetchableRecord {
     enum Columns: String, ColumnExpression {
         case id, name, price, publisherId
     }
@@ -34,13 +36,13 @@ extension GRDBStoredBook: MutablePersistableRecord, FetchableRecord {
         container[Columns.publisherId] = publisherId
     }
 
-    static let publisher = belongsTo(GRDBStoredPublisher.self)
-    var publisher: QueryInterfaceRequest<GRDBStoredPublisher> {
-        request(for: GRDBStoredBook.publisher)
+    static let publisher = belongsTo(GRDBObject.Publisher.self)
+    var publisher: QueryInterfaceRequest<GRDBObject.Publisher> {
+        request(for: Self.publisher)
     }
 }
 
-extension GRDBStoredPublisher: MutablePersistableRecord, FetchableRecord  {
+extension GRDBObject.Publisher: MutablePersistableRecord, FetchableRecord  {
 
     enum Columns: String, ColumnExpression {
         case id, name, ownerId
@@ -52,10 +54,10 @@ extension GRDBStoredPublisher: MutablePersistableRecord, FetchableRecord  {
         container[Columns.ownerId] = ownerId
     }
 
-    static let books = hasMany(GRDBStoredBook.self)
+    static let books = hasMany(GRDBObject.Book.self)
     static let owner = belongsTo(Owner.self)
 
-    var books: QueryInterfaceRequest<GRDBStoredBook> {
+    var books: QueryInterfaceRequest<GRDBObject.Book> {
         request(for: Self.books)
     }
 
@@ -77,8 +79,8 @@ extension Owner: MutablePersistableRecord, FetchableRecord {
         container[Columns.profile] = profile
     }
 
-    static let publishers = hasMany(GRDBStoredPublisher.self)
-    var publishers: QueryInterfaceRequest<GRDBStoredPublisher> {
+    static let publishers = hasMany(GRDBObject.Publisher.self)
+    var publishers: QueryInterfaceRequest<GRDBObject.Publisher> {
         request(for: Owner.publishers)
     }
 }

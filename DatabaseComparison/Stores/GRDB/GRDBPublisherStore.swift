@@ -9,7 +9,9 @@ final class GRDBPublisherStore: PublisherStore {
         self.databaseQueue = databaseQueue
         try? databaseQueue.write { database in
             try? database.create(
-                table: GRDBStoredPublisher.databaseTableName,
+                table: GRDBObject
+                    .Publisher
+                    .databaseTableName,
                 temporary: false,
                 ifNotExists: true
             ) { table in
@@ -21,11 +23,15 @@ final class GRDBPublisherStore: PublisherStore {
                 table.column("ownerId", .integer)
                     .notNull()
                     .indexed()
-                    .references(Owner.databaseTableName)
+                    .references(
+                        Owner.databaseTableName
+                    )
             }
 
             try? database.create(
-                table: GRDBStoredBook.databaseTableName,
+                table: GRDBObject
+                    .Book
+                    .databaseTableName,
                 temporary: false,
                 ifNotExists: true
             ){ table in
@@ -39,7 +45,7 @@ final class GRDBPublisherStore: PublisherStore {
                     .notNull()
                     .indexed()
                     .references(
-                        GRDBStoredPublisher.databaseTableName,
+                        GRDBObject.Publisher.databaseTableName,
                         onDelete: .cascade
                     )
             }
@@ -66,7 +72,7 @@ final class GRDBPublisherStore: PublisherStore {
             var owner = publisher.owner
             try? owner.insert(database)
             publisher.books.forEach { book in
-                var book = GRDBStoredBook(
+                var book = GRDBObject.Book(
                     id: book.id,
                     name: book.name,
                     price: book.price,
@@ -74,7 +80,7 @@ final class GRDBPublisherStore: PublisherStore {
                 )
                 try? book.insert(database)
             }
-            var publisherInfo = GRDBStoredPublisher(
+            var publisherInfo = GRDBObject.Publisher(
                 id: publisher.id,
                 name: publisher.name,
                 ownerId: publisher.owner.id
@@ -85,20 +91,22 @@ final class GRDBPublisherStore: PublisherStore {
 
     func read() -> [Publisher] {
         return databaseQueue.read { database in
-            let temporalKey = GRDBStoredPublisher.books.forKey("books")
-            let request = GRDBStoredPublisher
+            let temporalKey = GRDBObject.Publisher.books.forKey("books")
+            let request = GRDBObject.Publisher
                 .including(all: temporalKey)
-                .including(required: GRDBStoredPublisher.owner)
+                .including(required: GRDBObject.Publisher.owner)
             return (try? Publisher.fetchAll(database, request)) ?? []
         }
     }
 
     func update(publisher: Publisher) {
         try? databaseQueue.write { database in
-            let request = GRDBStoredPublisher
-                .filter(GRDBStoredPublisher.Columns.id == publisher.id)
-                .including(all: GRDBStoredPublisher.books)
-                .including(required: GRDBStoredPublisher.owner)
+            let request = GRDBObject.Publisher
+                .filter(
+                    GRDBObject.Publisher.Columns.id == publisher.id
+                )
+                .including(all: GRDBObject.Publisher.books)
+                .including(required: GRDBObject.Publisher.owner)
             guard let storedPublisher = try? Publisher.fetchOne(database, request) else {
                 return
             }
@@ -111,7 +119,7 @@ final class GRDBPublisherStore: PublisherStore {
                 )
 
             difference.deletedElements.forEach { element in
-                let book = GRDBStoredBook(
+                let book = GRDBObject.Book(
                     id: element.id,
                     name: element.name,
                     price: element.price,
@@ -121,7 +129,7 @@ final class GRDBPublisherStore: PublisherStore {
             }
 
             difference.insertedElements.forEach { element in
-                var book = GRDBStoredBook(
+                var book = GRDBObject.Book(
                     id: element.id,
                     name: element.name,
                     price: element.price,
@@ -131,7 +139,7 @@ final class GRDBPublisherStore: PublisherStore {
             }
 
             difference.noChangedElements.forEach { element in
-                var book = GRDBStoredBook(
+                var book = GRDBObject.Book(
                     id: element.id,
                     name: element.name,
                     price: element.price,
@@ -139,7 +147,7 @@ final class GRDBPublisherStore: PublisherStore {
                 )
                 try? book.update(database)
             }
-            let publisherInfo = GRDBStoredPublisher(
+            let publisherInfo = GRDBObject.Publisher(
                 id: publisher.id,
                 name: publisher.name,
                 ownerId: publisher.owner.id
@@ -150,7 +158,7 @@ final class GRDBPublisherStore: PublisherStore {
 
     func delete(publisher: Publisher) {
         try? databaseQueue.write { database in
-            let publisherInfo = GRDBStoredPublisher(
+            let publisherInfo = GRDBObject.Publisher(
                 id: publisher.id,
                 name: publisher.name,
                 ownerId: publisher.owner.id
