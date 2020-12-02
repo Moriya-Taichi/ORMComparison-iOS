@@ -3,10 +3,9 @@ platform :ios, '14.0'
 target 'DatabaseComparison' do
   use_frameworks!
 	
-  pod 'RealmSwift'
-  pod 'GRDB.swift'
-  pod 'FMDB'
-  pod 'SQLite.swift'
+  pod 'RealmSwift', '5.4.4'
+  pod 'GRDB.swift', '4.14.0'
+  pod 'FMDB', '2.7.5'
 end
 
 post_install do |installer|
