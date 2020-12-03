@@ -144,15 +144,58 @@ extension Benchmarker {
     }
 
     func benchmarkInsertSimpleByGRDB() {
-
+        try? databasePool.write { database in
+            Array(0..<1000).forEach { index in
+                let simpleObject = SimplyObject(
+                    id: index,
+                    name: "simple object id" + String(index)
+                )
+                try? simpleObject.insert(database)
+            }
+        }
     }
 
     func benchmarkInsertOneToOneByGRDB() {
+        try? databasePool.write { database in
+            Array(0..<1000).forEach { index in
+                let parentObject = GRDBObject.OneToOneObject(
+                    id: index,
+                    name: "one to one parent object id" + String(index)
+                )
 
+                let childObject = GRDBObject.OneToOneChildObject(
+                    id: index,
+                    name: "one to one child object id" + String(index),
+                    oneToOneObjectId: index
+                )
+
+                try? parentObject.insert(database)
+                try? childObject.insert(database)
+            }
+        }
     }
 
     func benachmarkInsertOneToManyByGRDB() {
+        try? databasePool.write { database in
+            Array(0..<1000).forEach { index in
+                let parentObject = GRDBObject.OneToManyObject(
+                    id: index,
+                    name: "one to many parent object id" + String(index)
+                )
+                try? parentObject.insert(database)
 
+                Array(0..<10).forEach { childObjectIndex in
+                    let id = childObjectIndex + index * 10
+                    let childObject = GRDBObject
+                        .OneToManyChildObject(
+                            id: id,
+                            name: "one to many child object id" + String(id),
+                            oneToManyObjectId: index
+                        )
+                    try? childObject.insert(database)
+                }
+            }
+        }
     }
 
     func benchmarkInsertSimpleByRealm() {
