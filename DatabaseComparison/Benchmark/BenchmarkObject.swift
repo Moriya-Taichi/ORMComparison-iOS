@@ -81,7 +81,7 @@ extension GRDBObject {
         PersistableRecord {
         let id: Int
         let name: String
-        let oneToOneGRDBObjectId: Int
+        let oneToOneObjectId: Int
         static let parentObject = belongsTo(OneToOneObject.self)
         var parentObject: QueryInterfaceRequest<OneToOneObject> {
             request(for: Self.parentObject)
@@ -101,6 +101,7 @@ extension GRDBObject {
     struct OneToManyChildObject: Codable, FetchableRecord, PersistableRecord {
         let id: Int
         let name: String
+        let oneToManyObjectId: Int
 
         static let parentObject = belongsTo(OneToManyObject.self)
         var parentObject: QueryInterfaceRequest<OneToManyObject> {
