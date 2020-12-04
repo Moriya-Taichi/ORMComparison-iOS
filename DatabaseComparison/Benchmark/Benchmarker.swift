@@ -132,15 +132,44 @@ final class Benchmarker {
 
 extension Benchmarker {
     func benchmarkInsertSimpleByCoreData() {
-
+        let context = container.viewContext
+        Array(0..<1000).forEach { index in
+            let object = SimplyEntity(context: context)
+            object.id = Int64(index)
+            object.name = "simple object id" + String(index)
+            context.insert(object)
+        }
     }
 
     func benchmarkInsertOneToOneByCoreData() {
-
+        let context = container.viewContext
+        Array(0..<1000).forEach { index in
+            let object = OneToOneEntity(context: context)
+            object.id = Int64(index)
+            object.name = "one to one parent object id" + String(index)
+            let childObject = SimplyEntity(context: context)
+            childObject.id = Int64(index)
+            childObject.name = "one to one child object id" + String(index)
+            object.relationship = childObject
+            context.insert(object)
+        }
     }
 
     func benachmarkInsertOneToManyByCoreData() {
-
+        let context = container.viewContext
+        Array(0..<1000).forEach { index in
+            let object = OneToManyEntity(context: context)
+            object.id = Int64(index)
+            object.name = "one to many parent object id" + String(index)
+            Array(0..<10).forEach { childIndex in
+                let id = childIndex + index * 10
+                let childObject = SimplyEntity(context: context)
+                childObject.id = Int64(id)
+                childObject.name = "one to many child object id" + String(id)
+                object.addToRelationship(childObject)
+            }
+            context.insert(object)
+        }
     }
 
     func benchmarkInsertSimpleByGRDB() {
@@ -184,8 +213,8 @@ extension Benchmarker {
                 )
                 try? parentObject.insert(database)
 
-                Array(0..<10).forEach { childObjectIndex in
-                    let id = childObjectIndex + index * 10
+                Array(0..<10).forEach { childIndex in
+                    let id = childIndex + index * 10
                     let childObject = GRDBObject
                         .OneToManyChildObject(
                             id: id,
