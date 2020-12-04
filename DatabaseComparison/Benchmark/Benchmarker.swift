@@ -199,15 +199,85 @@ extension Benchmarker {
     }
 
     func benchmarkInsertSimpleByRealm() {
-
+        if realm.isInWriteTransaction {
+            Array(0..<1000).forEach { index in
+                let object = RealmObject.SimplyObject()
+                object.id = index
+                object.name = "simple object id" + String(index)
+                try? realm.add(object)
+            }
+        } else {
+            try? realm.write {
+                Array(0..<1000).forEach { index in
+                    let object = RealmObject.SimplyObject()
+                    object.id = index
+                    object.name = "simple object id" + String(index)
+                    try? realm.add(object)
+                }
+            }
+        }
     }
 
     func benchmarkInsertOneToOneByRealm() {
-
+        if realm.isInWriteTransaction {
+            Array(0..<1000).forEach { index in
+                let object = RealmObject.OneToOneObject()
+                object.id = index
+                object.name = "one to one parent object id" + String(index)
+                let childObject = RealmObject.SimplyObject()
+                object.id = index
+                object.name = "one to one child object id" + String(index)
+                object.relationObject = childObject
+                try? realm.add(object)
+            }
+        } else {
+            try? realm.write {
+                Array(0..<1000).forEach { index in
+                    let object = RealmObject.OneToOneObject()
+                    object.id = index
+                    object.name = "one to one parent object id" + String(index)
+                    let childObject = RealmObject.SimplyObject()
+                    object.id = index
+                    object.name = "one to one child object id" + String(index)
+                    object.relationObject = childObject
+                    try? realm.add(object)
+                }
+            }
+        }
     }
 
     func benachmarkInsertOneToManyByRealm() {
-
+        if realm.isInWriteTransaction {
+            Array(0..<1000).forEach { index in
+                let object = RealmObject.OneToManyObject()
+                object.id = index
+                object.name = "one to many parent object id" + String(index)
+                Array(0..<10).forEach { childIndex in
+                    let id = childIndex + index * 10
+                    let childObject = RealmObject.SimplyObject()
+                    childObject.id = id
+                    childObject.name = "one to many child object id" + String(id)
+                    object.relationObjects.append(childObject)
+                }
+                try? realm.add(object)
+            }
+        } else {
+            try? realm.write {
+                Array(0..<1000).forEach { index in
+                    let object = RealmObject.OneToManyObject()
+                    object.id = index
+                    object.name = "one to many child object id" + String(index)
+                    Array(0..<10).forEach { childIndex in
+                        let id = childIndex + index * 10
+                        let childObject = RealmObject.SimplyObject()
+                        childObject.id = id
+                        childObject.name = "one to many child object id" + String(id)
+                        object.relationObjects.append(childObject)
+                    }
+                    try? realm.add(object)
+                }
+            }
+        }
     }
 
     func benchmarkInsertSimpleByFMDB() {
