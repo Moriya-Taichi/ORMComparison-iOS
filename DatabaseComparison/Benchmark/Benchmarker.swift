@@ -324,39 +324,51 @@ extension Benchmarker {
 
 extension Benchmarker {
     func benchmarkReadSimpleByCoreData() {
-
+        let context = container.viewContext
+        let request: NSFetchRequest<SimplyEntity> = SimplyEntity.fetchRequest()
+        let objects = try? context.fetch(request)
     }
 
     func benchmarkReadOneToOneByCoreData() {
-
+        let context = container.viewContext
+        let request: NSFetchRequest<OneToOneEntity> = OneToOneEntity.fetchRequest()
+        let objects = try? context.fetch(request)
     }
 
     func benchmarkReadOneToManyByCoreData() {
-
+        let context = container.viewContext
+        let request: NSFetchRequest<OneToManyEntity> = OneToManyEntity.fetchRequest()
+        let objects = try? context.fetch(request)
     }
 
     func benchmarkReadSimpleByGRDB() {
-
+        let objects = try? databasePool.read { database in
+            return try? SimplyObject.fetchAll(database)
+        }
     }
 
     func benchmarkReadOneToOneByGRDB() {
-
+        let objects = try? databasePool.read { database in
+            return try? GRDBObject.OneToOneObject.fetchAll(database)
+        }
     }
 
     func benchmarkReadOneToManyByGRDB() {
-
+        let objects = try? databasePool.read { database in
+            return try? GRDBObject.OneToManyObject.fetchAll(database)
+        }
     }
 
     func benchmarkReadSimpleByRealm() {
-
+        let objects = realm.objects(RealmObject.SimplyObject.self)
     }
 
     func benchmarkReadOneToOneByRealm() {
-
+        let objects = realm.objects(RealmObject.OneToOneObject.self)
     }
 
     func benchmarkReadOneToManyByRealm() {
-
+        let objects = realm.objects(RealmObject.OneToManyObject.self)
     }
 
     func benchmarkReadSimpleByFMDB() {
