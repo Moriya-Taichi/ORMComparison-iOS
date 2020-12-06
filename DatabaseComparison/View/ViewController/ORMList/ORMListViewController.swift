@@ -9,42 +9,48 @@ import UIKit
 
 final class ORMListViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            let listConfigure = UICollectionLayoutListConfiguration(appearance: .plain)
+            let layout = UICollectionViewCompositionalLayout.list(using: listConfigure)
+            collectionView.collectionViewLayout = layout
+        }
+    }
 
-    private let cellRagistration = UICollectionView.CellRegistration<ORMCell, ORMType> { cell, indexPath, type in
+    private lazy var dataSource: UICollectionViewDiffableDataSource<Section, ORMType> = {
+        let dataSource = UICollectionViewDiffableDataSource<Section, ORMType>(
+            collectionView: collectionView
+        ) { [weak self] collectionView, indexPath, type -> UICollectionViewCell? in
+            guard let self = self else {
+                return nil
+            }
+            return collectionView.dequeueConfiguredReusableCell(
+                using: self.cellRagistration,
+                for: indexPath,
+                item: type
+            )
+        }
+        return dataSource
+    }()
+
+    private let cellRagistration = UICollectionView.CellRegistration<ORMCell, ORMType>(
+        cellNib: UINib(
+            nibName: String(describing: ORMCell.self),
+            bundle: nil
+        )
+    ) { cell, indexPath, type in
         cell.configure(type)
     }
 
     override func viewDidLoad() {
 
         super.viewDidLoad()
-
-        func setupCollectionView() {
-            let dataSource = UICollectionViewDiffableDataSource<Section, ORMType>(
-                collectionView: collectionView
-            ) { [weak self] collectionView, indexPath, type -> UICollectionViewCell? in
-                guard let self = self else {
-                    return nil
-                }
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: self.cellRagistration,
-                    for: indexPath,
-                    item: type
-                )
-            }
-
-            let listConfigure = UICollectionLayoutListConfiguration(appearance: .plain)
-            let layout = UICollectionViewCompositionalLayout.list(using: listConfigure)
-            collectionView.collectionViewLayout = layout
-            collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-            collectionView.dataSource = dataSource
-            var snapshot = NSDiffableDataSourceSnapshot<Section, ORMType>()
-            snapshot.appendSections([.orm])
-            snapshot.appendItems(Mock.mockORMList, toSection: .orm)
-            dataSource.apply(snapshot)
-        }
-
-        setupCollectionView()
+        navigationItem.title = "ORMの一覧"
+        collectionView.delegate = self
+        var snapshot = NSDiffableDataSourceSnapshot<Section, ORMType>()
+        snapshot.appendSections([.orm])
+        snapshot.appendItems(Mock.mockORMList)
+        dataSource.apply(snapshot)
     }
 
     private func createViewModel(type: ORMType) -> PublisherListViewModel {

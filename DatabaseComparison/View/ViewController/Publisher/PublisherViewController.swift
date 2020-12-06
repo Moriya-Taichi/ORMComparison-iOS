@@ -22,19 +22,8 @@ final class PublisherViewController: UIViewController {
         cell.configure(book)
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        guard let publisher = publisher else {
-            return
-        }
-
-        publisherNameLabel.text = publisher.name
-        ownerNameLabel.text = publisher.owner.name
-        ownerAgeLabel.text = String(publisher.owner.age)
-        ownerProfileLabel.text = publisher.owner.profile
-
-        let datasource = UICollectionViewDiffableDataSource<Section, CellItem>(
+    private lazy var dataSource: UICollectionViewDiffableDataSource<Section, CellItem> = {
+        let dataSource = UICollectionViewDiffableDataSource<Section, CellItem>(
             collectionView: bookCollectionView
         ) { [weak self] collectionView, indexPath, cellItem -> UICollectionViewCell? in
             guard let self = self else {
@@ -51,10 +40,23 @@ final class PublisherViewController: UIViewController {
                 )
             }
         }
-        bookCollectionView.dataSource = datasource
+        return dataSource
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        guard let publisher = publisher else {
+            return
+        }
+
+        publisherNameLabel.text = publisher.name
+        ownerNameLabel.text = publisher.owner.name
+        ownerAgeLabel.text = String(publisher.owner.age)
+        ownerProfileLabel.text = publisher.owner.profile
         var snapshot = NSDiffableDataSourceSnapshot<Section, CellItem>()
         snapshot.appendSections([.book])
         snapshot.appendItems(publisher.books.map { CellItem.book($0) }, toSection: .book)
-        datasource.apply(snapshot)
+        dataSource.apply(snapshot)
     }
 }

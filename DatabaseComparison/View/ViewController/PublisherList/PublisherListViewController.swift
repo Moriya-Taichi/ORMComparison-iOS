@@ -46,7 +46,7 @@ final class PublisherListViewController: UIViewController {
         let listConfigure = UICollectionLayoutListConfiguration(appearance: .plain)
         let layout = UICollectionViewCompositionalLayout.list(using: listConfigure)
         collectionView.collectionViewLayout = layout
-        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        collectionView.autoresizingMask = [.flexibleHeight]
         collectionView.dataSource = dataSource
         bind()
     }
