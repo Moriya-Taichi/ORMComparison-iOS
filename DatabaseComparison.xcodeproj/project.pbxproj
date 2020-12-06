@@ -45,6 +45,7 @@
 		8D2FD833256CE0920042828A /* ORMCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD832256CE0920042828A /* ORMCell.xib */; };
 		8D2FD836256CE09A0042828A /* ORMCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD835256CE09A0042828A /* ORMCellView.xib */; };
 		8D2FD83B256CFF420042828A /* CellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD83A256CFF420042828A /* CellItem.swift */; };
+		8D3F0841257D385000189D5F /* BenchmarkContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3F0840257D385000189D5F /* BenchmarkContainer.swift */; };
 		8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */; };
 		8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */; };
 		8D5B5FEB25455A1300B22207 /* CoreDataAbstractObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */; };
@@ -99,6 +100,7 @@
 		8D2FD832256CE0920042828A /* ORMCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ORMCell.xib; sourceTree = "<group>"; };
 		8D2FD835256CE09A0042828A /* ORMCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ORMCellView.xib; sourceTree = "<group>"; };
 		8D2FD83A256CFF420042828A /* CellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellItem.swift; sourceTree = "<group>"; };
+		8D3F0840257D385000189D5F /* BenchmarkContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkContainer.swift; sourceTree = "<group>"; };
 		8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBModelExtension.swift; sourceTree = "<group>"; };
 		8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBMigrator.swift; sourceTree = "<group>"; };
 		8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAbstractObjectStore.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			children = (
 				8D2769F22570C5740086D102 /* BenchmarkObject.swift */,
 				8D2769F62570C7220086D102 /* Benchmarker.swift */,
+				8D3F0840257D385000189D5F /* BenchmarkContainer.swift */,
 			);
 			path = Benchmark;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				8D0EA828252BB62A005E51C3 /* SceneDelegate.swift in Sources */,
 				8D727BB2253953F800F2912D /* Book.swift in Sources */,
 				8D2FD7E7256BB6350042828A /* MockData.swift in Sources */,
+				8D3F0841257D385000189D5F /* BenchmarkContainer.swift in Sources */,
 				8D2FD800256C89050042828A /* loadNib.swift in Sources */,
 				8D0EA830252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld in Sources */,
 				8D0EA851252CC4F1005E51C3 /* CoreDataPublisherStore.swift in Sources */,
