@@ -8,6 +8,7 @@
 import Foundation
 
 enum Section {
+    case select
     case orm
     case publisher
     case book
