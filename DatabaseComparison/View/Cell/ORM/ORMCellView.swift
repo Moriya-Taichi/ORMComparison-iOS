@@ -27,24 +27,24 @@ final class ORMCellView: UIView {
         switch ormType {
         case .coredata:
             nameLabel.text = "CoreData"
-            descriptionLabel.text = "Apple純正のSQLiteのORM、iCloudとの連携が特徴"
+            descriptionLabel.text = "Apple純正のSQLiteのORM"
             imageView.image = UIImage(named: "CoreDataLogo")
         case .realm:
             nameLabel.text = "Realm"
-            descriptionLabel.text = "様々なプラットフォームで提供されている独自のDB、高いパフォーマンスが売り"
+            descriptionLabel.text = "様々なプラットフォームで提供されているDB"
             imageView.image = UIImage(named: "RealmLogo")
         case .grdb:
             nameLabel.text = "GRDB.swift"
-            descriptionLabel.text = "この中では比較的新しいSQLiteのORM、Swiftyに書ける"
+            descriptionLabel.text = "Swiftyに書けるSQLiteのORM"
             imageView.image = UIImage(named: "GRDBLogo")
         case .fmdb:
             nameLabel.text = "FMDB"
-            descriptionLabel.text = "obj-c時代に活躍したSQLiteのWrapper、今は進んで採用する必要はない"
+            descriptionLabel.text = "obj-c時代に活躍したSQLiteのWrapper"
             imageView.image = UIImage(systemName: "square.3.stack.3d.top.fill")
             imageView.tintColor = .systemTeal
         case .userDefaults:
             nameLabel.text = "UserDefaults"
-            descriptionLabel.text = "Apple純正のKVS、軽いものを保存する用"
+            descriptionLabel.text = "Apple純正のKVS"
             imageView.image = UIImage(systemName: "cylinder.split.1x2.fill")
             imageView.tintColor = .systemBlue
         }
