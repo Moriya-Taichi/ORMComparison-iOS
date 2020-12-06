@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PublisherListViewController" customModule="DatabaseComparison" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="exD-b7-znF" id="h92-gY-PjM"/>
+                <outlet property="view" destination="iN0-l3-epB" id="fx5-ti-HHZ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

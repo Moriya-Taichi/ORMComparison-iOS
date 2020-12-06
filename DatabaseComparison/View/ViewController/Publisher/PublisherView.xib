@@ -15,6 +15,7 @@
                 <outlet property="ownerNameLabel" destination="HZZ-rb-fvb" id="MU3-jh-gmU"/>
                 <outlet property="ownerProfileLabel" destination="7v6-hp-Rd9" id="h33-7g-mM2"/>
                 <outlet property="publisherNameLabel" destination="8TN-e2-HRe" id="HaL-jd-1bK"/>
+                <outlet property="view" destination="iN0-l3-epB" id="e7q-51-iH5"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
