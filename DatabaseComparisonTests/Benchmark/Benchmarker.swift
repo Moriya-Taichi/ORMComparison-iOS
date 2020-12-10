@@ -368,7 +368,39 @@ extension Benchmarker {
     }
 
     public func benchmarkInsertOneToManyByFMDB() {
-
+        fmDatabasePool.inDatabase { database in
+            database.open()
+            let parentBaseSql = "INSERT INTO parents (id, name) VALUES "
+            let childBaseSql = "INSERT INTO children (id, name, parent_id) VALUES "
+            let parentValues = Array(repeating: "(?, ?)", count: 1000).joined(separator: ",")
+            let childValues = Array(repeating: "(?, ?, ?)", count: 10000).joined(separator: ",")
+            let parentSql = parentBaseSql + parentValues + ";"
+            let childSql = childBaseSql + childValues + ";"
+            try? database.executeUpdate(
+                parentSql,
+                values: Array(0..<1000).map { index in
+                    return [
+                        index,
+                        "simple object id" + String(index)
+                    ]
+                }.flatMap { $0 }
+            )
+            try? database.executeUpdate(
+                childSql,
+                values: Array(0..<1000).map { index in
+                    let children = Array(0..<10).map { childIndex -> [Any] in
+                        let id = index * 10 + childIndex
+                        return [
+                            id,
+                            "child object id" + String(id),
+                            index
+                        ]
+                    }
+                    return children
+                }.flatMap { $0 }
+            )
+            database.close()
+        }
     }
 
     public func clearRealm() {
