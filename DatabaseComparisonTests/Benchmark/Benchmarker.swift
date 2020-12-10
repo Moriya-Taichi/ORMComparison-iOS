@@ -10,7 +10,7 @@ import CoreData
 import GRDB
 import FMDB
 
-final class Benchmarker {
+public final class Benchmarker {
 
     private let fmDatabasePool: FMDatabasePool
     private let databasePool: DatabasePool
@@ -131,7 +131,7 @@ final class Benchmarker {
 }
 
 extension Benchmarker {
-    func benchmarkInsertSimpleByCoreData() {
+    public func benchmarkInsertSimpleByCoreData() {
         let context = container.viewContext
         Array(0..<1000).forEach { index in
             let object = SimplyEntity(context: context)
@@ -141,7 +141,7 @@ extension Benchmarker {
         }
     }
 
-    func benchmarkInsertOneToOneByCoreData() {
+    public func benchmarkInsertOneToOneByCoreData() {
         let context = container.viewContext
         Array(0..<1000).forEach { index in
             let object = OneToOneEntity(context: context)
@@ -155,7 +155,7 @@ extension Benchmarker {
         }
     }
 
-    func benachmarkInsertOneToManyByCoreData() {
+    public func benchmarkInsertOneToManyByCoreData() {
         let context = container.viewContext
         Array(0..<1000).forEach { index in
             let object = OneToManyEntity(context: context)
@@ -172,7 +172,7 @@ extension Benchmarker {
         }
     }
 
-    func benchmarkInsertSimpleByGRDB() {
+    public func benchmarkInsertSimpleByGRDB() {
         try? databasePool.write { database in
             Array(0..<1000).forEach { index in
                 let simpleObject = SimplyObject(
@@ -184,7 +184,7 @@ extension Benchmarker {
         }
     }
 
-    func benchmarkInsertOneToOneByGRDB() {
+    public func benchmarkInsertOneToOneByGRDB() {
         try? databasePool.write { database in
             Array(0..<1000).forEach { index in
                 let parentObject = GRDBObject.OneToOneObject(
@@ -204,7 +204,7 @@ extension Benchmarker {
         }
     }
 
-    func benachmarkInsertOneToManyByGRDB() {
+    public func benchmarkInsertOneToManyByGRDB() {
         try? databasePool.write { database in
             Array(0..<1000).forEach { index in
                 let parentObject = GRDBObject.OneToManyObject(
@@ -227,7 +227,7 @@ extension Benchmarker {
         }
     }
 
-    func benchmarkInsertSimpleByRealm() {
+    public func benchmarkInsertSimpleByRealm() {
         if realm.isInWriteTransaction {
             Array(0..<1000).forEach { index in
                 let object = RealmObject.SimplyObject()
@@ -247,7 +247,7 @@ extension Benchmarker {
         }
     }
 
-    func benchmarkInsertOneToOneByRealm() {
+    public func benchmarkInsertOneToOneByRealm() {
         if realm.isInWriteTransaction {
             Array(0..<1000).forEach { index in
                 let object = RealmObject.OneToOneObject()
@@ -275,7 +275,7 @@ extension Benchmarker {
         }
     }
 
-    func benachmarkInsertOneToManyByRealm() {
+    public func benchmarkInsertOneToManyByRealm() {
         if realm.isInWriteTransaction {
             Array(0..<1000).forEach { index in
                 let object = RealmObject.OneToManyObject()
@@ -309,77 +309,126 @@ extension Benchmarker {
         }
     }
 
-    func benchmarkInsertSimpleByFMDB() {
+    public func benchmarkInsertSimpleByFMDB() {
 
     }
 
-    func benchmarkInsertOneToOneByFMDB() {
+    public func benchmarkInsertOneToOneByFMDB() {
 
     }
 
-    func benachmarkInsertOneToManyByFMDB() {
+    public func benchmarkInsertOneToManyByFMDB() {
+
+    }
+
+    public func clearRealm() {
+        if realm.isInWriteTransaction {
+            realm.delete(realm.objects(RealmObject.SimplyObject.self))
+            realm.delete(realm.objects(RealmObject.OneToOneObject.self))
+            realm.delete(realm.objects(RealmObject.OneToManyObject.self))
+        } else {
+            try? realm.write {
+                realm.delete(realm.objects(RealmObject.SimplyObject.self))
+                realm.delete(realm.objects(RealmObject.OneToOneObject.self))
+                realm.delete(realm.objects(RealmObject.OneToManyObject.self))
+            }
+        }
+    }
+
+    public func clearCoreData() {
+        let context = container.viewContext
+
+        let simplyEntityRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(
+            entityName: String(describing: SimplyEntity.self)
+        )
+        let simplyEntitydeleteRequest = NSBatchDeleteRequest(fetchRequest: simplyEntityRequest)
+
+        let oneToOneEntityRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(
+            entityName: String(describing: OneToOneEntity.self)
+        )
+        let oneToOneEntitydeleteRequest = NSBatchDeleteRequest(fetchRequest: oneToOneEntityRequest)
+
+        let oneToManyEntityRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(
+            entityName: String(describing: OneToManyEntity.self)
+        )
+        let oneToManyEntitydeleteRequest = NSBatchDeleteRequest(fetchRequest: oneToManyEntityRequest)
+
+        let _ = try? context.execute(simplyEntitydeleteRequest)
+        let _ = try? context.execute(oneToOneEntitydeleteRequest)
+        let _ = try? context.execute(oneToManyEntitydeleteRequest)
+    }
+
+    public func clearGRDB() {
+        try? databasePool.write { database in
+            let _ = try? GRDBObject.OneToManyObject.deleteAll(database)
+            let _ = try? GRDBObject.OneToOneObject.deleteAll(database)
+            let _ = try? SimplyObject.deleteAll(database)
+        }
+    }
+
+    public func clearFMDB() {
 
     }
 }
 
 extension Benchmarker {
-    func benchmarkReadSimpleByCoreData() {
+    public func benchmarkReadSimpleByCoreData() {
         let context = container.viewContext
         let request: NSFetchRequest<SimplyEntity> = SimplyEntity.fetchRequest()
         let objects = try? context.fetch(request)
     }
 
-    func benchmarkReadOneToOneByCoreData() {
+    public func benchmarkReadOneToOneByCoreData() {
         let context = container.viewContext
         let request: NSFetchRequest<OneToOneEntity> = OneToOneEntity.fetchRequest()
         let objects = try? context.fetch(request)
     }
 
-    func benchmarkReadOneToManyByCoreData() {
+    public func benchmarkReadOneToManyByCoreData() {
         let context = container.viewContext
         let request: NSFetchRequest<OneToManyEntity> = OneToManyEntity.fetchRequest()
         let objects = try? context.fetch(request)
     }
 
-    func benchmarkReadSimpleByGRDB() {
+    public func benchmarkReadSimpleByGRDB() {
         let objects = try? databasePool.read { database in
             return try? SimplyObject.fetchAll(database)
         }
     }
 
-    func benchmarkReadOneToOneByGRDB() {
+    public func benchmarkReadOneToOneByGRDB() {
         let objects = try? databasePool.read { database in
             return try? GRDBObject.OneToOneObject.fetchAll(database)
         }
     }
 
-    func benchmarkReadOneToManyByGRDB() {
+    public func benchmarkReadOneToManyByGRDB() {
         let objects = try? databasePool.read { database in
             return try? GRDBObject.OneToManyObject.fetchAll(database)
         }
     }
 
-    func benchmarkReadSimpleByRealm() {
+    public func benchmarkReadSimpleByRealm() {
         let objects = realm.objects(RealmObject.SimplyObject.self)
     }
 
-    func benchmarkReadOneToOneByRealm() {
+    public func benchmarkReadOneToOneByRealm() {
         let objects = realm.objects(RealmObject.OneToOneObject.self)
     }
 
-    func benchmarkReadOneToManyByRealm() {
+    public func benchmarkReadOneToManyByRealm() {
         let objects = realm.objects(RealmObject.OneToManyObject.self)
     }
 
-    func benchmarkReadSimpleByFMDB() {
+    public func benchmarkReadSimpleByFMDB() {
 
     }
 
-    func benchmarkReadOneToOneByFMDB() {
+    public func benchmarkReadOneToOneByFMDB() {
 
     }
 
-    func benchmarkReadOneToManyByFMDB() {
+    public func benchmarkReadOneToManyByFMDB() {
 
     }
 }

@@ -19,8 +19,6 @@
 		8D0EA854252CC50E005E51C3 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA853252CC50E005E51C3 /* UserDefaultsStore.swift */; };
 		8D0EA857252CC51F005E51C3 /* FMDBPublisherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA856252CC51E005E51C3 /* FMDBPublisherStore.swift */; };
 		8D2769E9256E3CCF0086D102 /* PublisherListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2769E8256E3CCF0086D102 /* PublisherListView.xib */; };
-		8D2769F32570C5740086D102 /* BenchmarkObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2769F22570C5740086D102 /* BenchmarkObject.swift */; };
-		8D2769F72570C7220086D102 /* Benchmarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2769F62570C7220086D102 /* Benchmarker.swift */; };
 		8D2FD7E0255EB0E60042828A /* Array+DIfference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7DF255EB0E60042828A /* Array+DIfference.swift */; };
 		8D2FD7E4256B8CD80042828A /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7E3256B8CD80042828A /* Container.swift */; };
 		8D2FD7E7256BB6350042828A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD7E6256BB6350042828A /* MockData.swift */; };
@@ -45,11 +43,14 @@
 		8D2FD833256CE0920042828A /* ORMCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD832256CE0920042828A /* ORMCell.xib */; };
 		8D2FD836256CE09A0042828A /* ORMCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2FD835256CE09A0042828A /* ORMCellView.xib */; };
 		8D2FD83B256CFF420042828A /* CellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2FD83A256CFF420042828A /* CellItem.swift */; };
-		8D3F0841257D385000189D5F /* BenchmarkContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3F0840257D385000189D5F /* BenchmarkContainer.swift */; };
 		8D3F0845257D43E200189D5F /* SelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D3F0844257D43E200189D5F /* SelectViewController.xib */; };
 		8D3F0848257D445400189D5F /* SelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3F0847257D445400189D5F /* SelectView.swift */; };
 		8D3F084D257D49FC00189D5F /* BenchmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3F084C257D49FC00189D5F /* BenchmarkViewController.swift */; };
 		8D3F0851257D4AB100189D5F /* BenchmarkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D3F0850257D4AB100189D5F /* BenchmarkView.xib */; };
+		8D3F085A257E05E700189D5F /* DatabaseComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3F0859257E05E700189D5F /* DatabaseComparisonTests.swift */; };
+		8D3F0865257FE3E600189D5F /* BenchmarkObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2769F22570C5740086D102 /* BenchmarkObject.swift */; };
+		8D3F0866257FE3E600189D5F /* Benchmarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2769F62570C7220086D102 /* Benchmarker.swift */; };
+		8D3F0867257FE3E600189D5F /* BenchmarkContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3F0840257D385000189D5F /* BenchmarkContainer.swift */; };
 		8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */; };
 		8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */; };
 		8D5B5FEB25455A1300B22207 /* CoreDataAbstractObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */; };
@@ -61,10 +62,24 @@
 		8D727BC825397E3200F2912D /* FMDBDatabaseWrapeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BC725397E3200F2912D /* FMDBDatabaseWrapeer.swift */; };
 		8DE32AE325470E74007A3ADB /* DefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE32AE225470E74007A3ADB /* DefaultsKey.swift */; };
 		8DE32B6E255C7686007A3ADB /* PublisherMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE32B6D255C7685007A3ADB /* PublisherMigration.swift */; };
+		FA794D6798EA7E4FABCE60D9 /* Pods_DatabaseComparisonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8613E1C62B4F1EB8D2AD11C7 /* Pods_DatabaseComparisonTests.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8D3F085C257E05E700189D5F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8D0EA81A252BB62A005E51C3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D0EA821252BB62A005E51C3;
+			remoteInfo = DatabaseComparison;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		1F86ABFF5284947D7D7374F8 /* Pods-DatabaseComparisonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatabaseComparisonTests.debug.xcconfig"; path = "Target Support Files/Pods-DatabaseComparisonTests/Pods-DatabaseComparisonTests.debug.xcconfig"; sourceTree = "<group>"; };
+		559E31C25AEE2F4EB18B6D1D /* Pods-DatabaseComparisonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatabaseComparisonTests.release.xcconfig"; path = "Target Support Files/Pods-DatabaseComparisonTests/Pods-DatabaseComparisonTests.release.xcconfig"; sourceTree = "<group>"; };
 		6A0F48F39E4701A2543D6630 /* Pods-DatabaseComparison.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatabaseComparison.debug.xcconfig"; path = "Target Support Files/Pods-DatabaseComparison/Pods-DatabaseComparison.debug.xcconfig"; sourceTree = "<group>"; };
+		8613E1C62B4F1EB8D2AD11C7 /* Pods_DatabaseComparisonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DatabaseComparisonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0EA822252BB62A005E51C3 /* DatabaseComparison.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DatabaseComparison.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0EA825252BB62A005E51C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D0EA827252BB62A005E51C3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +124,9 @@
 		8D3F0847257D445400189D5F /* SelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectView.swift; sourceTree = "<group>"; };
 		8D3F084C257D49FC00189D5F /* BenchmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkViewController.swift; sourceTree = "<group>"; };
 		8D3F0850257D4AB100189D5F /* BenchmarkView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BenchmarkView.xib; sourceTree = "<group>"; };
+		8D3F0857257E05E700189D5F /* DatabaseComparisonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DatabaseComparisonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D3F0859257E05E700189D5F /* DatabaseComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseComparisonTests.swift; sourceTree = "<group>"; };
+		8D3F085B257E05E700189D5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBModelExtension.swift; sourceTree = "<group>"; };
 		8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBMigrator.swift; sourceTree = "<group>"; };
 		8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAbstractObjectStore.swift; sourceTree = "<group>"; };
@@ -133,6 +151,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8D3F0854257E05E700189D5F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA794D6798EA7E4FABCE60D9 /* Pods_DatabaseComparisonTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -140,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				8D0EA824252BB62A005E51C3 /* DatabaseComparison */,
+				8D3F0858257E05E700189D5F /* DatabaseComparisonTests */,
 				8D0EA823252BB62A005E51C3 /* Products */,
 				FFBE46ABC1058269C7654864 /* Pods */,
 				E5D9ED313DCEF2B6E4487606 /* Frameworks */,
@@ -150,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				8D0EA822252BB62A005E51C3 /* DatabaseComparison.app */,
+				8D3F0857257E05E700189D5F /* DatabaseComparisonTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,7 +185,6 @@
 		8D0EA824252BB62A005E51C3 /* DatabaseComparison */ = {
 			isa = PBXGroup;
 			children = (
-				8D2769F12570C2F60086D102 /* Benchmark */,
 				8D2FD7F1256BC2C80042828A /* ViewModel */,
 				8D2FD7F0256BC2BF0042828A /* View */,
 				8D727BA8253950BC00F2912D /* Entity */,
@@ -316,6 +343,16 @@
 			path = Benchmark;
 			sourceTree = "<group>";
 		};
+		8D3F0858257E05E700189D5F /* DatabaseComparisonTests */ = {
+			isa = PBXGroup;
+			children = (
+				8D2769F12570C2F60086D102 /* Benchmark */,
+				8D3F0859257E05E700189D5F /* DatabaseComparisonTests.swift */,
+				8D3F085B257E05E700189D5F /* Info.plist */,
+			);
+			path = DatabaseComparisonTests;
+			sourceTree = "<group>";
+		};
 		8D727BA8253950BC00F2912D /* Entity */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +416,7 @@
 			isa = PBXGroup;
 			children = (
 				F4693C13DFC13D22D82B5012 /* Pods_DatabaseComparison.framework */,
+				8613E1C62B4F1EB8D2AD11C7 /* Pods_DatabaseComparisonTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -388,6 +426,8 @@
 			children = (
 				6A0F48F39E4701A2543D6630 /* Pods-DatabaseComparison.debug.xcconfig */,
 				FB9848FEEB79477F8E0FE867 /* Pods-DatabaseComparison.release.xcconfig */,
+				1F86ABFF5284947D7D7374F8 /* Pods-DatabaseComparisonTests.debug.xcconfig */,
+				559E31C25AEE2F4EB18B6D1D /* Pods-DatabaseComparisonTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -414,6 +454,26 @@
 			productReference = 8D0EA822252BB62A005E51C3 /* DatabaseComparison.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8D3F0856257E05E700189D5F /* DatabaseComparisonTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8D3F085E257E05E700189D5F /* Build configuration list for PBXNativeTarget "DatabaseComparisonTests" */;
+			buildPhases = (
+				00BAB83E48EFF846BD72A3B0 /* [CP] Check Pods Manifest.lock */,
+				8D3F0853257E05E700189D5F /* Sources */,
+				8D3F0854257E05E700189D5F /* Frameworks */,
+				8D3F0855257E05E700189D5F /* Resources */,
+				CB4816967A19F4F238B4604B /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8D3F085D257E05E700189D5F /* PBXTargetDependency */,
+			);
+			name = DatabaseComparisonTests;
+			productName = DatabaseComparisonTests;
+			productReference = 8D3F0857257E05E700189D5F /* DatabaseComparisonTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -425,6 +485,10 @@
 				TargetAttributes = {
 					8D0EA821252BB62A005E51C3 = {
 						CreatedOnToolsVersion = 12.0;
+					};
+					8D3F0856257E05E700189D5F = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = 8D0EA821252BB62A005E51C3;
 					};
 				};
 			};
@@ -442,6 +506,7 @@
 			projectRoot = "";
 			targets = (
 				8D0EA821252BB62A005E51C3 /* DatabaseComparison */,
+				8D3F0856257E05E700189D5F /* DatabaseComparisonTests */,
 			);
 		};
 /* End PBXProject section */
@@ -467,9 +532,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8D3F0855257E05E700189D5F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		00BAB83E48EFF846BD72A3B0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DatabaseComparisonTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2DD411C192B5F4337B6EC9AA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -509,6 +603,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CB4816967A19F4F238B4604B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DatabaseComparisonTests/Pods-DatabaseComparisonTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DatabaseComparisonTests/Pods-DatabaseComparisonTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DatabaseComparisonTests/Pods-DatabaseComparisonTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -518,10 +629,8 @@
 			files = (
 				8D0EA857252CC51F005E51C3 /* FMDBPublisherStore.swift in Sources */,
 				8D2FD830256CE0870042828A /* ORMCellView.swift in Sources */,
-				8D2769F32570C5740086D102 /* BenchmarkObject.swift in Sources */,
 				8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */,
 				8D727BC825397E3200F2912D /* FMDBDatabaseWrapeer.swift in Sources */,
-				8D2769F72570C7220086D102 /* Benchmarker.swift in Sources */,
 				8D2FD807256CC0380042828A /* PublisherListViewController.swift in Sources */,
 				8D0EA826252BB62A005E51C3 /* AppDelegate.swift in Sources */,
 				8D2FD7E4256B8CD80042828A /* Container.swift in Sources */,
@@ -531,7 +640,6 @@
 				8D0EA828252BB62A005E51C3 /* SceneDelegate.swift in Sources */,
 				8D727BB2253953F800F2912D /* Book.swift in Sources */,
 				8D2FD7E7256BB6350042828A /* MockData.swift in Sources */,
-				8D3F0841257D385000189D5F /* BenchmarkContainer.swift in Sources */,
 				8D2FD800256C89050042828A /* loadNib.swift in Sources */,
 				8D0EA830252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld in Sources */,
 				8D0EA851252CC4F1005E51C3 /* CoreDataPublisherStore.swift in Sources */,
@@ -559,7 +667,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8D3F0853257E05E700189D5F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D3F0865257FE3E600189D5F /* BenchmarkObject.swift in Sources */,
+				8D3F0866257FE3E600189D5F /* Benchmarker.swift in Sources */,
+				8D3F0867257FE3E600189D5F /* BenchmarkContainer.swift in Sources */,
+				8D3F085A257E05E700189D5F /* DatabaseComparisonTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8D3F085D257E05E700189D5F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D0EA821252BB62A005E51C3 /* DatabaseComparison */;
+			targetProxy = 8D3F085C257E05E700189D5F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8D0EA833252BB62B005E51C3 /* LaunchScreen.storyboard */ = {
@@ -727,6 +854,46 @@
 			};
 			name = Release;
 		};
+		8D3F085F257E05E700189D5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F86ABFF5284947D7D7374F8 /* Pods-DatabaseComparisonTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DatabaseComparisonTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mori.DatabaseComparisonTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DatabaseComparison.app/DatabaseComparison";
+			};
+			name = Debug;
+		};
+		8D3F0860257E05E700189D5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 559E31C25AEE2F4EB18B6D1D /* Pods-DatabaseComparisonTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DatabaseComparisonTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mori.DatabaseComparisonTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DatabaseComparison.app/DatabaseComparison";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -744,6 +911,15 @@
 			buildConfigurations = (
 				8D0EA83A252BB62B005E51C3 /* Debug */,
 				8D0EA83B252BB62B005E51C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8D3F085E257E05E700189D5F /* Build configuration list for PBXNativeTarget "DatabaseComparisonTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8D3F085F257E05E700189D5F /* Debug */,
+				8D3F0860257E05E700189D5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

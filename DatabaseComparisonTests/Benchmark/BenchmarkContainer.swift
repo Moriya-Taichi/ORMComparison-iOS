@@ -11,22 +11,25 @@ import CoreData
 import FMDB
 import GRDB
 
-struct BenchmarkContainer {
+public struct BenchmarkContainer {
     private static let container = NSPersistentContainer(name: "benchmark")
     private static let realmConfiguration = Realm.Configuration(
-        fileURL: .init(fileURLWithPath: "/realm/benchmark"),
         schemaVersion: 1,
-        deleteRealmIfMigrationNeeded: true,
-        objectTypes: [
-            RealmObject.SimplyObject.self,
-            RealmObject.OneToOneObject.self,
-            RealmObject.OneToManyObject.self
-        ]
+        deleteRealmIfMigrationNeeded: true
     )
     private static let realm = try! Realm(configuration: realmConfiguration)
-    private static let databasePool = try! DatabasePool(path: "/GRDB/benchmark")
-    private static let fmDatabasePool = FMDatabasePool(path: "/FMDB/benchmark")
-    static let benchmarker = Benchmarker(
+    private static let grdbDatabaseURL = try! FileManager
+        .default
+        .url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        )
+        .appendingPathComponent("grdbBenchmark.sqlite")
+    private static let databasePool = try! DatabasePool(path: grdbDatabaseURL.path)
+    private static let fmDatabasePool = FMDatabasePool(path: "/fmdbbenchmark.sqlite")
+    public static let benchmarker = Benchmarker(
         fmDatabasePool: fmDatabasePool,
         databasePool: databasePool,
         userDefaults: .standard,
