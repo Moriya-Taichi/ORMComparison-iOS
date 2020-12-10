@@ -42,13 +42,15 @@ final class CoreDataAbstractObjectStore {
             sectionNameKeyPath: nil,
             cacheName: nil
         )
-        do {
-            try controller.performFetch()
-        }
-        catch {
-            print(error)
-        }
+        try? controller.performFetch()
         return controller
+    }
+
+    func deleteAll<T: NSManagedObject>(_ type: T.Type) {
+        let context = container.viewContext
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: String(describing: type))
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        try? context.execute(deleteRequest)
     }
 
     func saveContext() {
