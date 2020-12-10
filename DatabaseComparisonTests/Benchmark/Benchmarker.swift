@@ -317,7 +317,22 @@ extension Benchmarker {
     }
 
     public func benchmarkInsertSimpleByFMDB() {
-
+        fmDatabasePool.inDatabase { database in
+            database.open()
+            let baseSql = "INSERT INTO parents (id, name) VALUES "
+            let values = Array(repeating: "(?, ?)", count: 1000).joined(separator: ",")
+            let sql = baseSql + values + ";"
+            try? database.executeUpdate(
+                sql,
+                values: Array(0..<1000).map { index in
+                    return [
+                        index,
+                        "simple object id" + String(index)
+                    ]
+                }.flatMap { $0 }
+            )
+            database.close()
+        }
     }
 
     public func benchmarkInsertOneToOneByFMDB() {
@@ -428,7 +443,6 @@ extension Benchmarker {
     }
 
     public func benchmarkReadSimpleByFMDB() {
-
     }
 
     public func benchmarkReadOneToOneByFMDB() {
