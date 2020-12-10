@@ -31,38 +31,36 @@ struct OneToManyObject: Codable, FetchableRecord, PersistableRecord {
     let relationObjects: [SimplyObject]
 }
 
-final class RealmObject {
-    final class SimplyObject: Object {
-        @objc dynamic var id: Int = 0
-        @objc dynamic var name: String = ""
+final class SimplyRealmObject: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var name: String = ""
 
-        static override func primaryKey() -> String? {
-            return "id"
-        }
-    }
-
-    final class OneToOneObject: Object {
-        @objc dynamic var id: Int = 0
-        @objc dynamic var name: String = ""
-        @objc dynamic var relationObject: SimplyObject?
-
-        static override func primaryKey() -> String? {
-            return "id"
-        }
-    }
-
-    final class OneToManyObject: Object {
-        @objc dynamic var id: Int = 0
-        @objc dynamic var name: String = ""
-        let relationObjects = List<SimplyObject>()
-
-        static override func primaryKey() -> String? {
-            return "id"
-        }
+    static override func primaryKey() -> String? {
+        return "id"
     }
 }
 
-extension GRDBObject {
+final class OneToOneRealmObject: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var name: String = ""
+    @objc dynamic var relationObject: SimplyRealmObject?
+
+    static override func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+final class OneToManyRealmObject: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var name: String = ""
+    let relationObjects = List<SimplyRealmObject>()
+
+    static override func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+struct GRDBObject {
     struct OneToOneObject:
         Codable,
         FetchableRecord,
