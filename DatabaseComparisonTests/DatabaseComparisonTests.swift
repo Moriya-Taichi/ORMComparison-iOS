@@ -9,23 +9,122 @@ import XCTest
 
 class DatabaseComparisonTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    let benchmaker = BenchmarkContainer.benchmarker
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
+    func testInsertRealmPerformance() throws {
+        benchmaker.clearRealm()
         measure {
-            // Put the code you want to measure the time of here.
+            benchmaker.benchmarkInsertSimpleByRealm()
+        }
+
+        measure {
+            benchmaker.benchmarkInsertOneToOneByRealm()
+        }
+
+        measure {
+            benchmaker.benchmarkInsertOneToManyByRealm()
+        }
+    }
+
+    func testInsertCoredataPerformance() throws {
+        benchmaker.clearCoreData()
+        measure {
+            benchmaker.benchmarkInsertSimpleByCoreData()
+        }
+
+        measure {
+            benchmaker.benchmarkInsertOneToOneByCoreData()
+        }
+
+        measure {
+            benchmaker.benchmarkInsertOneToManyByCoreData()
+        }
+    }
+
+    func testInsertGRDBPerformance() throws {
+        benchmaker.clearGRDB()
+        measure {
+            benchmaker.benchmarkInsertSimpleByGRDB()
+        }
+
+        measure {
+            benchmaker.benchmarkInsertOneToOneByGRDB()
+        }
+
+        measure {
+            benchmaker.benchmarkInsertOneToManyByGRDB()
+        }
+    }
+
+    func testInsertFMDBPerformance() throws {
+        benchmaker.clearFMDB()
+
+        measure {
+            benchmaker.benchmarkInsertSimpleByFMDB()
+        }
+
+        measure {
+            benchmaker.benchmarkInsertOneToOneByFMDB()
+        }
+
+        measure {
+            benchmaker.benchmarkInsertOneToManyByFMDB()
+        }
+    }
+
+    func testReadRealmPerformance() throws {
+        measure {
+            benchmaker.benchmarkReadSimpleByRealm()
+        }
+
+        measure {
+            benchmaker.benchmarkReadOneToOneByRealm()
+        }
+
+        measure {
+            benchmaker.benchmarkReadOneToManyByRealm()
+        }
+    }
+
+    func testReadCoredataPerformance() throws {
+        measure {
+            benchmaker.benchmarkReadSimpleByCoreData()
+        }
+
+        measure {
+            benchmaker.benchmarkReadOneToOneByCoreData()
+        }
+
+        measure {
+            benchmaker.benchmarkReadOneToManyByCoreData()
+        }
+    }
+
+    func testReadGRDBPerformance() throws {
+        measure {
+            benchmaker.benchmarkReadSimpleByGRDB()
+        }
+
+        measure {
+            benchmaker.benchmarkReadOneToOneByGRDB()
+        }
+
+        measure {
+            benchmaker.benchmarkInsertOneToManyByGRDB()
+        }
+    }
+
+    func  testReadFMDBPerformance() throws {
+        measure {
+            benchmaker.benchmarkReadSimpleByFMDB()
+        }
+
+        measure {
+            benchmaker.benchmarkReadOneToOneByFMDB()
+        }
+
+        measure {
+            benchmaker.benchmarkReadOneToManyByFMDB()
         }
     }
 
