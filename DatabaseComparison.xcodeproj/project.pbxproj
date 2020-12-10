@@ -51,6 +51,10 @@
 		8D3F0865257FE3E600189D5F /* BenchmarkObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2769F22570C5740086D102 /* BenchmarkObject.swift */; };
 		8D3F0866257FE3E600189D5F /* Benchmarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2769F62570C7220086D102 /* Benchmarker.swift */; };
 		8D3F0867257FE3E600189D5F /* BenchmarkContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3F0840257D385000189D5F /* BenchmarkContainer.swift */; };
+		8D3F0886258252F700189D5F /* InsertOneToManyBenchmarkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3F0885258252F700189D5F /* InsertOneToManyBenchmarkTests.swift */; };
+		8D3F088A2582530F00189D5F /* InsertOneToOneBenchmarkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3F08892582530F00189D5F /* InsertOneToOneBenchmarkTests.swift */; };
+		8D3F08902582532A00189D5F /* InsertSimpleBenchmarkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3F088F2582532A00189D5F /* InsertSimpleBenchmarkTests.swift */; };
+		8D3F0894258253A200189D5F /* ReadBenchmarkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3F0893258253A200189D5F /* ReadBenchmarkTests.swift */; };
 		8D5B5FBB254177F500B22207 /* GRDBModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */; };
 		8D5B5FBE254181DB00B22207 /* GRDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */; };
 		8D5B5FEB25455A1300B22207 /* CoreDataAbstractObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */; };
@@ -127,6 +131,10 @@
 		8D3F0857257E05E700189D5F /* DatabaseComparisonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DatabaseComparisonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D3F0859257E05E700189D5F /* DatabaseComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseComparisonTests.swift; sourceTree = "<group>"; };
 		8D3F085B257E05E700189D5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D3F0885258252F700189D5F /* InsertOneToManyBenchmarkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertOneToManyBenchmarkTests.swift; sourceTree = "<group>"; };
+		8D3F08892582530F00189D5F /* InsertOneToOneBenchmarkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertOneToOneBenchmarkTests.swift; sourceTree = "<group>"; };
+		8D3F088F2582532A00189D5F /* InsertSimpleBenchmarkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertSimpleBenchmarkTests.swift; sourceTree = "<group>"; };
+		8D3F0893258253A200189D5F /* ReadBenchmarkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBenchmarkTests.swift; sourceTree = "<group>"; };
 		8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBModelExtension.swift; sourceTree = "<group>"; };
 		8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBMigrator.swift; sourceTree = "<group>"; };
 		8D5B5FEA25455A1300B22207 /* CoreDataAbstractObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAbstractObjectStore.swift; sourceTree = "<group>"; };
@@ -348,6 +356,10 @@
 			children = (
 				8D2769F12570C2F60086D102 /* Benchmark */,
 				8D3F0859257E05E700189D5F /* DatabaseComparisonTests.swift */,
+				8D3F0893258253A200189D5F /* ReadBenchmarkTests.swift */,
+				8D3F088F2582532A00189D5F /* InsertSimpleBenchmarkTests.swift */,
+				8D3F08892582530F00189D5F /* InsertOneToOneBenchmarkTests.swift */,
+				8D3F0885258252F700189D5F /* InsertOneToManyBenchmarkTests.swift */,
 				8D3F085B257E05E700189D5F /* Info.plist */,
 			);
 			path = DatabaseComparisonTests;
@@ -671,10 +683,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D3F0886258252F700189D5F /* InsertOneToManyBenchmarkTests.swift in Sources */,
 				8D3F0865257FE3E600189D5F /* BenchmarkObject.swift in Sources */,
 				8D3F0866257FE3E600189D5F /* Benchmarker.swift in Sources */,
+				8D3F088A2582530F00189D5F /* InsertOneToOneBenchmarkTests.swift in Sources */,
 				8D3F0867257FE3E600189D5F /* BenchmarkContainer.swift in Sources */,
+				8D3F0894258253A200189D5F /* ReadBenchmarkTests.swift in Sources */,
 				8D3F085A257E05E700189D5F /* DatabaseComparisonTests.swift in Sources */,
+				8D3F08902582532A00189D5F /* InsertSimpleBenchmarkTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
