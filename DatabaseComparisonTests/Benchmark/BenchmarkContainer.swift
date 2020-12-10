@@ -12,13 +12,28 @@ import FMDB
 import GRDB
 
 public struct BenchmarkContainer {
-    private static let container = NSPersistentContainer(name: "benchmark")
+    private static let container = NSPersistentContainer(name: "DatabaseComparison")
+    private static let realmURL = try! FileManager
+        .default
+        .url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        )
+        .appendingPathComponent("realmBenchmark.realm")
     private static let realmConfiguration = Realm.Configuration(
+        fileURL: realmURL,
         schemaVersion: 1,
-        deleteRealmIfMigrationNeeded: true
+        deleteRealmIfMigrationNeeded: true,
+        objectTypes: [
+            SimplyRealmObject.self,
+            OneToOneRealmObject.self,
+            OneToManyRealmObject.self
+        ]
     )
     private static let realm = try! Realm(configuration: realmConfiguration)
-    private static let grdbDatabaseURL = try! FileManager
+    private static let grdbURL = try! FileManager
         .default
         .url(
             for: .applicationSupportDirectory,
@@ -27,7 +42,7 @@ public struct BenchmarkContainer {
             create: true
         )
         .appendingPathComponent("grdbBenchmark.sqlite")
-    private static let databasePool = try! DatabasePool(path: grdbDatabaseURL.path)
+    private static let databasePool = try! DatabasePool(path: grdbURL.path)
     private static let fmDatabasePool = FMDatabasePool(path: "/fmdbbenchmark.sqlite")
     public static let benchmarker = Benchmarker(
         fmDatabasePool: fmDatabasePool,
