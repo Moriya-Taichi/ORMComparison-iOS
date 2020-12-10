@@ -8,6 +8,14 @@ target 'DatabaseComparison' do
   pod 'FMDB', '2.7.5'
 end
 
+target 'DatabaseComparisonTests' do
+  use_frameworks!
+	
+  pod 'RealmSwift', '5.4.4'
+  pod 'GRDB.swift', '4.14.0'
+  pod 'FMDB', '2.7.5'
+end
+
 post_install do |installer|
      installer.pods_project.targets.each do |target|
          target.build_configurations.each do |config|
