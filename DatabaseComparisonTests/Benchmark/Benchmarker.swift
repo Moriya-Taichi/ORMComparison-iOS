@@ -521,7 +521,27 @@ extension Benchmarker {
     }
 
     public func benchmarkReadOneToOneByFMDB() {
+        var objects: [OneToOneObject] = []
+        let sql = "SELECT * FROM parents LEFT JOIN children ON parents.id == children.parent_id;"
+        fmDatabasePool.inDatabase { database in
+            database.open()
+            if let result = try? database.executeQuery(sql, values: nil) {
+                while result.next() {
+                    let childObject = SimplyObject(
+                        id: Int(result.int(forColumn: "children.id")),
+                        name: result.string(forColumn: "children.name") ?? ""
+                    )
+                    let parentObject = OneToOneObject(
+                        id: Int(result.int(forColumn: "parents.id")),
+                        name: result.string(forColumn: "parents.name") ?? "",
+                        realtionObject: childObject
+                    )
 
+                    objects.append(parentObject)
+                }
+            }
+            database.close()
+        }
     }
 
     public func benchmarkReadOneToManyByFMDB() {
