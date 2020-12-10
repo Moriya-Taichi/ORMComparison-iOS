@@ -503,6 +503,21 @@ extension Benchmarker {
     }
 
     public func benchmarkReadSimpleByFMDB() {
+        var objects: [SimplyObject] = []
+        let sql = "SELECT * FROM parents;"
+        fmDatabasePool.inDatabase { database in
+            database.open()
+            if let result = try? database.executeQuery(sql, values: nil) {
+                while result.next() {
+                    let object = SimplyObject(
+                        id: Int(result.int(forColumn: "id")),
+                        name: result.string(forColumn: "name") ?? ""
+                    )
+                    objects.append(object)
+                }
+            }
+            database.close()
+        }
     }
 
     public func benchmarkReadOneToOneByFMDB() {
