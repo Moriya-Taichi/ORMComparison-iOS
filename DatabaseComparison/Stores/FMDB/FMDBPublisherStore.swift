@@ -115,7 +115,7 @@ final class FMDBPublisherStore: PublisherStore {
     func read() -> [Publisher] {
         var publishers: [Publisher] = []
         let query = "SELECT * FROM publishers " +
-            "LEFT JOIN books ON publishers.id == books.id " +
+            "LEFT JOIN books ON publishers.id == books.publisher_id " +
             "LEFT JOIN owners ON publishers.owner_id == owners.id;"
         if
             let result = try? databaseWrapper.executeQuery(
