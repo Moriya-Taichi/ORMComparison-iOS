@@ -545,6 +545,48 @@ extension Benchmarker {
     }
 
     public func benchmarkReadOneToManyByFMDB() {
+        var objects: [OneToManyObject] = []
+        let sql = "SELECT * FROM parents LEFT JOIN children ON parents.id == children.parent_id;"
+        fmDatabasePool.inDatabase { database in
+            database.open()
+            if let result = try? database.executeQuery(sql, values: nil) {
+                var currentParentID = 0
+                var childrenObject: [SimplyObject] = []
+                var currentParent = OneToManyObject(
+                    id: 0,
+                    name: "",
+                    relationObjects: []
+                )
+                while result.next() {
+                    if Int(result.int(forColumn: "")) != currentParentID {
+                        let parentObject = OneToManyObject(
+                            id: currentParent.id,
+                            name: currentParent.name,
+                            relationObjects: childrenObject
+                        )
+                        childrenObject = []
+                        objects.append(parentObject)
+                    }
 
+                    currentParent = OneToManyObject(
+                        id: Int(result.int(forColumn: "parents.id")),
+                        name: result.string(forColumn: "parents.name") ?? "",
+                        relationObjects: []
+                    )
+                    let childObject = SimplyObject(
+                        id: Int(result.int(forColumn: "chilren.id")),
+                        name: result.string(forColumn: "children.name") ?? ""
+                    )
+                    childrenObject.append(childObject)
+                }
+                let parentObject = OneToManyObject(
+                    id: currentParent.id,
+                    name: currentParent.name,
+                    relationObjects: childrenObject
+                )
+                objects.append(parentObject)
+            }
+            database.close()
+        }
     }
 }
