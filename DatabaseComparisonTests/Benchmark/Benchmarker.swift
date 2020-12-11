@@ -449,7 +449,14 @@ extension Benchmarker {
     }
 
     public func clearFMDB() {
-
+        let parentsDeleteSql = "DELETE * FROM parents;"
+        let childrentDeleteSql = "DELETE * FROM children;"
+        fmDatabasePool.inDatabase { database in
+            database.open()
+            try? database.executeUpdate(childrentDeleteSql, values: nil)
+            try? database.executeUpdate(parentsDeleteSql, values: nil)
+            database.close()
+        }
     }
 }
 
