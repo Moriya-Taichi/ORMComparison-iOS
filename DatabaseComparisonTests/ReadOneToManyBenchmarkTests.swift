@@ -12,24 +12,32 @@ final class ReadOneToManyBenchmarkTests: XCTestCase {
     private let benchmaker = BenchmarkContainer.benchmarker
 
     func testReadRealmPerformance() throws {
+        benchmaker.clearRealm()
+        benchmaker.benchmarkInsertOneToManyByRealm()
         measure {
             benchmaker.benchmarkReadOneToManyByRealm()
         }
     }
 
     func testReadCoredataPerformance() throws {
+        benchmaker.clearCoreData()
+        benchmaker.benchmarkInsertOneToManyByCoreData()
         measure {
             benchmaker.benchmarkReadOneToManyByCoreData()
         }
     }
 
     func testReadGRDBPerformance() throws {
+        benchmaker.clearGRDB()
+        benchmaker.benchmarkInsertOneToManyByGRDB()
         measure {
             benchmaker.benchmarkInsertOneToManyByGRDB()
         }
     }
 
     func  testReadFMDBPerformance() throws {
+        benchmaker.clearFMDB()
+        benchmaker.benchmarkInsertOneToManyByFMDB()
         measure {
             benchmaker.benchmarkReadOneToManyByFMDB()
         }
