@@ -12,30 +12,46 @@ final class InsertOneToManyBenchmarkTests: XCTestCase {
     private let benchmaker = BenchmarkContainer.benchmarker
 
     func testInsertRealmPerformance() throws {
-        benchmaker.clearRealm()
-        measure {
+        let option = XCTMeasureOptions()
+        option.invocationOptions = [.manuallyStart, .manuallyStop]
+        measure(options: option) {
+            benchmaker.clearRealm()
+            startMeasuring()
             benchmaker.benchmarkInsertOneToManyByRealm()
+            stopMeasuring()
         }
     }
 
     func testInsertCoredataPerformance() throws {
-        benchmaker.clearCoreData()
-        measure {
+        let option = XCTMeasureOptions()
+        option.invocationOptions = [.manuallyStart, .manuallyStop]
+        measure(options: option) {
+            benchmaker.clearCoreData()
+            startMeasuring()
             benchmaker.benchmarkInsertOneToManyByCoreData()
+            stopMeasuring()
         }
     }
 
     func testInsertGRDBPerformance() throws {
-        benchmaker.clearGRDB()
-        measure {
+        let option = XCTMeasureOptions()
+        option.invocationOptions = [.manuallyStart, .manuallyStop]
+        measure(options: option) {
+            benchmaker.clearGRDB()
+            startMeasuring()
             benchmaker.benchmarkInsertOneToManyByGRDB()
+            stopMeasuring()
         }
     }
 
     func testInsertFMDBPerformance() throws {
-        benchmaker.clearFMDB()
-        measure {
+        let option = XCTMeasureOptions()
+        option.invocationOptions = [.manuallyStart, .manuallyStop]
+        measure(options: option) {
+            benchmaker.clearFMDB()
+            startMeasuring()
             benchmaker.benchmarkInsertOneToManyByFMDB()
+            stopMeasuring()
         }
     }
 }
