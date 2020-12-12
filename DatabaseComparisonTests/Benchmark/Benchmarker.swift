@@ -118,7 +118,7 @@ public final class Benchmarker {
             }
         }
 
-        fmDatabasePool.inExclusiveTransaction { fmDatabase, _ in
+        fmDatabasePool.inDatabase { fmDatabase in
             let parentTableSQL = "CREATE TABLE IF NOT EXISTS parents (id INTEGER PRIMARY KEY, name TEXT);"
             let childTableSQL = "CREATE TABLE IF NOT EXISTS children (id INTEGER PRIMARY KEY, name TEXT, parent_id INTEGER, foreign key(parent_id) references parent(id));"
             fmDatabase.open()
@@ -385,9 +385,10 @@ extension Benchmarker {
                     ]
                 }.flatMap { $0 }
             )
+
             try? database.executeUpdate(
                 childSql,
-                values: Array(0..<1000).map { index in
+                values: Array(0..<1000).map { index -> [Any] in
                     let children = Array(0..<10).map { childIndex -> [Any] in
                         let id = index * 10 + childIndex
                         return [
@@ -395,7 +396,7 @@ extension Benchmarker {
                             "child object id" + String(id),
                             index
                         ]
-                    }
+                    }.flatMap { $0 }
                     return children
                 }.flatMap { $0 }
             )
@@ -449,8 +450,8 @@ extension Benchmarker {
     }
 
     public func clearFMDB() {
-        let parentsDeleteSql = "DELETE * FROM parents;"
-        let childrentDeleteSql = "DELETE * FROM children;"
+        let parentsDeleteSql = "DELETE FROM parents;"
+        let childrentDeleteSql = "DELETE FROM children;"
         fmDatabasePool.inDatabase { database in
             database.open()
             try? database.executeUpdate(childrentDeleteSql, values: nil)
@@ -517,8 +518,8 @@ extension Benchmarker {
             if let result = try? database.executeQuery(sql, values: nil) {
                 while result.next() {
                     let object = SimplyObject(
-                        id: Int(result.int(forColumn: "id")),
-                        name: result.string(forColumn: "name") ?? ""
+                        id: Int(result.int(forColumnIndex: 0)),
+                        name: result.string(forColumnIndex: 1) ?? ""
                     )
                     objects.append(object)
                 }
@@ -529,18 +530,18 @@ extension Benchmarker {
 
     public func benchmarkReadOneToOneByFMDB() {
         var objects: [OneToOneObject] = []
-        let sql = "SELECT * FROM parents LEFT JOIN children ON parents.id == children.parent_id;"
+        let sql = "SELECT parents.id, parents.name, children.id, children.name FROM parents LEFT JOIN children ON parents.id == children.parent_id;"
         fmDatabasePool.inDatabase { database in
             database.open()
             if let result = try? database.executeQuery(sql, values: nil) {
                 while result.next() {
                     let childObject = SimplyObject(
-                        id: Int(result.int(forColumn: "children.id")),
-                        name: result.string(forColumn: "children.name") ?? ""
+                        id: Int(result.int(forColumnIndex: 2)),
+                        name: result.string(forColumnIndex: 3) ?? ""
                     )
                     let parentObject = OneToOneObject(
-                        id: Int(result.int(forColumn: "parents.id")),
-                        name: result.string(forColumn: "parents.name") ?? "",
+                        id: Int(result.int(forColumnIndex: 0)),
+                        name: result.string(forColumnIndex: 1) ?? "",
                         realtionObject: childObject
                     )
 
@@ -553,11 +554,10 @@ extension Benchmarker {
 
     public func benchmarkReadOneToManyByFMDB() {
         var objects: [OneToManyObject] = []
-        let sql = "SELECT * FROM parents LEFT JOIN children ON parents.id == children.parent_id;"
+        let sql = "SELECT parents.id, parents.name, children.id, children.name FROM parents LEFT JOIN children ON parents.id == children.parent_id;"
         fmDatabasePool.inDatabase { database in
             database.open()
             if let result = try? database.executeQuery(sql, values: nil) {
-                var currentParentID = 0
                 var childrenObject: [SimplyObject] = []
                 var currentParent = OneToManyObject(
                     id: 0,
@@ -565,7 +565,7 @@ extension Benchmarker {
                     relationObjects: []
                 )
                 while result.next() {
-                    if Int(result.int(forColumn: "")) != currentParentID {
+                    if Int(result.int(forColumnIndex: 0)) != currentParent.id {
                         let parentObject = OneToManyObject(
                             id: currentParent.id,
                             name: currentParent.name,
@@ -576,13 +576,13 @@ extension Benchmarker {
                     }
 
                     currentParent = OneToManyObject(
-                        id: Int(result.int(forColumn: "parents.id")),
-                        name: result.string(forColumn: "parents.name") ?? "",
+                        id: Int(result.int(forColumnIndex: 0)),
+                        name: result.string(forColumnIndex: 1) ?? "",
                         relationObjects: []
                     )
                     let childObject = SimplyObject(
-                        id: Int(result.int(forColumn: "chilren.id")),
-                        name: result.string(forColumn: "children.name") ?? ""
+                        id: Int(result.int(forColumnIndex: 2)),
+                        name: result.string(forColumnIndex: 3) ?? ""
                     )
                     childrenObject.append(childObject)
                 }
