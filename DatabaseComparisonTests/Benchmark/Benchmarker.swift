@@ -260,8 +260,8 @@ extension Benchmarker {
                 object.id = index
                 object.name = "one to one parent object id" + String(index)
                 let childObject = SimplyRealmObject()
-                object.id = index
-                object.name = "one to one child object id" + String(index)
+                childObject.id = index
+                childObject.name = "one to one child object id" + String(index)
                 object.relationObject = childObject
                 try? realm.add(object)
             }
@@ -272,8 +272,8 @@ extension Benchmarker {
                     object.id = index
                     object.name = "one to one parent object id" + String(index)
                     let childObject = SimplyRealmObject()
-                    object.id = index
-                    object.name = "one to one child object id" + String(index)
+                    childObject.id = index
+                    childObject.name = "one to one child object id" + String(index)
                     object.relationObject = childObject
                     try? realm.add(object)
                 }
@@ -301,7 +301,7 @@ extension Benchmarker {
                 Array(0..<1000).forEach { index in
                     let object = OneToManyRealmObject()
                     object.id = index
-                    object.name = "one to many child object id" + String(index)
+                    object.name = "one to many parent object id" + String(index)
                     Array(0..<10).forEach { childIndex in
                         let id = childIndex + index * 10
                         let childObject = SimplyRealmObject()
@@ -464,18 +464,21 @@ extension Benchmarker {
     public func benchmarkReadSimpleByCoreData() {
         let context = container.viewContext
         let request: NSFetchRequest<SimplyEntity> = SimplyEntity.fetchRequest()
+        request.sortDescriptors = [.init(keyPath: \SimplyEntity.id, ascending: true)]
         let objects = try? context.fetch(request)
     }
 
     public func benchmarkReadOneToOneByCoreData() {
         let context = container.viewContext
         let request: NSFetchRequest<OneToOneEntity> = OneToOneEntity.fetchRequest()
+        request.sortDescriptors = [.init(keyPath: \OneToOneEntity.id, ascending: true)]
         let objects = try? context.fetch(request)
     }
 
     public func benchmarkReadOneToManyByCoreData() {
         let context = container.viewContext
         let request: NSFetchRequest<OneToManyEntity> = OneToManyEntity.fetchRequest()
+        request.sortDescriptors = [.init(keyPath: \OneToManyEntity.id, ascending: true)]
         let objects = try? context.fetch(request)
     }
 
