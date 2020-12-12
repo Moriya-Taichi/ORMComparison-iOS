@@ -31,7 +31,7 @@ final class ReadOneToManyBenchmarkTests: XCTestCase {
         benchmaker.clearGRDB()
         benchmaker.benchmarkInsertOneToManyByGRDB()
         measure {
-            benchmaker.benchmarkInsertOneToManyByGRDB()
+            benchmaker.benchmarkReadOneToManyByGRDB()
         }
     }
 
