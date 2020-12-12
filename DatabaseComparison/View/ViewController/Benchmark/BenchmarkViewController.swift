@@ -21,6 +21,17 @@ final class BenchmarkViewController: UIViewController {
         }
     }
 
+    @IBOutlet weak var statusLabel: UILabel!
+
+    @IBOutlet weak var realmTimeLabel: UILabel!
+    @IBOutlet weak var coredataTimeLabel: UILabel!
+    @IBOutlet weak var grdbTimeLabel: UILabel!
+    @IBOutlet weak var fmdbTimeLabel: UILabel!
+
+    @IBAction func startButtonAction(_ sender: Any) {
+
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

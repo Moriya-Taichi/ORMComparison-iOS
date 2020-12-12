@@ -10,7 +10,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BenchmarkViewController" customModule="DatabaseComparison" customModuleProvider="target">
             <connections>
+                <outlet property="coredataTimeLabel" destination="spa-WX-q7d" id="zvj-Ym-uSD"/>
+                <outlet property="fmdbTimeLabel" destination="W07-Pw-4bJ" id="WJz-Rg-O6Q"/>
+                <outlet property="grdbTimeLabel" destination="kB9-0i-6Lz" id="XOz-Cz-Oua"/>
+                <outlet property="realmTimeLabel" destination="tgm-gw-szc" id="NbU-j3-rDC"/>
                 <outlet property="startButton" destination="v45-TV-6n8" id="xNG-q7-0aV"/>
+                <outlet property="statusLabel" destination="HMS-q7-BhH" id="r04-fy-7Fb"/>
                 <outlet property="view" destination="iN0-l3-epB" id="6X3-Lq-rKX"/>
             </connections>
         </placeholder>
@@ -25,6 +30,9 @@
                         <constraint firstAttribute="height" constant="48" id="42k-Ah-aKG"/>
                     </constraints>
                     <state key="normal" title="計測開始"/>
+                    <connections>
+                        <action selector="startButtonAction:" destination="-1" eventType="touchUpInside" id="NN9-du-O0R"/>
+                    </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="fuu-DC-vwH">
                     <rect key="frame" x="144.5" y="148" width="125" height="166"/>
