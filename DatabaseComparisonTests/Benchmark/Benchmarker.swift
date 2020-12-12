@@ -204,7 +204,6 @@ extension Benchmarker {
                     name: "one to one child object id" + String(index),
                     oneToOneObjectId: index
                 )
-
                 try? parentObject.insert(database)
                 try? childObject.insert(database)
             }
@@ -487,14 +486,24 @@ extension Benchmarker {
     }
 
     public func benchmarkReadOneToOneByGRDB() {
-        let objects = try? databasePool.read { database in
-            return try? GRDBObject.OneToOneObject.fetchAll(database)
+        let objects = try? databasePool.read { database -> [OneToOneObject]? in
+            let relationObject = GRDBObject.OneToOneObject.relationObject.forKey("relationObject")
+            let request = GRDBObject.OneToOneObject
+                .including(
+                    required: relationObject
+                )
+            return try? OneToOneObject.fetchAll(database, request)
         }
     }
 
     public func benchmarkReadOneToManyByGRDB() {
-        let objects = try? databasePool.read { database in
-            return try? GRDBObject.OneToManyObject.fetchAll(database)
+        let objects = try? databasePool.read { database -> [OneToManyObject]? in
+            let realtionObjects = GRDBObject.OneToManyObject.relationObjects.forKey("relationObjects")
+            let request = GRDBObject.OneToManyObject
+                .including(
+                    all: realtionObjects
+                )
+            return try? OneToManyObject.fetchAll(database, request)
         }
     }
 
@@ -542,7 +551,7 @@ extension Benchmarker {
                     let parentObject = OneToOneObject(
                         id: Int(result.int(forColumnIndex: 0)),
                         name: result.string(forColumnIndex: 1) ?? "",
-                        realtionObject: childObject
+                        relationObject: childObject
                     )
 
                     objects.append(parentObject)
