@@ -22,7 +22,7 @@ struct OneToOneObject:
     PersistableRecord {
     let id: Int
     let name: String
-    let realtionObject: SimplyObject
+    let relationObject: SimplyObject
 }
 
 struct OneToManyObject: Codable, FetchableRecord, PersistableRecord {
@@ -80,8 +80,8 @@ struct GRDBObject {
         let id: Int
         let name: String
         let oneToOneObjectId: Int
-        static let parentObject = belongsTo(OneToOneObject.self)
-        var parentObject: QueryInterfaceRequest<OneToOneObject> {
+        static let parentObject = belongsTo(GRDBObject.OneToOneObject.self)
+        var parentObject: QueryInterfaceRequest<GRDBObject.OneToOneObject> {
             request(for: Self.parentObject)
         }
     }
