@@ -43,7 +43,15 @@ public struct BenchmarkContainer {
         )
         .appendingPathComponent("grdbBenchmark.sqlite")
     private static let databasePool = try! DatabasePool(path: grdbURL.path)
-    private static let fmDatabasePool = FMDatabasePool(path: "/fmdbbenchmark.sqlite")
+    private static let fmDatabasePath = try! FileManager.default
+        .url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        )
+        .appendingPathComponent("fmbenchmark.sqlite")
+    private static let fmDatabasePool = FMDatabasePool(path: fmDatabasePath.path)
     public static let benchmarker = Benchmarker(
         fmDatabasePool: fmDatabasePool,
         databasePool: databasePool,
