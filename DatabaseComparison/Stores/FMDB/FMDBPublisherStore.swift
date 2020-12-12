@@ -114,7 +114,7 @@ final class FMDBPublisherStore: PublisherStore {
 
     func read() -> [Publisher] {
         var publishers: [Publisher] = []
-        let query = "SELECT * FROM publishers " +
+        let query = "SELECT publishers.id, publishers.name, books.id, books.name, books.price, owners.id, owners.name, owners.age, owners.profile FROM publishers " +
             "LEFT JOIN books ON publishers.id == books.publisher_id " +
             "LEFT JOIN owners ON publishers.owner_id == owners.id;"
         if
@@ -122,55 +122,41 @@ final class FMDBPublisherStore: PublisherStore {
                 query,
                 values: nil
             ) {
-            var publisher: Publisher? = nil
+            var currentPublisher = Publisher(
+                id: 0,
+                name: "",
+                books: [],
+                owner: .init(
+                    id: 0,
+                    name: "",
+                    age: 0,
+                    profile: "")
+            )
+            var books: [Book] = []
             while result.next() {
-                if publisher == nil {
-                    let owner = Owner(
-                        id: Int(result.int(forColumn: "owners.id")),
-                        name: result.string(forColumn: "owners.name") ?? "",
-                        age: Int(result.int(forColumn: "owners.age")),
-                        profile: result.string(forColumn: "owners.profile") ?? ""
-                    )
-                    publisher = .init(
-                        id: Int(result.int(forColumn: "publishers.id")),
-                        name: result.string(forColumn: "publishers.name") ?? "",
-                        books: [],
-                        owner: owner
-                    )
+                if currentPublisher.id != Int(result.int(forColumnIndex: 0)) {
+                    publishers.append(currentPublisher)
+                    books = []
                 }
 
-                guard var publisher = publisher else {
-                    continue
-                }
+                let book = Book(
+                    id: Int(result.int(forColumnIndex: 2)),
+                    name: result.string(forColumnIndex: 3) ?? "",
+                    price: Int(result.int(forColumnIndex: 4))
+                )
+                books.append(book)
 
-                if publisher.id == Int(result.int(forColumn: "publishers.id")) {
-                    let book = Book(
-                        id: Int(result.int(forColumn: "books.id")),
-                        name: result.string(forColumn: "books.name") ?? "",
-                        price: Int(result.int(forColumn: "books.price"))
+                currentPublisher = Publisher(
+                    id: Int(result.int(forColumnIndex: 0)),
+                    name: result.string(forColumnIndex: 1) ?? "",
+                    books: books,
+                    owner: .init(
+                        id: Int(result.int(forColumnIndex: 5)),
+                        name: result.string(forColumnIndex: 6) ?? "",
+                        age: Int(result.int(forColumnIndex: 7)),
+                        profile: result.string(forColumnIndex: 8) ?? ""
                     )
-                    publisher = .init(
-                        id: publisher.id,
-                        name: publisher.name,
-                        books: publisher.books + [book],
-                        owner: publisher.owner
-                    )
-                }
-                else {
-                    publishers.append(publisher)
-                    let owner = Owner(
-                        id: Int(result.int(forColumn: "owners.id")),
-                        name: result.string(forColumn: "owners.name") ?? "",
-                        age: Int(result.int(forColumn: "owners.age")),
-                        profile: result.string(forColumn: "owners.profile") ?? ""
-                    )
-                    publisher = .init(
-                        id: Int(result.int(forColumn: "publishers.id")),
-                        name: result.string(forColumn: "publishers.name") ?? "",
-                        books: [],
-                        owner: owner
-                    )
-                }
+                )
             }
         }
         return publishers
