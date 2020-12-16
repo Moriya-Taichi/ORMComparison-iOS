@@ -71,6 +71,12 @@ final class GRDBPublisherStore: PublisherStore {
         try? databaseQueue.write { database in
             var owner = publisher.owner
             try? owner.insert(database)
+            var publisherInfo = GRDBObject.Publisher(
+                id: publisher.id,
+                name: publisher.name,
+                ownerId: publisher.owner.id
+            )
+            try? publisherInfo.insert(database)
             publisher.books.forEach { book in
                 var book = GRDBObject.Book(
                     id: book.id,
@@ -80,12 +86,6 @@ final class GRDBPublisherStore: PublisherStore {
                 )
                 try? book.insert(database)
             }
-            var publisherInfo = GRDBObject.Publisher(
-                id: publisher.id,
-                name: publisher.name,
-                ownerId: publisher.owner.id
-            )
-            try? publisherInfo.insert(database)
         }
     }
 
