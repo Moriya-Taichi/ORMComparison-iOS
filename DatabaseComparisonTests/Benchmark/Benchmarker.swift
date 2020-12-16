@@ -120,7 +120,7 @@ public final class Benchmarker {
 
         fmDatabasePool.inDatabase { fmDatabase in
             let parentTableSQL = "CREATE TABLE IF NOT EXISTS parents (id INTEGER PRIMARY KEY, name TEXT);"
-            let childTableSQL = "CREATE TABLE IF NOT EXISTS children (id INTEGER PRIMARY KEY, name TEXT, parent_id INTEGER, foreign key(parent_id) references parent(id));"
+            let childTableSQL = "CREATE TABLE IF NOT EXISTS children (id INTEGER PRIMARY KEY, name TEXT, parent_id INTEGER, foreign key(parent_id) references parents(id));"
             fmDatabase.open()
             try? fmDatabase.executeUpdate(
                 parentTableSQL,
