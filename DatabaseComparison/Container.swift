@@ -9,25 +9,38 @@ import RealmSwift
 import Foundation
 import CoreData
 import GRDB
+import FMDB
 
 struct Container {
     private static let coredataContainer = NSPersistentContainer(name: "DatabaseComparison")
-    private static let fmdbDatabaseWrapper = FMDBDatabaseWrapeer()
-    private static let fmdbBookStore = FMDBBookStore(databaseWrapper: fmdbDatabaseWrapper)
-    private static let fmdbOwnerStore = FMDBOwnerStore(databaseWrapper: fmdbDatabaseWrapper)
     private static let realmConfiguration = Realm.Configuration(
-        encryptionKey: "hogehoge".data(using: .utf8),
         schemaVersion: 1,
         migrationBlock: nil,
         deleteRealmIfMigrationNeeded: false
     )
     private static let realm = try! Realm(configuration: realmConfiguration)
-    private static let grdbDatabaseQueue = try! DatabaseQueue(path: "grdbDatabase.sqlite")
+    private static let grdbURL = try! FileManager
+        .default
+        .url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        )
+        .appendingPathComponent("grdbDatabase.sqlite")
+    private static let grdbDatabaseQueue = try! DatabaseQueue(path: grdbURL.path)
     static let grdbPublisherStore = GRDBPublisherStore(databaseQueue: grdbDatabaseQueue)
+    private static let fmDatabaseURL = try! FileManager.default
+        .url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        )
+        .appendingPathComponent("fmDatabase.sqlite")
+    private static let fmDatabaseQueue = FMDatabaseQueue(path: fmDatabaseURL.path)!
     static let fmdbPublisherStore = FMDBPublisherStore(
-        databaseWrapper: fmdbDatabaseWrapper,
-        bookStore: fmdbBookStore,
-        ownerStore: fmdbOwnerStore
+        fmDatabaseQueue: fmDatabaseQueue
     )
 
     static let coredataStore = CoreDataPublisherStore(container: coredataContainer)
