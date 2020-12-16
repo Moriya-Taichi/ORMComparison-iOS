@@ -7,15 +7,19 @@ final class CoreDataPublisherStore: PublisherStore {
 
     init (container: NSPersistentContainer) {
         self.container = container
+        container.loadPersistentStores { _,_ in }
     }
 
     func create(publisher: Publisher) {
         let context = container.viewContext
         let request: NSFetchRequest<PublisherEntity> = PublisherEntity.fetchRequest()
         request.fetchLimit = 1
-        request.predicate = .init(format: "id = %@", publisher.id)
+        request.predicate = .init(format: "id = %@", NSNumber(value: publisher.id))
         let storedPublisher = try? context.fetch(request)
-        guard storedPublisher == nil else {
+        guard
+            storedPublisher == nil ||
+            storedPublisher?.isEmpty ?? true
+        else {
             update(publisher: publisher)
             return
         }
@@ -88,7 +92,7 @@ final class CoreDataPublisherStore: PublisherStore {
 
         let publisherRequest: NSFetchRequest<PublisherEntity> = PublisherEntity.fetchRequest()
         publisherRequest.fetchLimit = 1
-        publisherRequest.predicate = .init(format: "id = %@", publisher.id)
+        publisherRequest.predicate = .init(format: "id = %@", NSNumber(value: publisher.id))
 
         guard
             let publisherEntity = try? context.fetch(publisherRequest).first
@@ -145,7 +149,7 @@ final class CoreDataPublisherStore: PublisherStore {
         let context = container.viewContext
         let request: NSFetchRequest<PublisherEntity> = PublisherEntity.fetchRequest()
         request.fetchLimit = 1
-        request.predicate = .init(format: "id = %@", publisher.id)
+        request.predicate = .init(format: "id = %@", NSNumber(value: publisher.id))
         guard
             let objcet = try? context.fetch(request).first
         else {
@@ -170,7 +174,7 @@ final class CoreDataPublisherStore: PublisherStore {
     private func getOrCreateOwner(_ owner: Owner) -> OwnerEntity {
         let context = container.viewContext
         let request: NSFetchRequest<OwnerEntity> = OwnerEntity.fetchRequest()
-        request.predicate = .init(format: "id = %@", owner.id)
+        request.predicate = .init(format: "id = %@", NSNumber(value: owner.id))
         request.fetchLimit = 1
         if let ownerEntity = try? context.fetch(request).first {
             return ownerEntity
