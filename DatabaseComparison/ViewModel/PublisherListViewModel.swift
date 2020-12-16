@@ -26,6 +26,12 @@ final class PublisherListViewModel {
             .sink { [weak self] _ in
                 let publishers = store.read()
                 self?.publishersState.value = publishers
+                if publishers.isEmpty {
+                    Mock.mockPublishers.forEach { publisher in
+                        store.create(publisher: publisher)
+                    }
+                    self?.publishersState.value = store.read()
+                }
             }
             .store(in: &anyCancellable)
 
