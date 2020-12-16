@@ -8,6 +8,7 @@ final class CoreDataPublisherStore: PublisherStore {
     init (container: NSPersistentContainer) {
         self.container = container
         container.loadPersistentStores { _,_ in }
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
 
     func create(publisher: Publisher) {
