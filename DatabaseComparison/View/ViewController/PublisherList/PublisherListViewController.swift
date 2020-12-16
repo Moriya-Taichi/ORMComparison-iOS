@@ -10,11 +10,22 @@ import UIKit
 
 final class PublisherListViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            let listConfigure = UICollectionLayoutListConfiguration(appearance: .plain)
+            let layout = UICollectionViewCompositionalLayout.list(using: listConfigure)
+            collectionView.collectionViewLayout = layout
+        }
+    }
 
     private var anyCancellable = Set<AnyCancellable>()
 
-    private let publisherCellRegistration = UICollectionView.CellRegistration<PublisherCell, Publisher> { cell, indexPath, publisher in
+    private let publisherCellRegistration = UICollectionView.CellRegistration<PublisherCell, Publisher> (
+        cellNib: UINib(
+            nibName: String(describing: PublisherCell.self),
+            bundle: nil
+        )
+    ) { cell, indexPath, publisher in
         cell.configure(publisher)
     }
 
@@ -47,7 +58,6 @@ final class PublisherListViewController: UIViewController {
         let layout = UICollectionViewCompositionalLayout.list(using: listConfigure)
         collectionView.collectionViewLayout = layout
         collectionView.autoresizingMask = [.flexibleHeight]
-        collectionView.dataSource = dataSource
         bind()
     }
 
@@ -55,8 +65,6 @@ final class PublisherListViewController: UIViewController {
         guard let viewModel = viewModel else {
             return
         }
-
-        viewModel.loadInput.send(())
 
         viewModel
             .publishersOutput
@@ -76,6 +84,8 @@ final class PublisherListViewController: UIViewController {
                 self?.navigationController?.pushViewController(viewController, animated: true)
             }
             .store(in: &anyCancellable)
+
+        viewModel.loadInput.send(())
     }
 }
 
