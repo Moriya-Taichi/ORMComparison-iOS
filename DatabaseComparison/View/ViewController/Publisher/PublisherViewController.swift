@@ -10,7 +10,13 @@ import UIKit
 
 final class PublisherViewController: UIViewController {
 
-    @IBOutlet weak var bookCollectionView: UICollectionView!
+    @IBOutlet weak var bookCollectionView: UICollectionView! {
+        didSet {
+            let listConfigure = UICollectionLayoutListConfiguration(appearance: .plain)
+            let layout = UICollectionViewCompositionalLayout.list(using: listConfigure)
+            bookCollectionView.collectionViewLayout = layout
+        }
+    }
     @IBOutlet weak var publisherNameLabel: UILabel!
     @IBOutlet weak var ownerNameLabel: UILabel!
     @IBOutlet weak var ownerAgeLabel: UILabel!
@@ -18,7 +24,12 @@ final class PublisherViewController: UIViewController {
 
     var publisher: Publisher?
 
-    private let bookCellRegistration = UICollectionView.CellRegistration<BookCell, Book> { cell, indexPath, book in
+    private let bookCellRegistration = UICollectionView.CellRegistration<BookCell, Book>(
+        cellNib: .init(
+            nibName: String(describing: BookCell.self),
+            bundle: nil
+        )
+    ) { cell, indexPath, book in
         cell.configure(book)
     }
 
@@ -56,7 +67,9 @@ final class PublisherViewController: UIViewController {
         ownerProfileLabel.text = publisher.owner.profile
         var snapshot = NSDiffableDataSourceSnapshot<Section, CellItem>()
         snapshot.appendSections([.book])
-        snapshot.appendItems(publisher.books.map { CellItem.book($0) }, toSection: .book)
+        snapshot.appendItems(publisher.books.sorted(by: { lhs, rhs -> Bool in
+            return lhs.id < rhs.id
+        }).map { CellItem.book($0) }, toSection: .book)
         dataSource.apply(snapshot)
     }
 }
