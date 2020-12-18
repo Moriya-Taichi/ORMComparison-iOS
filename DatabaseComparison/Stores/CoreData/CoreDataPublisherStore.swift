@@ -26,7 +26,7 @@ final class CoreDataPublisherStore: PublisherStore {
         }
         let publisherEntity = PublisherEntity(context: context)
 
-        publisherEntity.id = Int64(publisher.owner.id)
+        publisherEntity.id = Int64(publisher.id)
         publisherEntity.name = publisher.name
 
         let ownerEntity = getOrCreateOwner(publisher.owner)
