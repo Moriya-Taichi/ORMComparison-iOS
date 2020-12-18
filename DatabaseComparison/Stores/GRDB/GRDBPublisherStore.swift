@@ -9,6 +9,20 @@ final class GRDBPublisherStore: PublisherStore {
         self.databaseQueue = databaseQueue
         try? databaseQueue.write { database in
             try? database.create(
+                table: Owner.databaseTableName,
+                temporary: false,
+                ifNotExists: true
+            ) { table in
+                table.column("id", .integer)
+                    .notNull()
+                    .indexed()
+                table.primaryKey(["id"])
+                table.column("name", .text).notNull()
+                table.column("age", .integer).notNull()
+                table.column("profile", .text).notNull()
+            }
+
+            try? database.create(
                 table: GRDBObject
                     .Publisher
                     .databaseTableName,
@@ -48,20 +62,6 @@ final class GRDBPublisherStore: PublisherStore {
                         GRDBObject.Publisher.databaseTableName,
                         onDelete: .cascade
                     )
-            }
-
-            try? database.create(
-                table: Owner.databaseTableName,
-                temporary: false,
-                ifNotExists: true
-            ) { table in
-                table.column("id", .integer)
-                    .notNull()
-                    .indexed()
-                table.primaryKey(["id"])
-                table.column("name", .text).notNull()
-                table.column("age", .integer).notNull()
-                table.column("profile", .text).notNull()
             }
 
         }
