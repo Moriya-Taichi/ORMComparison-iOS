@@ -15,6 +15,7 @@ final class PublisherListViewController: UIViewController {
             let listConfigure = UICollectionLayoutListConfiguration(appearance: .plain)
             let layout = UICollectionViewCompositionalLayout.list(using: listConfigure)
             collectionView.collectionViewLayout = layout
+            collectionView.delegate = self
         }
     }
 
@@ -53,11 +54,6 @@ final class PublisherListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let listConfigure = UICollectionLayoutListConfiguration(appearance: .plain)
-        let layout = UICollectionViewCompositionalLayout.list(using: listConfigure)
-        collectionView.collectionViewLayout = layout
-        collectionView.autoresizingMask = [.flexibleHeight]
         bind()
     }
 
