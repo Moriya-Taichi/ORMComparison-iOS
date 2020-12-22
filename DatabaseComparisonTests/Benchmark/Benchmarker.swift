@@ -195,6 +195,27 @@ extension Benchmarker {
         }
     }
 
+    public func benchmarkInsertSimpleByGRDBSQL() {
+        let sql = "INSERT INTO parents (id, name) VALUES " +
+            Array(repeating: "(?, ?)", count: 1000).joined(separator: ",") +
+            ";"
+        try? databasePool.write { database in
+            try? database.execute(
+                sql: sql,
+                arguments: .init(
+                    Array(0..<1000)
+                        .map { index -> [DatabaseValueConvertible] in
+                            return [
+                                index,
+                                "simple object id" + String(index)
+                            ]
+                        }
+                        .flatMap { $0 }
+                )
+            )
+        }
+    }
+
     public func benchmarkInsertOneToOneByGRDB() {
         try? databasePool.write { database in
             Array(0..<1000).forEach { index in
