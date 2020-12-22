@@ -545,19 +545,23 @@ extension Benchmarker {
 
     public func clearGRDB() {
         try? databasePool.write { database in
-            let _ = try? GRDBObject.OneToManyObject.deleteAll(database)
-            let _ = try? GRDBObject.OneToOneObject.deleteAll(database)
-            let _ = try? SimplyObject.deleteAll(database)
+            let deleteParentsSQL = "DELETE FROM parents;"
+            let deleteChildrentSQL = "DELETE FROM children;"
+            try? GRDBObject.OneToManyObject.deleteAll(database)
+            try? GRDBObject.OneToOneObject.deleteAll(database)
+            try? SimplyObject.deleteAll(database)
+            try? database.execute(sql: deleteChildrentSQL)
+            try? database.execute(sql: deleteParentsSQL)
         }
     }
 
     public func clearFMDB() {
-        let parentsDeleteSql = "DELETE FROM parents;"
-        let childrentDeleteSql = "DELETE FROM children;"
+        let deleteParentsSQL = "DELETE FROM parents;"
+        let deleteChildrentSQL = "DELETE FROM children;"
         fmDatabasePool.inDatabase { database in
             database.open()
-            try? database.executeUpdate(childrentDeleteSql, values: nil)
-            try? database.executeUpdate(parentsDeleteSql, values: nil)
+            try? database.executeUpdate(deleteChildrentSQL, values: nil)
+            try? database.executeUpdate(deleteParentsSQL, values: nil)
             database.close()
         }
     }
