@@ -235,6 +235,53 @@ extension Benchmarker {
         }
     }
 
+    public func benchmarkInsertOneToOneByGRDBSQL() {
+        let parentSQL = "INSERT INTO parents (id, name) VALUES " +
+            Array(
+                repeating: "(?, ?)",
+                count: 1000
+            )
+            .joined(separator: ",") +
+            ";"
+        let childSQL = "INSERT INTO children (id, name, parent_id) VALUES " +
+            Array(
+                repeating: "(?, ?, ?)",
+                count: 1000
+            )
+            .joined(separator: ",") +
+            ";"
+        try? databasePool.write { database in
+            try? database.execute(
+                sql: parentSQL,
+                arguments: .init(
+                    Array(0..<1000)
+                        .map { index -> [DatabaseValueConvertible] in
+                            return [
+                                index,
+                                "simple object id" + String(index)
+                            ]
+                        }
+                        .flatMap { $0 }
+                )
+            )
+
+            try? database.execute(
+                sql: childSQL,
+                arguments: .init(
+                    Array(0..<1000)
+                        .map { index -> [DatabaseValueConvertible] in
+                            return [
+                                index,
+                                "child object id" + String(index),
+                                index
+                            ]
+                        }
+                        .flatMap { $0 }
+                )
+            )
+        }
+    }
+
     public func benchmarkInsertOneToManyByGRDB() {
         try? databasePool.write { database in
             Array(0..<1000).forEach { index in
