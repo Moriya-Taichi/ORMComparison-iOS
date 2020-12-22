@@ -305,6 +305,59 @@ extension Benchmarker {
         }
     }
 
+    public func benchmarkInsertOneToManyByGRDBSQL() {
+        try? databasePool.write { database in
+            let parentSql = "INSERT INTO parents (id, name) VALUES " +
+                Array(
+                    repeating: "(?, ?)",
+                    count: 1000
+                )
+                .joined(separator: ",") +
+                ";"
+            let childSql = "INSERT INTO children (id, name, parent_id) VALUES " +
+                Array(
+                    repeating: "(?, ?, ?)",
+                    count: 10000
+                )
+                .joined(separator: ",") +
+                ";"
+            try? database.execute(
+                sql: parentSql,
+                arguments: .init(
+                    Array(0..<1000)
+                        .map { index -> [DatabaseValueConvertible] in
+                            return [
+                                index,
+                                "simple object id" + String(index)
+                            ]
+                        }
+                        .flatMap { $0 }
+                )
+            )
+
+            try? database.execute(
+                sql: childSql,
+                arguments: .init(
+                    Array(0..<1000)
+                        .map { index -> [DatabaseValueConvertible] in
+                            let children = Array(0..<10)
+                                .map { childIndex -> [DatabaseValueConvertible] in
+                                    let id = index * 10 + childIndex
+                                    return [
+                                        id,
+                                        "child object id" + String(id),
+                                        index
+                                    ]
+                                }
+                                .flatMap { $0 }
+                            return children
+                        }
+                        .flatMap { $0 }
+                )
+            )
+        }
+    }
+
     public func benchmarkInsertSimpleByRealm() {
         if realm.isInWriteTransaction {
             Array(0..<1000).forEach { index in
@@ -489,15 +542,16 @@ extension Benchmarker {
                 childSql,
                 values: Array(0..<1000)
                     .map { index -> [Any] in
-                        let children = Array(0..<10).map { childIndex -> [Any] in
-                            let id = index * 10 + childIndex
-                            return [
-                                id,
-                                "child object id" + String(id),
-                                index
-                            ]
-                        }
-                        .flatMap { $0 }
+                        let children = Array(0..<10)
+                            .map { childIndex -> [Any] in
+                                let id = index * 10 + childIndex
+                                return [
+                                    id,
+                                    "child object id" + String(id),
+                                    index
+                                ]
+                            }
+                            .flatMap { $0 }
                         return children
                     }
                     .flatMap { $0 }
