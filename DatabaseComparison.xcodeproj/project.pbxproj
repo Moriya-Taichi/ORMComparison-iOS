@@ -58,6 +58,7 @@
 		8D727BAA253950D100F2912D /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BA9253950D100F2912D /* Publisher.swift */; };
 		8D727BAF253953E200F2912D /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BAE253953E200F2912D /* Owner.swift */; };
 		8D727BB2253953F800F2912D /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D727BB1253953F800F2912D /* Book.swift */; };
+		8D9D6CCA258F4E970026C0FD /* GRDBSQLPublisherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9D6CC9258F4E970026C0FD /* GRDBSQLPublisherStore.swift */; };
 		8DE32AE325470E74007A3ADB /* DefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE32AE225470E74007A3ADB /* DefaultsKey.swift */; };
 		8DE32B6E255C7686007A3ADB /* PublisherMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE32B6D255C7685007A3ADB /* PublisherMigration.swift */; };
 		FA794D6798EA7E4FABCE60D9 /* Pods_DatabaseComparisonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8613E1C62B4F1EB8D2AD11C7 /* Pods_DatabaseComparisonTests.framework */; };
@@ -132,6 +133,7 @@
 		8D727BA9253950D100F2912D /* Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		8D727BAE253953E200F2912D /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		8D727BB1253953F800F2912D /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		8D9D6CC9258F4E970026C0FD /* GRDBSQLPublisherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBSQLPublisherStore.swift; sourceTree = "<group>"; };
 		8DE32AE225470E74007A3ADB /* DefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKey.swift; sourceTree = "<group>"; };
 		8DE32B6D255C7685007A3ADB /* PublisherMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherMigration.swift; sourceTree = "<group>"; };
 		F4693C13DFC13D22D82B5012 /* Pods_DatabaseComparison.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DatabaseComparison.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -358,6 +360,7 @@
 				8D0EA84D252CC4E8005E51C3 /* GRDBPublisherStore.swift */,
 				8D5B5FBA254177F500B22207 /* GRDBModelExtension.swift */,
 				8D5B5FBD254181DB00B22207 /* GRDBMigrator.swift */,
+				8D9D6CC9258F4E970026C0FD /* GRDBSQLPublisherStore.swift */,
 			);
 			path = GRDB;
 			sourceTree = "<group>";
@@ -621,6 +624,7 @@
 				8D2FD811256CC13D0042828A /* BookCell.swift in Sources */,
 				8DE32AE325470E74007A3ADB /* DefaultsKey.swift in Sources */,
 				8D2FD826256CC9290042828A /* ORMListViewController.swift in Sources */,
+				8D9D6CCA258F4E970026C0FD /* GRDBSQLPublisherStore.swift in Sources */,
 				8D2FD7EE256BC11F0042828A /* PublisherListViewModel.swift in Sources */,
 				8D2FD83B256CFF420042828A /* CellItem.swift in Sources */,
 				8D2FD7FD256C85C60042828A /* PublisherCellView.swift in Sources */,
