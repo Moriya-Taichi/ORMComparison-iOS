@@ -390,17 +390,23 @@ extension Benchmarker {
     public func benchmarkInsertSimpleByFMDB() {
         fmDatabasePool.inDatabase { database in
             database.open()
-            let baseSql = "INSERT INTO parents (id, name) VALUES "
-            let values = Array(repeating: "(?, ?)", count: 1000).joined(separator: ",")
-            let sql = baseSql + values + ";"
+            let sql = "INSERT INTO parents (id, name) VALUES " +
+                Array(
+                    repeating: "(?, ?)",
+                    count: 1000
+                )
+                .joined(separator: ",") +
+                ";"
             try? database.executeUpdate(
                 sql,
-                values: Array(0..<1000).map { index in
-                    return [
-                        index,
-                        "simple object id" + String(index)
-                    ]
-                }.flatMap { $0 }
+                values: Array(0..<1000)
+                    .map { index in
+                        return [
+                            index,
+                            "simple object id" + String(index)
+                        ]
+                    }
+                    .flatMap { $0 }
             )
             database.close()
         }
@@ -409,30 +415,42 @@ extension Benchmarker {
     public func benchmarkInsertOneToOneByFMDB() {
         fmDatabasePool.inDatabase { database in
             database.open()
-            let parentBaseSql = "INSERT INTO parents (id, name) VALUES "
-            let childBaseSql = "INSERT INTO children (id, name, parent_id) VALUES "
-            let parentValues = Array(repeating: "(?, ?)", count: 1000).joined(separator: ",")
-            let childValues = Array(repeating: "(?, ?, ?)", count: 1000).joined(separator: ",")
-            let parentSql = parentBaseSql + parentValues + ";"
-            let childSql = childBaseSql + childValues + ";"
+            let parentSql = "INSERT INTO parents (id, name) VALUES " +
+                Array(
+                    repeating: "(?, ?)",
+                    count: 1000
+                )
+                .joined(separator: ",") +
+                ";"
+            let childSql = "INSERT INTO children (id, name, parent_id) VALUES " +
+                Array(
+                    repeating: "(?, ?, ?)",
+                    count: 1000
+                )
+                .joined(separator: ",") +
+                ";"
             try? database.executeUpdate(
                 parentSql,
-                values: Array(0..<1000).map { index in
-                    return [
-                        index,
-                        "simple object id" + String(index)
-                    ]
-                }.flatMap { $0 }
+                values: Array(0..<1000)
+                    .map { index in
+                        return [
+                            index,
+                            "simple object id" + String(index)
+                        ]
+                    }
+                    .flatMap { $0 }
             )
             try? database.executeUpdate(
                 childSql,
-                values: Array(0..<1000).map { index in
-                    return [
-                        index,
-                        "child object id" + String(index),
-                        index
-                    ]
-                }.flatMap { $0 }
+                values: Array(0..<1000)
+                    .map { index in
+                        return [
+                            index,
+                            "child object id" + String(index),
+                            index
+                        ]
+                    }
+                    .flatMap { $0 }
             )
             database.close()
         }
@@ -441,35 +459,48 @@ extension Benchmarker {
     public func benchmarkInsertOneToManyByFMDB() {
         fmDatabasePool.inDatabase { database in
             database.open()
-            let parentBaseSql = "INSERT INTO parents (id, name) VALUES "
-            let childBaseSql = "INSERT INTO children (id, name, parent_id) VALUES "
-            let parentValues = Array(repeating: "(?, ?)", count: 1000).joined(separator: ",")
-            let childValues = Array(repeating: "(?, ?, ?)", count: 10000).joined(separator: ",")
-            let parentSql = parentBaseSql + parentValues + ";"
-            let childSql = childBaseSql + childValues + ";"
+            let parentSql = "INSERT INTO parents (id, name) VALUES " +
+                Array(
+                    repeating: "(?, ?)",
+                    count: 1000
+                )
+                .joined(separator: ",") +
+                ";"
+            let childSql = "INSERT INTO children (id, name, parent_id) VALUES " +
+                Array(
+                    repeating: "(?, ?, ?)",
+                    count: 10000
+                )
+                .joined(separator: ",") +
+                ";"
             try? database.executeUpdate(
                 parentSql,
-                values: Array(0..<1000).map { index in
-                    return [
-                        index,
-                        "simple object id" + String(index)
-                    ]
-                }.flatMap { $0 }
+                values: Array(0..<1000)
+                    .map { index in
+                        return [
+                            index,
+                            "simple object id" + String(index)
+                        ]
+                    }
+                    .flatMap { $0 }
             )
 
             try? database.executeUpdate(
                 childSql,
-                values: Array(0..<1000).map { index -> [Any] in
-                    let children = Array(0..<10).map { childIndex -> [Any] in
-                        let id = index * 10 + childIndex
-                        return [
-                            id,
-                            "child object id" + String(id),
-                            index
-                        ]
-                    }.flatMap { $0 }
-                    return children
-                }.flatMap { $0 }
+                values: Array(0..<1000)
+                    .map { index -> [Any] in
+                        let children = Array(0..<10).map { childIndex -> [Any] in
+                            let id = index * 10 + childIndex
+                            return [
+                                id,
+                                "child object id" + String(id),
+                                index
+                            ]
+                        }
+                        .flatMap { $0 }
+                        return children
+                    }
+                    .flatMap { $0 }
             )
             database.close()
         }
