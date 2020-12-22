@@ -188,20 +188,14 @@ final class FMDBPublisherStore: PublisherStore {
                     query,
                     values: nil
                 ) {
-                var currentPublisher = Publisher(
-                    id: 1,
-                    name: "",
-                    books: [],
-                    owner: .init(
-                        id: 0,
-                        name: "",
-                        age: 0,
-                        profile: "")
-                )
+                var currentPublisher: Publisher? = nil
                 var books: [Book] = []
                 while result.next() {
-                    if currentPublisher.id != Int(result.int(forColumnIndex: 0)) {
-                        publishers.append(currentPublisher)
+                    if
+                        let publisher = currentPublisher,
+                        publisher.id != Int(result.int(forColumnIndex: 0))
+                    {
+                        publishers.append(publisher)
                         books = []
                     }
 
