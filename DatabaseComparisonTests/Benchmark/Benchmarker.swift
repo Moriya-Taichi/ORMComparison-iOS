@@ -36,6 +36,9 @@ public final class Benchmarker {
         self.container = container
         self.realm = realm
 
+        let parentTableSQL = "CREATE TABLE IF NOT EXISTS parents (id INTEGER PRIMARY KEY, name TEXT);"
+        let childTableSQL = "CREATE TABLE IF NOT EXISTS children (id INTEGER PRIMARY KEY, name TEXT, parent_id INTEGER, foreign key(parent_id) references parents(id));"
+
         try? databasePool.write { database in
             try? database.create(
                 table: SimplyObject.databaseTableName,
@@ -116,11 +119,12 @@ public final class Benchmarker {
                     )
                 table.primaryKey(["id"])
             }
+
+            try? database.execute(sql: parentTableSQL)
+            try? database.execute(sql: childTableSQL)
         }
 
         fmDatabasePool.inDatabase { fmDatabase in
-            let parentTableSQL = "CREATE TABLE IF NOT EXISTS parents (id INTEGER PRIMARY KEY, name TEXT);"
-            let childTableSQL = "CREATE TABLE IF NOT EXISTS children (id INTEGER PRIMARY KEY, name TEXT, parent_id INTEGER, foreign key(parent_id) references parents(id));"
             fmDatabase.open()
             try? fmDatabase.executeUpdate(
                 parentTableSQL,
