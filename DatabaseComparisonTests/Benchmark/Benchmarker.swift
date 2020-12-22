@@ -195,6 +195,48 @@ extension Benchmarker {
         }
     }
 
+    public func benchmarkInsertOneToOneByGRDB() {
+        try? databasePool.write { database in
+            Array(0..<1000).forEach { index in
+                let parentObject = GRDBObject.OneToOneObject(
+                    id: index,
+                    name: "one to one parent object id" + String(index)
+                )
+
+                let childObject = GRDBObject.OneToOneChildObject(
+                    id: index,
+                    name: "one to one child object id" + String(index),
+                    oneToOneObjectId: index
+                )
+                try? parentObject.insert(database)
+                try? childObject.insert(database)
+            }
+        }
+    }
+
+    public func benchmarkInsertOneToManyByGRDB() {
+        try? databasePool.write { database in
+            Array(0..<1000).forEach { index in
+                let parentObject = GRDBObject.OneToManyObject(
+                    id: index,
+                    name: "one to many parent object id" + String(index)
+                )
+                try? parentObject.insert(database)
+
+                Array(0..<10).forEach { childIndex in
+                    let id = childIndex + index * 10
+                    let childObject = GRDBObject
+                        .OneToManyChildObject(
+                            id: id,
+                            name: "one to many child object id" + String(id),
+                            oneToManyObjectId: index
+                        )
+                    try? childObject.insert(database)
+                }
+            }
+        }
+    }
+
     public func benchmarkInsertSimpleByGRDBSQL() {
         let sql = "INSERT INTO parents (id, name) VALUES " +
             Array(repeating: "(?, ?)", count: 1000).joined(separator: ",") +
@@ -213,25 +255,6 @@ extension Benchmarker {
                         .flatMap { $0 }
                 )
             )
-        }
-    }
-
-    public func benchmarkInsertOneToOneByGRDB() {
-        try? databasePool.write { database in
-            Array(0..<1000).forEach { index in
-                let parentObject = GRDBObject.OneToOneObject(
-                    id: index,
-                    name: "one to one parent object id" + String(index)
-                )
-
-                let childObject = GRDBObject.OneToOneChildObject(
-                    id: index,
-                    name: "one to one child object id" + String(index),
-                    oneToOneObjectId: index
-                )
-                try? parentObject.insert(database)
-                try? childObject.insert(database)
-            }
         }
     }
 
@@ -279,29 +302,6 @@ extension Benchmarker {
                         .flatMap { $0 }
                 )
             )
-        }
-    }
-
-    public func benchmarkInsertOneToManyByGRDB() {
-        try? databasePool.write { database in
-            Array(0..<1000).forEach { index in
-                let parentObject = GRDBObject.OneToManyObject(
-                    id: index,
-                    name: "one to many parent object id" + String(index)
-                )
-                try? parentObject.insert(database)
-
-                Array(0..<10).forEach { childIndex in
-                    let id = childIndex + index * 10
-                    let childObject = GRDBObject
-                        .OneToManyChildObject(
-                            id: id,
-                            name: "one to many child object id" + String(id),
-                            oneToManyObjectId: index
-                        )
-                    try? childObject.insert(database)
-                }
-            }
         }
     }
 
@@ -726,6 +726,93 @@ extension Benchmarker {
     }
 
     public func benchmarkReadOneToManyByFMDB() {
+        var objects: [OneToManyObject] = []
+        let sql = "SELECT parents.id, parents.name, children.id, children.name FROM parents LEFT JOIN children ON parents.id == children.parent_id;"
+        fmDatabasePool.inDatabase { database in
+            database.open()
+            if let result = try? database.executeQuery(sql, values: nil) {
+                var childrenObject: [SimplyObject] = []
+                var currentParent = OneToManyObject(
+                    id: 0,
+                    name: "",
+                    relationObjects: []
+                )
+                while result.next() {
+                    if Int(result.int(forColumnIndex: 0)) != currentParent.id {
+                        let parentObject = OneToManyObject(
+                            id: currentParent.id,
+                            name: currentParent.name,
+                            relationObjects: childrenObject
+                        )
+                        childrenObject = []
+                        objects.append(parentObject)
+                    }
+
+                    currentParent = OneToManyObject(
+                        id: Int(result.int(forColumnIndex: 0)),
+                        name: result.string(forColumnIndex: 1) ?? "",
+                        relationObjects: []
+                    )
+                    let childObject = SimplyObject(
+                        id: Int(result.int(forColumnIndex: 2)),
+                        name: result.string(forColumnIndex: 3) ?? ""
+                    )
+                    childrenObject.append(childObject)
+                }
+                let parentObject = OneToManyObject(
+                    id: currentParent.id,
+                    name: currentParent.name,
+                    relationObjects: childrenObject
+                )
+                objects.append(parentObject)
+            }
+            database.close()
+        }
+    }
+
+    public func benchmarkReadSimpleByGRDBSQL() {
+        var objects: [SimplyObject] = []
+        let sql = "SELECT * FROM parents;"
+        try? databasePool.read { database in
+            if
+                let rows = try? Row.fetchCursor(database, sql: sql)
+            {
+                while let row = try? rows.next() {
+                    let object = SimplyObject(
+                        id: row["id"],
+                        name: row["name"]
+                    )
+                    objects.append(object)
+                }
+            }
+        }
+    }
+
+    public func benchmarkReadOneToOneByGRDBSQL() {
+        var objects: [OneToOneObject] = []
+        let sql = "SELECT parents.id, parents.name, children.id, children.name FROM parents LEFT JOIN children ON parents.id == children.parent_id;"
+        fmDatabasePool.inDatabase { database in
+            database.open()
+            if let result = try? database.executeQuery(sql, values: nil) {
+                while result.next() {
+                    let childObject = SimplyObject(
+                        id: Int(result.int(forColumnIndex: 2)),
+                        name: result.string(forColumnIndex: 3) ?? ""
+                    )
+                    let parentObject = OneToOneObject(
+                        id: Int(result.int(forColumnIndex: 0)),
+                        name: result.string(forColumnIndex: 1) ?? "",
+                        relationObject: childObject
+                    )
+
+                    objects.append(parentObject)
+                }
+            }
+            database.close()
+        }
+    }
+
+    public func benchmarkReadOneToManyByGRDBSQL() {
         var objects: [OneToManyObject] = []
         let sql = "SELECT parents.id, parents.name, children.id, children.name FROM parents LEFT JOIN children ON parents.id == children.parent_id;"
         fmDatabasePool.inDatabase { database in
