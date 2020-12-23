@@ -96,29 +96,29 @@ final class GRDBSQLPublisherStore {
             while let row = try? rows.next() {
                 if
                     let publisher = currentPublisher,
-                    publisher.id != row["publishers.id"]
+                    publisher.id != row[0]
                 {
                     publishers.append(publisher)
                     books = []
                 }
 
                 let book = Book(
-                    id: row["book.id"],
-                    name: row["book.name"],
-                    price: row["book.price"]
+                    id: row[2],
+                    name: row[3],
+                    price: row[4]
                 )
                 books.append(book)
 
                 let owner = Owner(
-                    id: row["owners.id"],
-                    name: row["owners.name"],
-                    age: row["owners.age"],
-                    profile: row["owners.profile"]
+                    id: row[5],
+                    name: row[6],
+                    age: row[7],
+                    profile: row[8]
                 )
 
                 currentPublisher = .init(
-                    id: row["publishers.id"],
-                    name: row["publishers.name"],
+                    id: row[0],
+                    name: row[1],
                     books: books,
                     owner: owner
                 )
