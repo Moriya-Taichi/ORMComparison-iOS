@@ -791,69 +791,63 @@ extension Benchmarker {
     public func benchmarkReadOneToOneByGRDBSQL() {
         var objects: [OneToOneObject] = []
         let sql = "SELECT parents.id, parents.name, children.id, children.name FROM parents LEFT JOIN children ON parents.id == children.parent_id;"
-        fmDatabasePool.inDatabase { database in
-            database.open()
-            if let result = try? database.executeQuery(sql, values: nil) {
-                while result.next() {
+        try? databasePool.read { database in
+            if
+                let rows = try? Row.fetchCursor(database, sql: sql)
+            {
+                while let row = try? rows.next() {
                     let childObject = SimplyObject(
-                        id: Int(result.int(forColumnIndex: 2)),
-                        name: result.string(forColumnIndex: 3) ?? ""
+                        id: row[2],
+                        name: row[3]
                     )
                     let parentObject = OneToOneObject(
-                        id: Int(result.int(forColumnIndex: 0)),
-                        name: result.string(forColumnIndex: 1) ?? "",
+                        id: row[0],
+                        name: row[1],
                         relationObject: childObject
                     )
 
                     objects.append(parentObject)
                 }
             }
-            database.close()
         }
     }
 
     public func benchmarkReadOneToManyByGRDBSQL() {
         var objects: [OneToManyObject] = []
         let sql = "SELECT parents.id, parents.name, children.id, children.name FROM parents LEFT JOIN children ON parents.id == children.parent_id;"
-        fmDatabasePool.inDatabase { database in
-            database.open()
-            if let result = try? database.executeQuery(sql, values: nil) {
-                var childrenObject: [SimplyObject] = []
-                var currentParent = OneToManyObject(
-                    id: 0,
-                    name: "",
-                    relationObjects: []
-                )
-                while result.next() {
-                    if Int(result.int(forColumnIndex: 0)) != currentParent.id {
-                        let parentObject = OneToManyObject(
-                            id: currentParent.id,
-                            name: currentParent.name,
-                            relationObjects: childrenObject
-                        )
-                        childrenObject = []
-                        objects.append(parentObject)
+        var children: [SimplyObject] = []
+        var currentParent: OneToManyObject? = nil
+        try? databasePool.read { database in
+            if
+                let rows = try? Row.fetchCursor(database, sql: sql)
+            {
+                while let row = try? rows.next() {
+                    if
+                        let parent = currentParent,
+                        parent.id != row[0]
+                    {
+                        objects.append(parent)
+                        children = []
                     }
 
-                    currentParent = OneToManyObject(
-                        id: Int(result.int(forColumnIndex: 0)),
-                        name: result.string(forColumnIndex: 1) ?? "",
-                        relationObjects: []
+                    let child = SimplyObject(
+                        id: row[2],
+                        name: row[3]
                     )
-                    let childObject = SimplyObject(
-                        id: Int(result.int(forColumnIndex: 2)),
-                        name: result.string(forColumnIndex: 3) ?? ""
+                    children.append(child)
+
+                    currentParent = .init(
+                        id: row[0],
+                        name: row[1],
+                        relationObjects: children
                     )
-                    childrenObject.append(childObject)
                 }
-                let parentObject = OneToManyObject(
-                    id: currentParent.id,
-                    name: currentParent.name,
-                    relationObjects: childrenObject
-                )
-                objects.append(parentObject)
+
+                if let parent = currentParent {
+                    objects.append(parent)
+                    children = []
+                }
             }
-            database.close()
         }
     }
 }
