@@ -42,4 +42,12 @@ final class ReadSimpleBenchmarkTests: XCTestCase {
             benchmaker.benchmarkReadSimpleByFMDB()
         }
     }
+
+    func testReadGRDBSQLPerformance() throws {
+        benchmaker.clearGRDB()
+        benchmaker.benchmarkInsertSimpleByGRDBSQL()
+        measure {
+            benchmaker.benchmarkReadSimpleByGRDBSQL()
+        }
+    }
 }

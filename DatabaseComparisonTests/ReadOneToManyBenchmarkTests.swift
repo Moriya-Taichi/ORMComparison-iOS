@@ -42,4 +42,12 @@ final class ReadOneToManyBenchmarkTests: XCTestCase {
             benchmaker.benchmarkReadOneToManyByFMDB()
         }
     }
+
+    func testReadGRDBSQLPerformance() throws {
+        benchmaker.clearGRDB()
+        benchmaker.benchmarkInsertOneToManyByGRDBSQL()
+        measure {
+            benchmaker.benchmarkReadOneToManyByGRDBSQL()
+        }
+    }
 }

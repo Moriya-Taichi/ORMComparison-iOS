@@ -54,4 +54,15 @@ final class InsertOneToOneBenchmarkTests: XCTestCase {
             stopMeasuring()
         }
     }
+
+    func testInsertGRDBSQLPerformance() throws {
+        let option = XCTMeasureOptions()
+        option.invocationOptions = [.manuallyStart, .manuallyStop]
+        measure(options: option) {
+            benchmaker.clearRealm()
+            startMeasuring()
+            benchmaker.benchmarkInsertOneToOneByGRDBSQL()
+            stopMeasuring()
+        }
+    }
 }

@@ -54,4 +54,15 @@ final class InsertSimpleBenchmarkTests: XCTestCase {
             stopMeasuring()
         }
     }
+
+    func testInsertGRDBSQLPerformance() throws {
+        let option = XCTMeasureOptions()
+        option.invocationOptions = [.manuallyStart, .manuallyStop]
+        measure(options: option) {
+            benchmaker.clearGRDB()
+            startMeasuring()
+            benchmaker.benchmarkInsertSimpleByGRDBSQL()
+            stopMeasuring()
+        }
+    }
 }

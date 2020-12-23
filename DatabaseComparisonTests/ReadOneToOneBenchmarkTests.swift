@@ -42,5 +42,13 @@ final class ReadOneToOneBenchmarkTests: XCTestCase {
             benchmaker.benchmarkReadOneToOneByFMDB()
         }
     }
+
+    func testReadGRDBSQLPerformance() throws {
+        benchmaker.clearGRDB()
+        benchmaker.benchmarkInsertOneToOneByGRDBSQL()
+        measure {
+            benchmaker.benchmarkReadOneToOneByGRDBSQL()
+        }
+    }
 }
 
