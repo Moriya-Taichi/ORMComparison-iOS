@@ -1,17 +1,15 @@
-## WIP 
-
 ### これは何？  
 iOSの様々なORMをCRUD操作, マイグレーションを実装して比較
 
 使用するORM
 
-- UserDefaults
+- UserDefaults v
 - CoreData
 - GRDB.swift
 - FMDB
 - Realm
 
-Qiitaの解説とコードでは実際に高度に使われるのを考えて1 対 1, 1 対 多, Migrationの説明を重点的におこなっているので、このREADMEにおいてはシンプルなオブジェクトを用いた簡単なCRUDの説明を行う。  
+Qiita(WIP)の解説とコードでは実際に高度に使われるのを考えて1 対 1, 1 対 多, Migrationの説明を重点的におこなっているので、このREADMEにおいてはシンプルなオブジェクトを用いた簡単なCRUDの説明を行う。  
 ## 今回は例なのでコードにおいて`try?`でエラーを潰していますが実際に使う場合はアプリの性質を考えて適切に処理しましょう！
 
 ---
@@ -20,16 +18,7 @@ Qiitaの解説とコードでは実際に高度に使われるのを考えて1 �
 
 ---
 ## Core Data
-Apple公式が提供するSQLiteのORM  
-Editor上でモデルを作成し、Containerのcontextを使用してCRUD操作を行う  
-Read以外の各種操作の後には`context.save()`を呼ぶ必要があり、これによってCoreDataのファイルが更新される。 
-マイグレーションにはLightとHeavyの２種類があり、前者は自動的にマイグレーションが行われる。  
-それに対して後者は他のORMフレームワークと同じでどのプロパティがどれに対応するかなどをコードで示す必要がある。
-簡単な例として、以下のような一意なidを持つ`Object`を用いて説明する  
-
-<br>
-
-- 説明に用いるモデル
+- 例に用いるモデル
 ```
 class Object: NSManagedObject {
     @NSManaged public var id: Int64
@@ -54,12 +43,6 @@ container.persistentStoreDescriptions = [desription]
 
 ---
 ### Create
-作成はオブジェクトを`init(context:)`で作成し、各プロパティに値をセット
-その後`context.insert`を使うことでオブジェクトを挿入できる。  
-1 対 多の場合は`addToHoge(object)`にオブジェクトを入れていくことで保存ができる。  
-日本語の情報においては`insertedObeject`で保存するオブジェクトの生成と挿入を同時に行なっているのが多いが、  
-2020年現在では下記のように`Object.init(context:)`で生成し、`context.insert(object:)`で挿入するのがAppleのSwiftUIの作例で示されている    
-作成したオブジェクトには一意なObjectIDが付与されており、これPrimaryKeyとしてオブジェクトを管理している。このIDの役割を任意のプロパティに変更することはできないので、作成前には同じオブジェクトがあるかどうかを調べる必要がある。
 
 ```
 func create(id: Int, name: String) {
@@ -83,15 +66,6 @@ func create(id: Int, name: String) {
 
 ---
 ### Read
-単純にオブジェクトをfetchするのとNSFetchedResultsControllerを返すのの２種類がある。NSFetchedResultsControllerはfetchされたオブジェクトに対してIndexPathでアクセスできることやdelegateで変更通知などを行える。  
-またNSFetchedResultsControllerはinit時にキャッシュ名を設定するとキャッシュを作ってくれる。  
-これはキャッシュの更新日時とCoreDataのファイルの更新日時を監視しており、変更がない場合はキャッシュを使い変更がある場合は再fetchという挙動になっている。
-どちらにしてもまずは読み込みたい型のリクエストを`HogeType.fetchRequest()`で作成する。  
-`NSFetchRequest(entityName: String)`と`NSFetchRequest<HogeType>(entityName: String)`もあるが、どちらもTypoの可能性があるのと、前者はダウンキャストする手間があるのでおすすめしない。 
-また`@FetchRequest`を`FetchResult<Entity>`につけることで簡単にfetchしたオブジェクトを使用できる。AppleのSwiftUI + CoreDataのサンプルでも使われている。   
-その後、`request.predicate`に対して検索条件を設定しfetchを実行する。  
-<br>
-
 - 単純にfetchするパターン
 ```
 func read() -> [Object]? {
@@ -136,8 +110,6 @@ controller.object(at: IndexPath(row: 0, section: 0))
 
 ---
 ### Update  
-更新はオブジェクトのプロパティを変更で行う。
-なので一旦、更新対象のオブジェクトをfetchする必要がある。
 
 ```
 func update(id: Int, name: String) {
@@ -163,8 +135,6 @@ func update(id: Int, name: String) {
 ```
 ---
 ### Delete
-`context.delete(object)`で消去できる。  
-updateと同じで削除対象のオブジェクトを一旦fetchする必要がある
 
 ```
 func delete(id: Int) {
@@ -192,18 +162,7 @@ func delete(id: Int) {
 
 ---
 ## Realm
-CoreDataなどのSQLite系のORMとは違い  
-独自のDBとORMを提供しているOSS  
-CoreDataと同じで元がObj-cなのでSwift的にモデルをStructで定義して使うことができない  
-使い方としては保存したいオブジェクトをclassで宣言し`Object`を継承
-`Realm`のインスタンスを通して各操作を行う  
-1 対 多の関係ではプロパティに`List<HogeObject>`を使い  
-1 対 1の場合はプロパティにそのまま`HogeObject`を使う  
-どちらの場合でも参照しているだけなので更新や削除の際に親のオブジェクトからやる必要はない。  
-簡単な例として、以下のような一意なidを持つ`Entity`を用いて説明する。  
-<br>
-
-- 説明に用いるモデル 
+- 例に用いるモデル 
 ```
 class Entity: Object {
     @objc dynamic var id: Int = -1
@@ -347,51 +306,8 @@ func delete(id: Int) {
 ---
 
 ## GRDB
-2015年にリリースされたSQLiteのORM  
-モデルに各種protocolやclassを継承させていくことでDBで扱えるようになる。  
-素のSQLもサポートされており、更新頻度高い(2020/10において) 
-のでSQLを書きたい場合でもFMDBよりこちらの方がおすすめできる。   
-保存する対象は`Record`のサブクラスにするか  
-Structで定義し各種protocolに準拠させる。  
-公式としては`Record`でサブクラスを作るのはoldで、  
-structを`FetchableRecord`や`PersistableRecord`に準拠させるのがSwifty  
-と述べている。今回はSwiftyな方を解説する。  
-まず各種Protocolについて解説する。  
-- `Read`できるようにする系
-   - `FetchableRecord`  
-これに準拠するとDBからfetchするメソッドが付与される。  
-またプロパティ名を元にDBのカラムからinitするのが付与される。  
-initではこの先紹介するモデルのように`row["hoge"]`といった風に  
-カラム名を指定して初期化する。  
-`String, ColumnExpression`に準拠したenumも使用可能で  
-`row[Enum.hoge]`といった記述もできる。  
-`Decodable`に準拠している場合はinitを書く必要はない  
 
-  - `TableRecord`   
-これに準拠すると、SQLを生成してくれるようになる  
-また`PrimaryKey`での検索が可能になる
-<br>
-<br>
-
-
-- `Update`などの操作を可能にする系
-  - `MutablePersistableRecord(TableRecord, EncodableRecord)`
-  - `PersistableRecord(MutablePersistableRecord)`  
-`EncodableRecord`というのも存在するが直接使うことはない。   
-どちらのProtocolも準拠すると`Update`,`Create`,`Delete`が可能になる。  
-使い方については  
-`struct`で`Auto Increment主キーがある`場合は`MutablePersistableRecord`に準拠し`didInsert()`の中でrowIDをモデルのidにセットする実装をする。   
-`モデルがclass` or `structでAuto Incrementな主キーがない`場合は`PersistableRecord`に準拠、`didInsert()`は実装しない。  
-どちらも`TableRecord`を含んでいるのでデータベースに保存するモデルは  
-上二つのどちらか + `FetchableRecord`に準拠すれば全ての操作ができる。  
-
-Databaseへのアクセスは`Queue`と`Pool`があるが、  
-訳のわからない場合は`Queue`を公式はおすすめしている。  
-叩くメソッドは同じなのでデータベースに対してマルチスレッドで  
-大量にアクセスしない限りは`Queue`で十分である。  
-<br>
-
-- 説明に用いるモデル
+- 例に用いるモデル
 ```
 struct Object: FetchableRecord, Decodable, PersistableRecord {
     let id: Int
@@ -487,19 +403,8 @@ func delete(object: Object) {
 
 ---
 ## FMDB
-古くからあるSQLiteのWrapper  
-基本的にはSQLを書いて実行していく、  
-そのためN+1をはじめとしたパフォーマンス面での調整はエンジニアに委ねられる。
-かつマルチスレッドでの動作もエンジニアに委ねられる。  
-他のORMと同じで初めにpathを指定して`FMDatabase`を初期化し各種操作を行う。
-pathを指定しない場合はinMemoryで動作する。    
-公式としてはFMDatabaseのインスタンスを共有するのが推奨していなく、  
-様々なスレッドで共有される場合は`FMDatabaseQueue`か`FMDatabasePool`を  
-使用するように推奨されている。  
-紹介してきたORMの中では一番更新頻度が少なく、かつSQLの実行はGRDBでサポートされているので積極的にこれを選択する理由はない。  
-<br>
 
-- 説明に用いるモデル
+- 例に用いるモデル
 ```
 struct Object {
     let id: Int
@@ -668,4 +573,3 @@ func delete(object: Object) {
     database.close()
 }
 ```
----
