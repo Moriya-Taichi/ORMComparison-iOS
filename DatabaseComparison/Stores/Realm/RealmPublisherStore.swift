@@ -101,58 +101,97 @@ final class RealmPublisherStore: PublisherStore {
     }
 
     func update(publisher: Publisher) {
-        guard let storedPublisher = realm.object(
+        guard
+            let publisherObject = realm.object(
                 ofType: PublisherObject.self,
                 forPrimaryKey: publisher.id
-        ) else {
+            )
+        else {
             return
         }
         if realm.isInWriteTransaction {
-            updateProcess(publisher: publisher, storedPublisher: storedPublisher)
+            updateProcess(publisher: publisher, publisherObject: publisherObject)
         } else {
             try? realm.write {
-                updateProcess(publisher: publisher, storedPublisher: storedPublisher)
+                updateProcess(publisher: publisher, publisherObject: publisherObject)
             }
         }
     }
 
-    private func updateProcess(publisher: Publisher, storedPublisher: PublisherObject) {
+    private func updateProcess(publisher: Publisher, publisherObject: PublisherObject) {
         let owner = getOrCreateOwner(owner: publisher.owner)
         owner.age = publisher.owner.age
         owner.name = publisher.owner.name
         owner.profile = publisher.owner.profile
 
-        storedPublisher.name = publisher.name
-        storedPublisher.owner = owner
+        publisherObject.name = publisher.name
+        publisherObject.owner = owner
 
-        let difference = publisher
-            .books
-            .map { $0.id }
-            .differenceIndex(
-                from: storedPublisher.books.map { $0.id }
-            )
-
-        difference.deletedIndex.forEach { index in
-            storedPublisher.books.remove(at: index)
-        }
-
-        difference.insertedIndex.forEach { index in
-            let newBookObject = BookObject()
-            let book = publisher.books[index]
-            newBookObject.id = book.id
-            newBookObject.name = book.name
-            newBookObject.price = book.price
-            storedPublisher.books.append(newBookObject)
-        }
-
-        zip(
-            difference.noChangedIndex.map { publisher.books[$0] },
-            difference.noChangedOldIndex.map { storedPublisher.books[$0] }
-        )
-        .forEach { book, bookObject in
+        //全部消してinsert
+        realm.delete(publisherObject.books)
+        publisher.books.forEach { book in
+            let bookObject = BookObject()
             bookObject.id = book.id
             bookObject.name = book.name
             bookObject.price = book.price
+            publisherObject.books.append(bookObject)
+        }
+
+        //差分更新
+        let differences = publisher
+            .books
+            .map { $0.id }
+            .difference(
+                from: publisherObject.books.map { $0.id }
+            )
+
+        var insertedBookIDs: Set<Int> = .init()
+        var deletedBookIDs: Set<Int> = .init()
+
+        differences.forEach { difference in
+            switch difference {
+            case let .insert(offset, _, _):
+                let book = publisher.books[offset]
+                let bookObject = BookObject()
+                bookObject.id = book.id
+                bookObject.name = book.name
+                bookObject.price = book.price
+                realm.add(bookObject, update: .all)
+                publisherObject.books.append(bookObject)
+                insertedBookIDs.insert(book.id)
+            case let .remove(offset, _, _):
+                let bookObject = publisherObject.books[offset]
+                deletedBookIDs.insert(bookObject.id)
+                realm.delete(bookObject)
+            }
+        }
+
+        zip(
+            publisher.books.filter { !insertedBookIDs.contains($0.id) },
+            publisherObject.books.filter { !deletedBookIDs.contains($0.id) }
+        )
+        .forEach { book, bookObject in
+            bookObject.name = book.name
+            bookObject.price = book.price
+        }
+
+        //検索条件とかを活用する方法
+        realm.delete(realm
+                        .objects(BookObject.self)
+                        .filter(
+                            NSPredicate(
+                                format: "NOT id IN %@", publisher.books.map { $0.id }
+                            )
+                        )
+        )
+
+        publisher.books.forEach { book in
+            let bookObject = BookObject()
+            bookObject.id = book.id
+            bookObject.name = book.name
+            bookObject.price = book.price
+            realm.add(bookObject, update: .all)
+            publisherObject.books.append(bookObject)
         }
     }
 
