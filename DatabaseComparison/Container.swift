@@ -15,7 +15,19 @@ struct Container {
     private static let coredataContainer = NSPersistentContainer(name: "DatabaseComparison")
     private static let realmConfiguration = Realm.Configuration(
         schemaVersion: 1,
-        migrationBlock: nil,
+        migrationBlock: { migration, schemaVersion in
+            if schemaVersion < 2 {
+                migration.enumerateObjects(ofType: PublisherObject.className()) { oldObject, newObject in
+                    //let publisherNamre = oldObject!["name"]
+                    //newObject!["Hoge"] = hogehoge
+                }
+//                migration.renameProperty(
+//                    onType: PublisherObject.className(),
+//                    from: "name",
+//                    to: "hoge"
+//                )
+            }
+        },
         deleteRealmIfMigrationNeeded: false
     )
     private static let realm = try! Realm(configuration: realmConfiguration)
