@@ -236,9 +236,15 @@ final class FMDBPublisherStore: PublisherStore {
 
     func update (publisher: Publisher) {
         let updataPublisherSQL = "UPDATE publishers SET name = ?, owner_id = ? WHERE id = ?;"
-        let updateBookSQL =
-            "UPDATE books SET name = ?, price = ?, publisher_id = ? WHERE id = ?;"
         let updateOwnerSQL = "UPDATE owners SET name = ?, age = ?, profile = ? WHERE id = ?;"
+        let insertOrUpdateBookSQL = "INSERT INTO books (id, name, price, publisher_id) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO UPDATE set name = ?, price = ?, publisher_id = ?;"
+        let deleteBookSQL = "DELETE FROM books where publisher_id = ? AND NOT IN " +
+            Array(
+                repeating: "?",
+                count: publisher.books.count
+            )
+            .joined(separator: ",") +
+            ";"
         fmDatabaseQueue.inDatabase { database in
             try? database
                 .executeUpdate(
@@ -260,16 +266,24 @@ final class FMDBPublisherStore: PublisherStore {
                         publisher.owner.id
                     ]
                 )
-
+            try? database
+                .executeUpdate(
+                    deleteBookSQL,
+                    values: [publisher.id] +
+                        publisher.books.map { $0.id }
+                )
             if database.beginTransaction() {
                 publisher.books.forEach { book in
                     try? database.executeUpdate(
-                        updateBookSQL,
+                        insertOrUpdateBookSQL,
                         values: [
+                            book.id,
                             book.name,
                             book.price,
                             publisher.id,
-                            book.id
+                            book.name,
+                            book.price,
+                            publisher.id
                         ]
                     )
                 }
