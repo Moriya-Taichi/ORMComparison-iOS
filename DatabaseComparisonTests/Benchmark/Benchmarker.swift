@@ -38,6 +38,7 @@ public final class Benchmarker {
 
         let parentTableSQL = "CREATE TABLE IF NOT EXISTS parents (id INTEGER PRIMARY KEY, name TEXT);"
         let childTableSQL = "CREATE TABLE IF NOT EXISTS children (id INTEGER PRIMARY KEY, name TEXT, parent_id INTEGER, foreign key(parent_id) references parents(id));"
+        let childIndexSQL = "CREATE INDEX parentindex on children(parent_id)"
 
         try? databasePool.write { database in
             try? database.create(
@@ -122,6 +123,7 @@ public final class Benchmarker {
 
             try? database.execute(sql: parentTableSQL)
             try? database.execute(sql: childTableSQL)
+            try? database.execute(sql: childIndexSQL)
         }
 
         fmDatabasePool.inDatabase { fmDatabase in
@@ -132,6 +134,10 @@ public final class Benchmarker {
             )
             try? fmDatabase.executeUpdate(
                 childTableSQL,
+                values: nil
+            )
+            try? fmDatabase.executeUpdate(
+                childIndexSQL,
                 values: nil
             )
             fmDatabase.close()
@@ -150,6 +156,23 @@ extension Benchmarker {
             object.name = "simple object id" + String(index)
             context.insert(object)
         }
+        try? context.save()
+    }
+
+    public func benchmarkInsertSimpleByCoreDataBIR() {
+        let context = container.viewContext
+        let batchInsertRequest = NSBatchInsertRequest(
+            entityName: String(describing: SimplyEntity.self),
+            objects: Array(0..<1000)
+                .map { index -> [String: Any] in
+                    return [
+                        "id": Int64(index),
+                        "name": "simple object id" + String(index)
+                    ]
+                }
+        )
+        batchInsertRequest.resultType = .statusOnly
+        try? context.execute(batchInsertRequest)
     }
 
     public func benchmarkInsertOneToOneByCoreData() {
@@ -164,6 +187,7 @@ extension Benchmarker {
             object.relationship = childObject
             context.insert(object)
         }
+        try? context.save()
     }
 
     public func benchmarkInsertOneToManyByCoreData() {
@@ -181,6 +205,7 @@ extension Benchmarker {
             }
             context.insert(object)
         }
+        try? context.save()
     }
 
     public func benchmarkInsertSimpleByGRDB() {
@@ -592,9 +617,23 @@ extension Benchmarker {
         )
         let oneToManyEntitydeleteRequest = NSBatchDeleteRequest(fetchRequest: oneToManyEntityRequest)
 
-        let _ = try? context.execute(simplyEntitydeleteRequest)
-        let _ = try? context.execute(oneToOneEntitydeleteRequest)
-        let _ = try? context.execute(oneToManyEntitydeleteRequest)
+        if
+            let deleteSimplyEntityRequestResult = try? context.execute(simplyEntitydeleteRequest) as? NSBatchDeleteResult,
+            let deleteOneToOneEntityRequestResult = try? context.execute(oneToOneEntitydeleteRequest) as? NSBatchDeleteResult,
+            let deleteOneToManyEntityRequestResult = try? context.execute(oneToManyEntitydeleteRequest) as? NSBatchDeleteResult,
+            let isSucceedDeleteSimplyEntities = deleteSimplyEntityRequestResult.result as? Bool,
+            let isSucceedDeleteOneToOneEntities = deleteOneToOneEntityRequestResult.result as? Bool,
+            let isSucceedDeleteOneToManyEntities = deleteOneToManyEntityRequestResult.result as? Bool,
+            isSucceedDeleteSimplyEntities &&
+                isSucceedDeleteOneToOneEntities &&
+                isSucceedDeleteOneToManyEntities
+        {
+            try? context.save()
+        }
+    }
+
+    public func resetContext() {
+        container.viewContext.reset()
     }
 
     public func clearGRDB() {
