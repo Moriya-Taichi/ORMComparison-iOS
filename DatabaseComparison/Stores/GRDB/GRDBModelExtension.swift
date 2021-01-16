@@ -8,13 +8,13 @@
 import GRDB
 
 final class GRDBObject {
-    struct Publisher: Decodable {
+    struct Publisher: Codable {
         let id: Int
         let name: String
         let ownerId: Int
     }
 
-    struct Book: Decodable {
+    struct Book: Codable {
         let id: Int
         let name: String
         let price: Int
@@ -24,17 +24,23 @@ final class GRDBObject {
 
 extension Publisher: FetchableRecord { }
 
-extension GRDBObject.Book: MutablePersistableRecord, FetchableRecord {
-    enum Columns: String, ColumnExpression {
-        case id, name, price, publisherId
-    }
-
-    func encode(to container: inout PersistenceContainer) {
-        container[Columns.id] = id
-        container[Columns.name] = name
-        container[Columns.price] = price
-        container[Columns.publisherId] = publisherId
-    }
+extension GRDBObject.Book: PersistableRecord, FetchableRecord {
+//    enum Columns: String, ColumnExpression {
+//        case id, name, price, publisherId
+//    }
+//
+//    func encode(to container: inout PersistenceContainer) {
+//        container[Columns.id] = id
+//        container[Columns.name] = name
+//        container[Columns.price] = price
+//        container[Columns.publisherId] = publisherId
+//    }
+//    init(row: Row) {
+//        id = row["id"]
+//        name = row["name"]
+//        price = row["price"]
+//        publisherId = row["publisherId"]
+//    }
 
     static let publisher = belongsTo(GRDBObject.Publisher.self)
     var publisher: QueryInterfaceRequest<GRDBObject.Publisher> {
@@ -42,7 +48,7 @@ extension GRDBObject.Book: MutablePersistableRecord, FetchableRecord {
     }
 }
 
-extension GRDBObject.Publisher: MutablePersistableRecord, FetchableRecord  {
+extension GRDBObject.Publisher: PersistableRecord, FetchableRecord  {
 
     enum Columns: String, ColumnExpression {
         case id, name, ownerId
