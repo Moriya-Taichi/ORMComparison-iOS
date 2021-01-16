@@ -11,6 +11,12 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="NewEntity" representedClassName="NewEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="code" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="OneToManyEntity" representedClassName="OneToManyEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -57,5 +63,6 @@
         <element name="OwnerEntity" positionX="519.87890625" positionY="-194.30859375" width="128" height="118"/>
         <element name="PublisherEntity" positionX="-63" positionY="-18" width="128" height="103"/>
         <element name="SimplyEntity" positionX="-176.12109375" positionY="-186.6796875" width="128" height="103"/>
+        <element name="NewEntity" positionX="36" positionY="-72" width="128" height="103"/>
     </elements>
 </model>
