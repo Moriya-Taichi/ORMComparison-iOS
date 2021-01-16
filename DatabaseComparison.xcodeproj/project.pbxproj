@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8250264E5C2ABAF83CF83404 /* Pods_DatabaseComparison.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4693C13DFC13D22D82B5012 /* Pods_DatabaseComparison.framework */; };
+		8D0C8FE925A3C27D00FFFCE0 /* Mapping.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8D0C8FE825A3C27D00FFFCE0 /* Mapping.xcmappingmodel */; };
 		8D0EA826252BB62A005E51C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA825252BB62A005E51C3 /* AppDelegate.swift */; };
 		8D0EA828252BB62A005E51C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA827252BB62A005E51C3 /* SceneDelegate.swift */; };
 		8D0EA830252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D0EA82E252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld */; };
@@ -79,6 +80,8 @@
 		559E31C25AEE2F4EB18B6D1D /* Pods-DatabaseComparisonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatabaseComparisonTests.release.xcconfig"; path = "Target Support Files/Pods-DatabaseComparisonTests/Pods-DatabaseComparisonTests.release.xcconfig"; sourceTree = "<group>"; };
 		6A0F48F39E4701A2543D6630 /* Pods-DatabaseComparison.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DatabaseComparison.debug.xcconfig"; path = "Target Support Files/Pods-DatabaseComparison/Pods-DatabaseComparison.debug.xcconfig"; sourceTree = "<group>"; };
 		8613E1C62B4F1EB8D2AD11C7 /* Pods_DatabaseComparisonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DatabaseComparisonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D0C8FE125A3BF2200FFFCE0 /* DatabaseComparison 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DatabaseComparison 2.xcdatamodel"; sourceTree = "<group>"; };
+		8D0C8FE825A3C27D00FFFCE0 /* Mapping.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Mapping.xcmappingmodel; sourceTree = "<group>"; };
 		8D0EA822252BB62A005E51C3 /* DatabaseComparison.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DatabaseComparison.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0EA825252BB62A005E51C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D0EA827252BB62A005E51C3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -193,6 +196,7 @@
 				8D0EA833252BB62B005E51C3 /* LaunchScreen.storyboard */,
 				8D0EA836252BB62B005E51C3 /* Info.plist */,
 				8D0EA82E252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld */,
+				8D0C8FE825A3C27D00FFFCE0 /* Mapping.xcmappingmodel */,
 				8D2FD7E3256B8CD80042828A /* Container.swift */,
 				8D2FD7E6256BB6350042828A /* MockData.swift */,
 			);
@@ -636,6 +640,7 @@
 				8D0EA84B252CC4E0005E51C3 /* RealmPublisherStore.swift in Sources */,
 				8D727BAF253953E200F2912D /* Owner.swift in Sources */,
 				8D2FD7EA256BBF6D0042828A /* PublisherStore.swift in Sources */,
+				8D0C8FE925A3C27D00FFFCE0 /* Mapping.xcmappingmodel in Sources */,
 				8D5B5FEB25455A1300B22207 /* CoreDataAbstractObjectStore.swift in Sources */,
 				8D0EA854252CC50E005E51C3 /* UserDefaultsStore.swift in Sources */,
 				8D727BAA253950D100F2912D /* Publisher.swift in Sources */,
@@ -910,6 +915,7 @@
 		8D0EA82E252BB62A005E51C3 /* DatabaseComparison.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				8D0C8FE125A3BF2200FFFCE0 /* DatabaseComparison 2.xcdatamodel */,
 				8D0EA82F252BB62A005E51C3 /* DatabaseComparison.xcdatamodel */,
 			);
 			currentVersion = 8D0EA82F252BB62A005E51C3 /* DatabaseComparison.xcdatamodel */;
