@@ -13,17 +13,6 @@ final class CoreDataPublisherStore: PublisherStore {
 
     func create(publisher: Publisher) {
         let context = container.viewContext
-        let request: NSFetchRequest<PublisherEntity> = PublisherEntity.fetchRequest()
-        request.fetchLimit = 1
-        request.predicate = .init(format: "id = %@", NSNumber(value: publisher.id))
-        let storedPublisher = try? context.fetch(request)
-        guard
-            storedPublisher == nil ||
-            storedPublisher?.isEmpty ?? true
-        else {
-            update(publisher: publisher)
-            return
-        }
         let publisherEntity = PublisherEntity(context: context)
 
         publisherEntity.id = Int64(publisher.id)
@@ -41,7 +30,6 @@ final class CoreDataPublisherStore: PublisherStore {
             bookEntity.name = book.name
             bookEntity.price = Int64(book.price)
             publisherEntity.addToBooks(bookEntity)
-            context.insert(bookEntity)
         }
 
         context.insert(publisherEntity)
@@ -96,7 +84,12 @@ final class CoreDataPublisherStore: PublisherStore {
         publisherRequest.predicate = .init(format: "id = %@", NSNumber(value: publisher.id))
 
         guard
-            let publisherEntity = try? context.fetch(publisherRequest).first
+            let publisherEntity = try? context.fetch(publisherRequest).first,
+            let bookEntities = publisherEntity.books?
+                .compactMap({ $0 as? BookEntity })
+                .sorted(by: { lhs, rhs -> Bool in
+                    return lhs.id < rhs.id
+                })
         else {
             return
         }
@@ -108,40 +101,85 @@ final class CoreDataPublisherStore: PublisherStore {
         ownerEntity.profile = publisher.owner.profile
         publisherEntity.owner = ownerEntity
 
-        if let relataionBooks = publisherEntity.books?.compactMap({ $0 as? BookEntity }) {
-            let difference = publisher
-                .books
-                .map { $0.id }
-                .differenceIndex(
-                    from: relataionBooks.map { Int($0.id) }
-                )
-
-            difference.insertedIndex.forEach { index in
-                let book = publisher.books[index]
-                let bookEntity = BookEntity(context: context)
-                bookEntity.id = Int64(book.id)
-                bookEntity.name = book.name
-                bookEntity.price = Int64(book.price)
-                publisherEntity.addToBooks(bookEntity)
-                context.insert(bookEntity)
-            }
-
-            difference.deletedIndex.forEach { index in
-                let bookEntity = relataionBooks[index]
-                publisherEntity.removeFromBooks(bookEntity)
-            }
-
-            zip(
-                difference.noChangedIndex.map { publisher.books[$0] },
-                difference.noChangedOldIndex.map { relataionBooks[$0] }
+        //CollectionDIffing(Swift5.1から)を使って差分から更新する方法
+        let differences = publisher
+            .books
+            .map { $0.id }
+            .difference(
+                from: bookEntities.map { Int($0.id) }
             )
-            .forEach { book, bookEntity in
-                bookEntity.id = Int64(book.id)
-                bookEntity.name = book.name
-                bookEntity.price = Int64(book.price)
+        var insertedBookIDs: Set<Int> = .init()
+        var deletedBookIDs: Set<Int64> = .init()
+        differences.forEach { difference in
+            switch difference {
+            case let .insert(offset, _, _):
+                let newBookEntity = BookEntity(context: context)
+                newBookEntity.id = Int64(publisher.books[offset].id)
+                newBookEntity.name = publisher.books[offset].name
+                newBookEntity.price = Int64(publisher.books[offset].price)
+
+                context.insert(newBookEntity)
+                publisherEntity.addToBooks(newBookEntity)
+
+                insertedBookIDs.insert(publisher.books[offset].id)
+            case let .remove(offset, _, _):
+                deletedBookIDs.insert(bookEntities[offset].id)
+                publisherEntity.removeFromBooks(bookEntities[offset])
+                context.delete(bookEntities[offset])
             }
         }
 
+        zip(
+            publisher.books.filter { !insertedBookIDs.contains($0.id) },
+            bookEntities.filter { !deletedBookIDs.contains($0.id) }
+        )
+        .forEach { book, bookEntity in
+            bookEntity.name = book.name
+            bookEntity.price = Int64(book.price)
+        }
+        //mergePolicyがNSMergeByPropertyObjectTrumpMergePolicyなので重複を気にせずこれでもよい
+        publisher.books.forEach { book in
+            let bookEntity = BookEntity(context: context)
+            bookEntity.id = Int64(book.id)
+            bookEntity.name = book.name
+            bookEntity.price = Int64(book.price)
+            context.insert(bookEntity)
+            publisherEntity.addToBooks(bookEntity)
+        }
+
+        //全部消してinsertし直す方法
+        bookEntities.forEach { bookEntity in
+            publisherEntity.removeFromBooks(bookEntity)
+            context.delete(bookEntity)
+        }
+
+        publisher.books.forEach { book in
+            let bookEntity = BookEntity(context: context)
+            bookEntity.id = Int64(book.id)
+            bookEntity.name = book.name
+            bookEntity.price = Int64(book.price)
+            context.insert(bookEntity)
+            publisherEntity.addToBooks(bookEntity)
+        }
+
+        //Requestを活用する方法
+        let bookEntityFetchRequest: NSFetchRequest<NSFetchRequestResult> = .init(entityName: .init(describing: BookEntity.self))
+        bookEntityFetchRequest.predicate = .init(
+            format: "publisher == %@ AND NOT id IN %@",
+            publisherEntity,
+            publisher.books.map { $0.id }
+        )
+        let bookEntityDeleteRequest = NSBatchDeleteRequest(fetchRequest: bookEntityFetchRequest)
+        try? context.execute(bookEntityDeleteRequest)
+
+        publisher.books.forEach { book in
+            let bookEntity = BookEntity(context: context)
+            bookEntity.id = Int64(book.id)
+            bookEntity.name = book.name
+            bookEntity.price = Int64(book.price)
+            context.insert(bookEntity)
+            publisherEntity.addToBooks(bookEntity)
+        }
 
         saveContext()
     }
