@@ -298,6 +298,7 @@ final class FMDBPublisherStore: PublisherStore {
         let deleteBookSQL =
             "DELETE FROM books WHERE publisher_id = ?;"
         fmDatabaseQueue.inDatabase { database in
+            database.open()
             try? database.executeUpdate(
                 deletePublisherSQL,
                 values: [
@@ -311,6 +312,7 @@ final class FMDBPublisherStore: PublisherStore {
                     publisher.id
                 ]
             )
+            database.close()
         }
     }
 }
