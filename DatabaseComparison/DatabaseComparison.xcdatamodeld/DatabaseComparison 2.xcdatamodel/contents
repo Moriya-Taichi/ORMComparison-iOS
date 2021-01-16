@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="BookEntity" representedClassName="BookEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="publisher" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PublisherEntity" inverseName="books" inverseEntity="PublisherEntity"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="OneToManyEntity" representedClassName="OneToManyEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="relationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SimplyEntity" inverseName="relationship" inverseEntity="SimplyEntity"/>
+    </entity>
+    <entity name="OneToOneEntity" representedClassName="OneToOneEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SimplyEntity" inverseName="relationship1" inverseEntity="SimplyEntity"/>
+    </entity>
+    <entity name="OwnerEntity" representedClassName="OwnerEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="age" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="profile" optional="YES" attributeType="String"/>
+        <relationship name="publishers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PublisherEntity" inverseName="owner" inverseEntity="PublisherEntity"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="PublisherEntity" representedClassName="PublisherEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="books" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BookEntity" inverseName="publisher" inverseEntity="BookEntity"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="OwnerEntity" inverseName="publishers" inverseEntity="OwnerEntity"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="SimplyEntity" representedClassName="SimplyEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OneToManyEntity" inverseName="relationship" inverseEntity="OneToManyEntity"/>
+        <relationship name="relationship1" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OneToOneEntity" inverseName="relationship" inverseEntity="OneToOneEntity"/>
+    </entity>
+    <elements>
+        <element name="BookEntity" positionX="527.55859375" positionY="27.18359375" width="128" height="103"/>
+        <element name="OneToManyEntity" positionX="152.3203125" positionY="-235.01953125" width="128" height="88"/>
+        <element name="OneToOneEntity" positionX="175.8828125" positionY="-145.390625" width="128" height="88"/>
+        <element name="OwnerEntity" positionX="519.87890625" positionY="-194.30859375" width="128" height="118"/>
+        <element name="PublisherEntity" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="SimplyEntity" positionX="-176.12109375" positionY="-186.6796875" width="128" height="103"/>
+    </elements>
+</model>
