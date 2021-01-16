@@ -10,7 +10,9 @@ final class FMDBPublisherStore: PublisherStore {
         self.fmDatabaseQueue = fmDatabaseQueue
         fmDatabaseQueue.inDatabase { database in
             let createPublisherTableSQL = "CREATE TABLE IF NOT EXISTS publishers (id INTEGER PRIMARY KEY, name TEXT, owner_id INTEGER, foreign key(owner_id) references owners(id));"
+            let createPublisherIndexSQL = "CREATE INDEX ownerindex on publishers(owner_id);"
             let createBooksTableSQL = "CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY, name TEXT, price INTEGER, publisher_id INTEGER, foreign key(publisher_id) references publishers(id));"
+            let createBooksIndexSQL = "CREATE INDEX publisherindex on books(publisher_id);"
             let createOwnersTableSQL = "CREATE TABLE IF NOT EXISTS owners (id INTEGER PRIMARY KEY, name TEXT, age INTEGER, profile TEXT);"
             database.open()
             try? database.executeUpdate(
@@ -25,6 +27,15 @@ final class FMDBPublisherStore: PublisherStore {
 
             try? database.executeUpdate(
                 createBooksTableSQL,
+                values: nil
+            )
+            try? database.executeUpdate(
+                createPublisherIndexSQL,
+                values: nil
+            )
+
+            try? database.executeUpdate(
+                createBooksIndexSQL,
                 values: nil
             )
             database.close()
