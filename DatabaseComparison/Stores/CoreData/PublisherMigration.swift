@@ -21,10 +21,13 @@ final class PublisherMigration: NSEntityMigrationPolicy {
             let publisherName = sInstance.primitiveValue(forKey: "name") as? String
             let publisherID = sInstance.primitiveValue(forKey: "id") as? Int
 
-            //example
-            //let newObject = Hoge(context: context)
-            //newObject.hoge = publisherName
-            //context.insert(newObject)
+//            example
+//            let newEntity = NSEntityDescription
+//                .insertNewObject(
+//                    forEntityName: .init(describing: NewEntity.self),
+//                    into: context
+//                )
+//            newEntity.setValue(publisherName, forKey: "name")
         }
     }
 }
