@@ -33,6 +33,17 @@ final class InsertSimpleBenchmarkTests: XCTestCase {
         }
     }
 
+    func testInsertCoredataBIRPerfomance() throws {
+        let option = XCTMeasureOptions()
+        option.invocationOptions = [.manuallyStart, .manuallyStop]
+        measure(options: option) {
+            benchmaker.clearCoreData()
+            startMeasuring()
+            benchmaker.benchmarkInsertSimpleByCoreDataBIR()
+            stopMeasuring()
+        }
+    }
+
     func testInsertGRDBPerformance() throws {
         let option = XCTMeasureOptions()
         option.invocationOptions = [.manuallyStart, .manuallyStop]
