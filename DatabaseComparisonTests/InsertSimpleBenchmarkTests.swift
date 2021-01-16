@@ -14,6 +14,7 @@ final class InsertSimpleBenchmarkTests: XCTestCase {
     func testInsertRealmPerformance() throws {
         let option = XCTMeasureOptions()
         option.invocationOptions = [.manuallyStart, .manuallyStop]
+        option.iterationCount = 10
         measure(options: option) {
             benchmaker.clearRealm()
             startMeasuring()
@@ -25,6 +26,7 @@ final class InsertSimpleBenchmarkTests: XCTestCase {
     func testInsertCoredataPerformance() throws {
         let option = XCTMeasureOptions()
         option.invocationOptions = [.manuallyStart, .manuallyStop]
+        option.iterationCount = 10
         measure(options: option) {
             benchmaker.clearCoreData()
             startMeasuring()
@@ -36,6 +38,7 @@ final class InsertSimpleBenchmarkTests: XCTestCase {
     func testInsertCoredataBIRPerfomance() throws {
         let option = XCTMeasureOptions()
         option.invocationOptions = [.manuallyStart, .manuallyStop]
+        option.iterationCount = 10
         measure(options: option) {
             benchmaker.clearCoreData()
             startMeasuring()
@@ -47,6 +50,7 @@ final class InsertSimpleBenchmarkTests: XCTestCase {
     func testInsertGRDBPerformance() throws {
         let option = XCTMeasureOptions()
         option.invocationOptions = [.manuallyStart, .manuallyStop]
+        option.iterationCount = 10
         measure(options: option) {
             benchmaker.clearGRDB()
             startMeasuring()
@@ -58,6 +62,7 @@ final class InsertSimpleBenchmarkTests: XCTestCase {
     func testInsertFMDBPerformance() throws {
         let option = XCTMeasureOptions()
         option.invocationOptions = [.manuallyStart, .manuallyStop]
+        option.iterationCount = 10
         measure(options: option) {
             benchmaker.clearFMDB()
             startMeasuring()
@@ -69,6 +74,7 @@ final class InsertSimpleBenchmarkTests: XCTestCase {
     func testInsertGRDBSQLPerformance() throws {
         let option = XCTMeasureOptions()
         option.invocationOptions = [.manuallyStart, .manuallyStop]
+        option.iterationCount = 10
         measure(options: option) {
             benchmaker.clearGRDB()
             startMeasuring()
