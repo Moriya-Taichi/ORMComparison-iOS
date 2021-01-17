@@ -3,18 +3,17 @@ iOSの様々なORMをCRUD操作, マイグレーションを実装して比較
 
 動作環境
 
-- XCode 12.1
+- XCode 12.0
 - CocoaPod v1.9.1
 
 使用するORM
 
-- UserDefaults
 - CoreData
 - GRDB.swift v4.14.0
 - FMDB v2.7.5
 - Realm v5.4.4
 
-Qiita(WIP)の解説とコードでは実際に高度に使われるのを考えて1 対 1, 1 対 多, Migrationの説明を重点的におこなっているので、このREADMEにおいてはシンプルなオブジェクトを用いた簡単なCRUDの説明を行う。  
+[Qiita](https://qiita.com/Moriya-Taichi/items/e25066952daef7859037)の解説では実際に高度に使われるのを考えて1 対 1, 1 対 多, Migrationの説明を重点的におこなっているので、このREADMEにおいてはシンプルなオブジェクトを用いた簡単なCRUDの説明を行う。  
 ## 今回は例なのでコードにおいて`try?`でエラーを潰していますが実際に使う場合はアプリの性質を考えて適切に処理しましょう！
 
 ---
