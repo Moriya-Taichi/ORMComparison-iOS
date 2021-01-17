@@ -7,6 +7,20 @@ final class CoreDataPublisherStore: PublisherStore {
 
     init (container: NSPersistentContainer) {
         self.container = container
+//        let path = try! FileManager.default
+//            .url(
+//                for: .applicationSupportDirectory,
+//                in: .userDomainMask,
+//                appropriateFor: nil,
+//                create: false
+//            )
+//            .appendingPathComponent("DatabaseComparison.sqlite")
+//        let path = (container.persistentStoreDescriptions.last?.url!)!
+//        let description = NSPersistentStoreDescription(url: path)
+//        HeavyWeightMigration時
+//        description.shouldInferMappingModelAutomatically = false
+//        description.shouldMigrateStoreAutomatically = true
+//        container.persistentStoreDescriptions = [description]
         container.loadPersistentStores { _,_ in }
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
